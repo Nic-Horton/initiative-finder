@@ -15,7 +15,6 @@ function Crud() {
     const [updatedMonsterAC, setUpdatedMonsterAC] = useState('')
 
     const monsterCollectionRef = collection(db, 'Monsters')
-
     const onSubmitMonster = async () => {
         await addDoc(monsterCollectionRef, {
             Name: monsterName,
