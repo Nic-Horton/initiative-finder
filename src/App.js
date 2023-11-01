@@ -2,6 +2,7 @@
 import './App.css';
 import { Route, Routes } from "react-router-dom";
 import  Login  from "./components/Login"
+import Register from './components/Register';
 
 
 
@@ -14,15 +15,16 @@ function App() {
       backgroundPosition: "center",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      height: "100vh",
+      height: "100%",
       width: "100%",
     }}>
       <header className="App-header">
-        <Login />
 
+      
         <Routes>
-          <Route path="/Login" element={<Login />} />
-          
+          <Route path="/" element={<Login />} />
+          <Route path="/Register" element={<Register/>} />
+
         </Routes>
 
       </header>
