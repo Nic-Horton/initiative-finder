@@ -13,11 +13,15 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
+import { blueGrey } from "@mui/material/colors";
+
+const appBarColor = blueGrey[900];
+
 
 const pages = [
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Initiative Tracker', path: '/initiativetracker' },
-  { name: 'Login', path: '/login' },
+  { name: 'Dashboard', path: '/Dashboard' },
+  { name: 'InitiativeTracker', path: '/Initiativetracker' },
+  { name: 'Login', path: '/Login' },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -27,7 +31,7 @@ function Navbar() {
 
   const handleOpenNavMenu = (event) => {
     console.log("clicked Hamburger");
-    setAnchorElNav(event.currentTarget);
+     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     console.log("clicked Profile Icon");
@@ -45,7 +49,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: appBarColor }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <CasinoOutlinedIcon
@@ -137,11 +141,13 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
+                component={NavLink}
+                to={page.path}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
