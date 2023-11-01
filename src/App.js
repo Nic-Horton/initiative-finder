@@ -5,8 +5,6 @@ import Dashboard from "./Pages/Dashboard";
 import InitiativeTracker from "./Pages/InitiativeTracker";
 import Login from "./Pages/Login";
 import { Routes, Route } from 'react-router-dom';
-import InitiativeTracker from './Pages/InitiativeTracker';
-import Login from './Pages/Login';
 
 function App() {
 	return (
@@ -17,8 +15,6 @@ function App() {
 				<Route path="/tracker" element={<InitiativeTracker />} />
 				<Route path="/Login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/initiativetracker" element={<InitiativeTracker />}></Route>
-        <Route path="/login" element={<Login />}></Route>
       </Routes>
     </div>
   );
