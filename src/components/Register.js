@@ -18,7 +18,7 @@ export default function Register() {
 
   const handleCancel = () => {
     setOpen(true);
-    alert("Crit Fail!");
+    alert("Critical Fail!");
   };
 
   const handleCloseReg = () => {
