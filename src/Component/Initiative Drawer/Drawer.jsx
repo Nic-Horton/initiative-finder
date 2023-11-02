@@ -6,6 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled } from '@mui/material/styles';
+//For search
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+
 
 //set width based on breakpoints
 const drawerWidth = {
@@ -76,7 +83,20 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 	marginTop: 15,
 }));
 
+
+
 function SearchDrawer({open,setOpen}) {
+	//For Search
+	const [search,setSearch] = useState('');
+	const [value, setValue] = React.useState('one');
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+	//For search
+	const handleSearchChange = (e) =>{
+		setSearch(e.target.value)
+	}  
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -123,10 +143,31 @@ function SearchDrawer({open,setOpen}) {
 					open={open}
 				>
 					<DrawerHeader />
-					<IconButton color="inherit" onClick={handleDrawerClose}>
+					<Box sx={{display:'flex', justifyContent:'flex-end'}}>
+					<IconButton color="inherit" onClick={handleDrawerClose} edge='start' >
 						<ChevronLeftIcon />
 					</IconButton>
+					</Box>
+					<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
+      			<Tabs
+      			  value={value}
+      			  onChange={handleTabChange}
+      			  // textColor="secondary"
+      			  // indicatorColor="secondary"
+      			  aria-label="secondary tabs example"
+      			>
+      			  <Tab value="characters" label="Characters" />
+      			  <Tab value="monsters" label="Monsters" />
+      			</Tabs>
+    			</Box>
 					<Divider />
+					<Box sx={{ width: '100%', display:'flex', justifyContent:'center', mt:2 }}>
+					<TextField label="Search" type='search' variant="outlined"
+      			value={search?search:''}
+						onChange={handleSearchChange}
+						sx={{width:'90%'}}
+						/>
+						</Box>
 				</Drawer>
    </>
   )
