@@ -1,6 +1,5 @@
 import React from 'react'
 import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -80,7 +79,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 	// gets content to be below the AppBar
 	...theme.mixins.toolbar,
 	justifyContent: 'flex-end',
-	marginTop: 15,
+	marginTop: 12,
 }));
 
 
@@ -88,7 +87,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function SearchDrawer({open,setOpen}) {
 	//For Search
 	const [search,setSearch] = useState('');
-	const [value, setValue] = React.useState('one');
+	const [value, setValue] = React.useState('characters');
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -107,69 +106,70 @@ function SearchDrawer({open,setOpen}) {
 	};
 
   return (
-   <>
-    <Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						sx={{ mr: 2, ...(open && { display: 'none' }) }}
-					>
-						<ChevronRightIcon />
-					</IconButton>
-				</Toolbar>
-				<Drawer
-					sx={{
-						width: {
-							xs: drawerWidth.xs,
-							sm: drawerWidth.sm,
-							md: drawerWidth.md,
-							lg: drawerWidth.lg,
-						},
-						flexShrink: 0,
-						'& .MuiDrawer-paper': {
-							width: {
-								xs: drawerWidth.xs,
-								sm: drawerWidth.sm,
-								md: drawerWidth.md,
-								lg: drawerWidth.lg,
-							},
-							boxSizing: 'border-box',
-						},
-					}}
-					variant="persistent"
-					anchor="left"
-					open={open}
-				>
-					<DrawerHeader />
-					<Box sx={{display:'flex', justifyContent:'flex-end'}}>
+  <>
+    <Box sx={{display:'flex'}}>
+			<IconButton
+				color="inherit"
+				aria-label="open drawer"
+				onClick={handleDrawerOpen}
+				sx={{ ml:1,mr: 2, ...(open && { display: 'none' }) }}
+			>
+				<ChevronRightIcon />
+			</IconButton>
+		</Box>
+		<Drawer
+			sx={{
+				width: {
+					xs: drawerWidth.xs,
+					sm: drawerWidth.sm,
+					md: drawerWidth.md,
+					lg: drawerWidth.lg,
+				},
+				flexShrink: 0,
+				'& .MuiDrawer-paper': {
+					width: {
+						xs: drawerWidth.xs,
+						sm: drawerWidth.sm,
+						md: drawerWidth.md,
+						lg: drawerWidth.lg,
+					},
+					boxSizing: 'border-box',
+				},
+			}}
+			variant="persistent"
+			anchor="left"
+			open={open}
+		>
+			<DrawerHeader />
+			<Box sx={{display:'flex', justifyContent:'space-between'}}>
+				<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
+    			<Tabs
+    			  value={value}
+    			  onChange={handleTabChange}
+    			  // textColor="secondary"
+    			  // indicatorColor="secondary"
+    			  aria-label="secondary tabs example"
+    			>
+    			  <Tab value="characters" label="Characters" />
+    			  <Tab value="monsters" label="Monsters" />
+    			</Tabs>
+    		</Box>
+				<Box sx={{display:'flex', justifyContent:'flex-end'}}>
 					<IconButton color="inherit" onClick={handleDrawerClose} edge='start' >
 						<ChevronLeftIcon />
 					</IconButton>
-					</Box>
-					<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
-      			<Tabs
-      			  value={value}
-      			  onChange={handleTabChange}
-      			  // textColor="secondary"
-      			  // indicatorColor="secondary"
-      			  aria-label="secondary tabs example"
-      			>
-      			  <Tab value="characters" label="Characters" />
-      			  <Tab value="monsters" label="Monsters" />
-      			</Tabs>
-    			</Box>
-					<Divider />
-					<Box sx={{ width: '100%', display:'flex', justifyContent:'center', mt:2 }}>
-					<TextField label="Search" type='search' variant="outlined"
-      			value={search?search:''}
-						onChange={handleSearchChange}
-						sx={{width:'90%'}}
-						/>
-						</Box>
-				</Drawer>
-   </>
+				</Box>
+			</Box>
+			<Divider />
+			<Box sx={{ width: '100%', display:'flex', justifyContent:'center', mt:2 }}>
+				<TextField label="Search" type='search' variant="outlined"
+    			value={search?search:''}
+					onChange={handleSearchChange}
+					sx={{width:'90%'}}
+				/>
+			</Box>
+		</Drawer>
+  </>
   )
 }
 

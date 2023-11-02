@@ -1,4 +1,5 @@
 import './App.css';
+import Toolbar from '@mui/material/Toolbar';
 import Crud from './Component/Crud';
 import Navbar from './Component/Navbar';
 import Dashboard from './Pages/Dashboard';
@@ -10,6 +11,7 @@ function App() {
 	return (
 		<div>
 			<Navbar />
+			<Toolbar />
 			<Routes>
 				<Route path="/" element={<Crud />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
