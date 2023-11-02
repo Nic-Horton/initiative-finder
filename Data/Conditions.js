@@ -386,19 +386,6 @@ export const Conditions = [
         ]
     },
     {
-        name: 'hidden',
-        definition: 'While youre hidden from a creature, that creature knows the space youre in but cant tell precisely where you are. You typically become hidden by using Stealth to Hide. When Seeking a creature using only imprecise senses, it remains hidden, rather than observed. A creature youre hidden from is flat-footed to you, and it must succeed at a DC 11 flat check when targeting you with an attack, spell, or other effect or it fails to affect you. Area effects arent subject to this flat check. A creature might be able to use the Seek action to try to observe you.',
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: null,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            },
-        ]
-    },
-    {
         name: 'hostile',
         definition: 'This condition reflects a creatures disposition toward a particular character, and only supernatural effects (like a spell) can impose this condition on a PC. A creature that is hostile to a character actively seeks to harm that character. It doesnt necessarily attack, but it wont accept Requests from the character.',
         conditionEffects: [
@@ -438,34 +425,8 @@ export const Conditions = [
         ]
     },
     {
-        name: 'invisible',
-        definition: 'While invisible, you cant be seen. Youre undetected to everyone. Creatures can Seek to attempt to detect you; if a creature succeeds at its Perception check against your Stealth DC, you become hidden to that creature until you Sneak to become undetected again. If you become invisible while someone can already see you, you start out hidden to the observer (instead of undetected) until you successfully Sneak. You cant become observed while invisible except via special abilities or magic.',
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: null,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            },
-        ]
-    },
-    {
         name: 'observed',
         definition: 'Anything in plain view is observed by you. If a creature takes measures to avoid detection, such as by using Stealth to Hide, it can become hidden or undetected instead of observed. If you have another precise sense instead of or in addition to sight, you might be able to observe a creature or object using that sense instead. You can observe a creature only with precise senses. When Seeking a creature using only imprecise senses, it remains hidden, rather than observed.',
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: null,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            },
-        ]
-    },
-    {
-        name: 'malevolence',
-        definition: 'Some definition of the condition here',
         conditionEffects: [
             {
                 stage: 1,
@@ -527,23 +488,6 @@ export const Conditions = [
             {
                 stage: 1,
                 acEffect: -2,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            },
-        ]
-    },
-
-    {
-        name: 'quickened',
-        definition: `You gain 1 additional action at the start of your turn each round. 
-        Many effects that make you quickened specify the types of actions you can use with this additional action. 
-        If you become quickened from multiple sources, you can use the extra action you’ve been granted for any single action allowed by any of the effects that made you quickened. 
-        Because quickened has its effect at the start of your turn, you don’t immediately gain actions if you become quickened during your turn.`,
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: null,
                 fortitudeEffect: null,
                 willEffect: null,
                 reflexEffect: null,
@@ -723,19 +667,7 @@ export const Conditions = [
             },
         ]
     },
-    {
-        name: 'unnoticed',
-        definition: 'Some definition of the condition here',
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: -2,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            },
-        ]
-    },
+    
     {
         name: 'wounded',
         definition: `You have been seriously injured. 
