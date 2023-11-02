@@ -1,6 +1,5 @@
 import React from 'react'
 import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -80,7 +79,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 	// gets content to be below the AppBar
 	...theme.mixins.toolbar,
 	justifyContent: 'flex-end',
-	marginTop: 15,
+	marginTop: 12,
 }));
 
 
