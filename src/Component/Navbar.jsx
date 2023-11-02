@@ -31,7 +31,7 @@ function Navbar() {
 
   const handleOpenNavMenu = (event) => {
     console.log("clicked Hamburger");
-     setAnchorElNav(event.currentTarget);
+    setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     console.log("clicked Profile Icon");
