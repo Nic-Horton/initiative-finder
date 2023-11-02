@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
 import { Main } from '../Component/Initiative Drawer/Drawer';
 import SearchDrawer from '../Component/Initiative Drawer/Drawer';
 import InitiativeOrderCard from '../Component/InitiativeOrderCard';
@@ -13,7 +12,6 @@ function InitiativeTracker() {
 
 	return (
 		<>
-			<Toolbar />
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
 				<SearchDrawer open={open} setOpen={setOpen} />
