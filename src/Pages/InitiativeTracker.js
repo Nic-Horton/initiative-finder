@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import { Main } from '../Component/Initiative Drawer/Drawer';
 import SearchDrawer from '../Component/Initiative Drawer/Drawer';
+import InitiativeOrderCard from '../Component/InitiativeOrderCard';
 
 function InitiativeTracker() {
 	const [open, setOpen] = React.useState(false);
@@ -20,6 +21,7 @@ function InitiativeTracker() {
 					<Grid container spacing={2}>
 						<Grid item xs={6}>
 							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker</Paper>
+							<InitiativeOrderCard/>
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'green' }}>Character Details</Paper>
