@@ -5,7 +5,6 @@ import Dashboard from "./Pages/Dashboard";
 import InitiativeTracker from "./Pages/InitiativeTracker";
 import Login from "./Pages/Login";
 import { Routes, Route } from 'react-router-dom';
-import  Dashboard  from './Pages/Dashboard';
 
 function App() {
 	return (
