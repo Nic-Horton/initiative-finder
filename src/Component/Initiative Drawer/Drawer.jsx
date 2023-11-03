@@ -101,12 +101,13 @@ function SearchDrawer({open,setOpen}) {
 
   return (
   <>
-    <Box sx={{display:'flex'}}>
+    <Box sx={{mt:2}}>
 			<IconButton
 				color="inherit"
 				aria-label="open drawer"
 				onClick={handleDrawerOpen}
-				sx={{ ml:1,mr: 2, ...(open && { display: 'none' }) }}
+				edge='end'
+				sx={{ml: 1, mr: 2, ...(open && { display: 'none' }) }}
 			>
 				<ChevronRightIcon />
 			</IconButton>
