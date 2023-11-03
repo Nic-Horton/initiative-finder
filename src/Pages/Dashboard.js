@@ -26,10 +26,11 @@ function Dashboard() {
 				}}
 			/> 	<Container sx={{ display: 'flex', flexDirection: 'row' }}>
 				<Container>
-					
 					<MonsterSubmit />
 				</Container>
-				<DashboardData/>
+				<Container>
+					<DashboardData/>
+				</Container>
 			</Container>
 		</>
 	);
