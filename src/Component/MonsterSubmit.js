@@ -2,15 +2,17 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
-import { db, auth } from '../Config/firebase-config'
-import { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore'
+import { db, auth } from '../Config/firebase-config';
+import { useState, useEffect } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
 
 export default function MonsterSubmit() {
+
 
     const monsterCollectionRef = collection(db, "Monsters")
     const characterCollectionRef = collection(db, "Characters")
@@ -121,3 +123,4 @@ export default function MonsterSubmit() {
         </div>
     )
 }
+
