@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { db, auth } from '../../Config/firebase-config'
 import { useState, useEffect } from 'react';
 import { getDocs, collection, doc, updateDoc } from 'firebase/firestore'
+import SearchList from './SearchList';
 
 const monsterCollectionRef = collection(db, 'Monsters')
 const characterCollectionRef = collection(db, 'Characters')
@@ -10,50 +11,37 @@ const characterCollectionRef = collection(db, 'Characters')
 function SearchBar({category}) {
   const [search,setSearch] = useState('');
 
-  const [monsterList, setMonsterList] = useState([]);
-  const [characterList, setCharacterList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-  
+  const [combatantList, setCombatantList] = useState([{monsterList:[],characterList:[]}]);
 
   useEffect(() => {
-    const getMonsterList = async () => {
+    const getLists = async () => {
         try {
-            const data = await getDocs(monsterCollectionRef)
-            const filteredData = data.docs.map((doc) => ({
+            const monsterData = await getDocs(monsterCollectionRef)
+            const characterData = await getDocs(characterCollectionRef)
+
+            const filteredMonsterData = monsterData.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
             }))
+            const filteredCharacterData = characterData.docs.map((doc) => ({
+              ...doc.data(),
+              id: doc.id,
+          }))
             
-            setMonsterList(filteredData)
+            setCombatantList({monsterList:filteredMonsterData,characterList:filteredCharacterData})
         } catch (err) {
             console.error(err)
         }
     }
-    getMonsterList()
-}, [])
-
-  useEffect(() => {
-    const getCharacterList = async () => {
-        try {
-            const data = await getDocs(characterCollectionRef)
-            const filteredData = data.docs.map((doc) => ({
-                ...doc.data(),
-                id: doc.id,
-            }))
-            
-            setCharacterList(filteredData)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-    getCharacterList()
+    getLists()
 }, [])
 
   const handleSearchChange = (e, category) =>{
 		setSearch(e.target.value.toLowerCase())
 
     if(category === 'characters'){
-      const filteredResult = characterList.filter((character)=>{
+      const filteredResult = combatantList.characterList.filter((character)=>{
         if(character.name.toLowerCase().includes(e.target.value.toLowerCase())){
           return true;
         }
@@ -61,8 +49,8 @@ function SearchBar({category}) {
       })
       setFilteredList(filteredResult)
     } else {
-      const filteredResult = monsterList.filter((monster)=>{
-        if(monster.name &&monster.name.toLowerCase().includes(e.target.value.toLowerCase())){
+      const filteredResult = combatantList.monsterList.filter((monster)=>{
+        if(monster.name.toLowerCase().includes(e.target.value.toLowerCase())){
           return true;
         }
         return false;
@@ -73,29 +61,17 @@ function SearchBar({category}) {
 
   return (
     <>
-    <TextField label="Search" type='search' variant="outlined"
-    			value={search ? search : ''}
-					onChange={(e)=>handleSearchChange(e, category)}
-					sx={{width:'90%'}}
-				/>
-        <ul>
-          {!search ? 
-          (category === 'characters' ? 
-          characterList.map((character) => {
-            return (<li key={character.id}>{character.name}</li>)
-          })
-          :
-          monsterList.map((monster) => {
-            return (<li key={monster.id}>{monster.name}</li>)
-          })
-          ) : ( filteredList.length > 0 ?
-            filteredList.map((creature) => {
-              return (<li key={creature.id}>{creature.name}</li>)
-            }) 
-            :
-            <p>Nothing found</p>
-          )}
-        </ul>
+      <TextField label="Search" type='search' variant="outlined"
+    		value={search ? search : ''}
+				onChange={(e)=>handleSearchChange(e, category)}
+				sx={{width:'90%'}}
+			/>
+      <SearchList
+        search={search} 
+        category={category} 
+        filteredList={filteredList} 
+        combatantList={combatantList}
+      />
     </>
   )
 }
