@@ -145,7 +145,7 @@ export default function DashboardData() {
     };
 
 
-    const DataBoxContainer = styled('Paper')({
+    const DataBoxContainer = styled('div')({
         width: 1600,
         height: 1220,
         backgroundColor: 'grey',
@@ -157,7 +157,7 @@ export default function DashboardData() {
         <>
             <DataBoxContainer>
                 <div sx={{border:"5px solid rgba(54,69,79,0.5)"}}>
-                <h3 >Information</h3>
+                <h3>Information</h3>
                 </div>
                 <Grid container spacing={2} columns={16}>
                     <Grid xs={4}><Select
