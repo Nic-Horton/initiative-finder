@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled } from '@mui/material/styles';
 //For search
-import TextField from '@mui/material/TextField';
+import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -85,17 +85,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 function SearchDrawer({open,setOpen}) {
-	//For Search
-	const [search,setSearch] = useState('');
-	const [value, setValue] = React.useState('characters');
+	const [category, setCategory] = useState('characters');
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newCategory) => {
+    setCategory(newCategory);
   };
-	//For search
-	const handleSearchChange = (e) =>{
-		setSearch(e.target.value)
-	}  
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -144,7 +138,7 @@ function SearchDrawer({open,setOpen}) {
 			<Box sx={{display:'flex', justifyContent:'space-between'}}>
 				<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
     			<Tabs
-    			  value={value}
+    			  value={category}
     			  onChange={handleTabChange}
     			  // textColor="secondary"
     			  // indicatorColor="secondary"
@@ -161,12 +155,8 @@ function SearchDrawer({open,setOpen}) {
 				</Box>
 			</Box>
 			<Divider />
-			<Box sx={{ width: '100%', display:'flex', justifyContent:'center', mt:2 }}>
-				<TextField label="Search" type='search' variant="outlined"
-    			value={search?search:''}
-					onChange={handleSearchChange}
-					sx={{width:'90%'}}
-				/>
+			<Box sx={{ width: '100%', display:'flex', flexDirection:'column', alignItems:'center', mt:2 }}>
+				<SearchBar category={category}/>
 			</Box>
 		</Drawer>
   </>
