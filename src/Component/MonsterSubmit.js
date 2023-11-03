@@ -25,6 +25,7 @@ export default function MonsterSubmit() {
             reflexSave: monsterReflexSave,
             willSave: monsterWillSave,
             initiative: monsterInitiative,
+            description: monsterDescription,
             userId: auth?.currentUser?.uid
         }
         )

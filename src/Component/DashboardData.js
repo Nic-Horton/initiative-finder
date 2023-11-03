@@ -3,6 +3,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader'
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
@@ -24,7 +25,7 @@ export default function DashboardData() {
                     ...doc.data(),
                     id: doc.id,
                 }))
-
+                .filter((doc) => doc.userId === auth.currentUser.uid)
                 setMonsterList(filteredData)
             } catch (err) {
                 console.error(err)
@@ -36,47 +37,38 @@ export default function DashboardData() {
 
     const [monsterList, setMonsterList] = useState([])
     const [dataSearch, setDataSearch] = useState('')
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
+        setSelectedIndex(index === selectedIndex ? -1 : index);
     };
 
     return (
-        <>
-            <div className='dashboardData'>
-                <TextField onChange={(e) => setDataSearch(e.target.value)} label="Filled" variant="filled" sx={{ width: '50%' }} />
-                <List component="nav" aria-label="main mailbox folders">
-                    <ListItemButton
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0)}
-                    >
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Inbox" />
-                    </ListItemButton>
-                    <ListItemButton
-                        selected={selectedIndex === 1}
-                        onClick={(event) => handleListItemClick(event, 1)}
-                    >
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Drafts" />
-                    </ListItemButton>
-                </List>
-                <Divider />
-                <List component="nav" aria-label="secondary mailbox folder">
-                    {monsterList.map((monster) => (
-                        <ListItemButton key={monster.id}>
+        <div className='dashboardData'>
+            <TextField onChange={(e) => setDataSearch(e.target.value)} label="Filled" variant="filled" sx={{ width: '75%' }} />
+            <Divider />
+            <List component="nav" aria-label="secondary mailbox folder">
+            <ListSubheader>{`Monsters`}</ListSubheader>
+                {monsterList.map((monster, index) => (
+                    <React.Fragment key={monster.id}>
+                        <ListItemButton onClick={(event) => handleListItemClick(event, index)}>
                             <ListItemText primary={monster.name} />
-                            <ListItemText primary={monster.AC} />
-                            <ListItemText primary={monster.reflexSave} />
                         </ListItemButton>
-                    ))}
-                </List>
-            </div>
-        </>
-    )
+                        {selectedIndex === index && (
+                            <div>
+                                <p>AC: {monster.AC}</p>
+                                <p>Reflex Save: {monster.reflexSave}</p>
+                                <p>Fortitude Save: {monster.fortitudeSave}</p>
+                                <p>Will Save: {monster.willSave}</p>
+                                <p>description: {monster.description}</p>
+                            </div>
+                        )}
+                    </React.Fragment>
+                ))}
+            </List>
+        </div>
+    );
 }
+
+
