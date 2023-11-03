@@ -23,7 +23,7 @@ function Crud() {
 	const monsterCollectionRef = collection(db, 'Monsters');
 	const onSubmitMonster = async () => {
 		await addDoc(monsterCollectionRef, {
-			Name: monsterName,
+			name: monsterName,
 			AC: monsterAC,
 			fortitudeSave: monsterFortSave,
 			reflexSave: monsterReflexSave,
@@ -93,7 +93,7 @@ function Crud() {
 					</div>
 					{monsterList.map((monster) => (
 						<>
-							<h1>Name: {monster.Name}</h1>
+							<h1>Name: {monster.name}</h1>
 							<h3>AC: {monster.AC}</h3>
 							<h3>Reflex Save: {monster.reflexSave}</h3>
 							<h3>fortitude Save:{monster.fortitudeSave}</h3>
