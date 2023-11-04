@@ -5,10 +5,9 @@ import Button from '@mui/material/Button';
 import { db, auth } from '../Config/firebase-config';
 import { useState, useEffect } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-
-
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+
 
 
 export default function MonsterSubmit() {
@@ -34,7 +33,7 @@ export default function MonsterSubmit() {
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
-    const [tabValue, setTabValue] = React.useState('characters');
+    const [tabValue, setTabValue] = React.useState('Characters');
     const [monsterName, setMonsterName] = useState('')
     const [monsterAC, setMonsterAC] = useState('')
     const [monsterWillSave, setMonsterWillSave] = useState('')
