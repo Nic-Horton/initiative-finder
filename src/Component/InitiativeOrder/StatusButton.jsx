@@ -4,29 +4,9 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import { experimentalStyled as styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import { Conditions } from "../../Data/Conditions";
-import { alpha } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
-import Switch from "@mui/material/Switch";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 
-const RedSwitch = styled(Switch)(({ theme }) => ({
-  "& .MuiSwitch-switchBase.Mui-checked": {
-    color: red[500],
-    "&:hover": {
-      backgroundColor: alpha(red[500], theme.palette.action.hoverOpacity),
-    },
-  },
-  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-    backgroundColor: red[500],
-  },
-}));
-
-const label = { inputProps: { "aria-label": "Color switch demo" } };
-
-export default function ConditionsButton() {
+export default function BonusButton() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,10 +16,10 @@ export default function ConditionsButton() {
       <Stack direction="row" spacing={2}>
         <Button
           variant="outlined"
-          startIcon={<MonitorHeartIcon />}
+          startIcon={<RocketLaunchIcon />}
           onClick={handleOpen}
         >
-          Conditions
+          Bonuses
         </Button>
         <Modal
           open={open}
@@ -61,17 +41,10 @@ export default function ConditionsButton() {
             }}
           >
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Conditions
+              Test
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <Grid container spacing={5} columns={12}>
-                {Conditions.map((condition, index) => (
-                  <Grid item xs={6} sm={6} md={3} key={index}>
-                    {condition.name}
-                    <RedSwitch {...label} />
-                  </Grid>
-                ))}
-              </Grid>
+              Testtesttest
             </Typography>
           </Box>
         </Modal>

@@ -11,7 +11,7 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 
 import ConditionsButton from "./ConditionsButton";
 import BuffsButton from "./BuffsButton";
-import BonusButton from "./BonusButton";
+import BonusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
