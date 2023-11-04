@@ -18,7 +18,7 @@ function InitiativeTracker() {
 				<SearchDrawer open={open} setOpen={setOpen} />
 				<Main open={open}>
 					<Grid container spacing={2}>
-						<Grid item xs={6}>
+						<Grid item xs={12} lg>
 							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker</Paper>
 							<InitiativeOrderCard />
 						</Grid>

@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 //For search
 import SearchBar from './SearchBar';
 import { useState } from 'react';
@@ -136,6 +137,11 @@ function SearchDrawer({open,setOpen}) {
 			open={open}
 		>
 			<DrawerHeader />
+			<Box sx={{mb:1, width: '100%', display:'flex', justifyContent:'center' }}>
+				<Typography variant='h5'>
+					{category==='characters'?'Add Characters' : 'Add Monsters'}
+				</Typography>
+			</Box>
 			<Box sx={{display:'flex', justifyContent:'space-between'}}>
 				<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
     			<Tabs
