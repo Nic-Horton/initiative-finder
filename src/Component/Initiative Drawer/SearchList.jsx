@@ -10,17 +10,17 @@ function SearchList({category, search, filteredList, combatantList}) {
       {!search ? 
         (category === 'characters' ? 
             combatantList?.characterList?.map((character) => {
-              return (<ListResult combatant={character}/>)
+              return (<ListResult key={character.id} combatant={character}/>)
             })
           :
             combatantList?.monsterList?.map((monster) => {
-              return (<ListResult combatant={monster}/>)
+              return (<ListResult key={monster.id} combatant={monster}/>)
             })
           ) 
       : 
         (filteredList?.length > 0 ?
             filteredList?.map((combatant) => {
-              return (<ListResult combatant={combatant}/>)
+              return (<ListResult key={combatant.id} combatant={combatant}/>)
             }) 
           :
             <ListItem><ListItemText primary='Nothing found'/></ListItem>
