@@ -7,6 +7,7 @@ import { Main } from '../Component/Initiative Drawer/Drawer';
 import SearchDrawer from '../Component/Initiative Drawer/Drawer';
 import { useState } from 'react';
 import InitiativeOrderCard from '../Component/InitiativeOrder/InitiativeOrderCard';
+import CombatantCard from '../Component/InititiativeDescription/CombatantCard';
 
 function InitiativeTracker() {
 	const [open, setOpen] = useState(true);
@@ -24,6 +25,7 @@ function InitiativeTracker() {
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'green' }}>Character Details</Paper>
+							<CombatantCard />
 						</Grid>
 					</Grid>
 				</Main>
