@@ -5,8 +5,10 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+// import InfoIcon from '@mui/icons-material/Info';
 //For search
-import TextField from '@mui/material/TextField';
+import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -85,17 +87,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 function SearchDrawer({open,setOpen}) {
-	//For Search
-	const [search,setSearch] = useState('');
-	const [value, setValue] = React.useState('characters');
+	const [category, setCategory] = useState('characters');
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newCategory) => {
+    setCategory(newCategory);
   };
-	//For search
-	const handleSearchChange = (e) =>{
-		setSearch(e.target.value)
-	}  
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -107,12 +103,13 @@ function SearchDrawer({open,setOpen}) {
 
   return (
   <>
-    <Box sx={{display:'flex'}}>
+    <Box sx={{mt:2}}>
 			<IconButton
 				color="inherit"
 				aria-label="open drawer"
 				onClick={handleDrawerOpen}
-				sx={{ ml:1,mr: 2, ...(open && { display: 'none' }) }}
+				edge='end'
+				sx={{ml: 1, mr: 2, ...(open && { display: 'none' }) }}
 			>
 				<ChevronRightIcon />
 			</IconButton>
@@ -141,10 +138,15 @@ function SearchDrawer({open,setOpen}) {
 			open={open}
 		>
 			<DrawerHeader />
+			<Box sx={{mb:1, width: '100%', display:'flex', justifyContent:'center' }}>
+				<Typography variant='h5'>
+					{category==='characters'?'Add Characters' : 'Add Monsters' }
+				</Typography>
+			</Box>
 			<Box sx={{display:'flex', justifyContent:'space-between'}}>
 				<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
     			<Tabs
-    			  value={value}
+    			  value={category}
     			  onChange={handleTabChange}
     			  // textColor="secondary"
     			  // indicatorColor="secondary"
@@ -161,12 +163,8 @@ function SearchDrawer({open,setOpen}) {
 				</Box>
 			</Box>
 			<Divider />
-			<Box sx={{ width: '100%', display:'flex', justifyContent:'center', mt:2 }}>
-				<TextField label="Search" type='search' variant="outlined"
-    			value={search?search:''}
-					onChange={handleSearchChange}
-					sx={{width:'90%'}}
-				/>
+			<Box sx={{ width: '100%', display:'flex', flexDirection:'column', alignItems:'center', mt:2 }}>
+				<SearchBar category={category}/>
 			</Box>
 		</Drawer>
   </>
