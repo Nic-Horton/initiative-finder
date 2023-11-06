@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import DashboardData from '../Component/DashboardData'
 import MonsterSubmit from '../Component/MonsterSubmit'
 
-const EntryBox = styled('Div')({
+const EntryBox = styled('div')({
 	width: 500,
 	height: 600,
 	borderRadius: 1,
