@@ -1,16 +1,17 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import SeverityLevelDropdown from "./SeverityLevelDropdown";
 import FlareIcon from "@mui/icons-material/Flare";
 import { experimentalStyled as styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
 import { Buffs } from "../../Data/Buffs";
 import { alpha } from "@mui/material/styles";
 import { blue } from "@mui/material/colors";
-import Switch from "@mui/material/Switch";
 
 const BlueSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -23,14 +24,13 @@ const BlueSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: blue[500],
   },
 }));
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-
-export default function BuffsButton() {
+export default function BuffsButton({ statusValues, handleStatusToggle }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -65,10 +65,16 @@ export default function BuffsButton() {
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={5} columns={8}>
-                {Buffs.map((condition, index) => (
+                {/* Conditions mapping */}
+                {Buffs.map((buff, index) => (
                   <Grid item xs={4} sm={4} md={4} key={index}>
-                    {condition.name}
-                    <BlueSwitch {...label} />
+                    {buff.name}
+                    <SeverityLevelDropdown />
+                    <BlueSwitch
+                      {...label}
+                      checked={statusValues.includes(buff.name)}
+                      onChange={() => handleStatusToggle(buff.name)}
+                    />
                   </Grid>
                 ))}
               </Grid>

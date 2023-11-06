@@ -1,16 +1,17 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import SeverityLevelDropdown from "./SeverityLevelDropdown";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { experimentalStyled as styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
 import { Conditions } from "../../Data/Conditions";
 import { alpha } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import Switch from "@mui/material/Switch";
 
 const RedSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -23,10 +24,9 @@ const RedSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: red[500],
   },
 }));
-
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-export default function ConditionsButton() {
+export default function ConditionsButton({ statusValues, handleStatusToggle }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,11 +53,13 @@ export default function ConditionsButton() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: 650,
               bgcolor: "background.paper",
               border: "2px solid #000",
               boxShadow: 24,
               p: 4,
+              overflowY: "auto",
+              maxHeight: "60vh",
             }}
           >
             <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -65,10 +67,18 @@ export default function ConditionsButton() {
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={5} columns={12}>
+                {/* Conditions mapping */}
                 {Conditions.map((condition, index) => (
-                  <Grid item xs={6} sm={6} md={3} key={index}>
+                  <Grid item xs={4} sm={4} md={4} key={index}>
                     {condition.name}
-                    <RedSwitch {...label} />
+                    <SeverityLevelDropdown />
+                    <RedSwitch
+                      {...label}
+                      checked={statusValues.includes(condition.name)}
+                      onChange={() =>
+                        handleStatusToggle(condition.name)
+                      }
+                    />
                   </Grid>
                 ))}
               </Grid>
