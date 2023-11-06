@@ -1,82 +1,154 @@
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
-import { getDocs, collection, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { getDocs, collection, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { Auth } from './Auth';
-import { db, auth } from '../Config/firebase-config'
+import { db, auth } from '../Config/firebase-config';
+import UpdateModal from './UpdateModal';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 
 export default function DashboardData() {
+    const monsterCollectionRef = collection(db, 'Monsters');
+    const characterCollectionRef = collection(db, "Characters")
+    const [tabValue, setTabValue] = React.useState('Characters');
 
-    const monsterCollectionRef = collection(db, 'Monsters')
-
+    const collectionRef = tabValue === 'Monsters' ? monsterCollectionRef : characterCollectionRef;
     useEffect(() => {
-        const getMonsterList = async () => {
+        const getInformationList = async () => {
             try {
-                const data = await getDocs(monsterCollectionRef)
-                const filteredData = data.docs.map((doc) => ({
-                    ...doc.data(),
-                    id: doc.id,
-                }))
-
-                setMonsterList(filteredData)
+                const data = await getDocs(collectionRef);
+                const filteredData = data.docs
+                    .map((doc) => ({
+                        ...doc.data(),
+                        id: doc.id,
+                    }))
+                    .filter((doc) => doc.userId === auth.currentUser.uid);
+                setMonsterList(filteredData);
             } catch (err) {
-                console.error(err)
+                console.error(err);
             }
-        }
-        getMonsterList()
-    }, [])
+        };
+        getInformationList();
+    }, [tabValue]);
 
+    const [monsterList, setMonsterList] = useState([]);
+    const [dataSearch, setDataSearch] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+    
+    const [openStates, setOpenStates] = React.useState([]);
 
-    const [monsterList, setMonsterList] = useState([])
-    const [dataSearch, setDataSearch] = useState('')
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    // Initialize open states for each list item to false
+    useEffect(() => {
+        setOpenStates(new Array(monsterList.length).fill(false));
+    }, [monsterList]);
 
     const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
+        setSelectedIndex(index === selectedIndex ? -1 : index);
+    };
+
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+ // Set the corresponding open state to true for the clicked item
+    const handleOpen = (index) => {
+        const updatedOpenStates = [...openStates];
+        updatedOpenStates[index] = true;
+        setOpenStates(updatedOpenStates);
+    };
+
+// Set the corresponding open state to false for the clicked item
+    const handleClose = (index) => {
+        const updatedOpenStates = [...openStates];
+        updatedOpenStates[index] = false;
+        setOpenStates(updatedOpenStates);
     };
 
     return (
-        <>
-            <div className='dashboardData'>
-                <TextField onChange={(e) => setDataSearch(e.target.value)} label="Filled" variant="filled" sx={{ width: '50%' }} />
-                <List component="nav" aria-label="main mailbox folders">
-                    <ListItemButton
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0)}
-                    >
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Inbox" />
-                    </ListItemButton>
-                    <ListItemButton
-                        selected={selectedIndex === 1}
-                        onClick={(event) => handleListItemClick(event, 1)}
-                    >
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Drafts" />
-                    </ListItemButton>
-                </List>
-                <Divider />
-                <List component="nav" aria-label="secondary mailbox folder">
-                    {monsterList.map((monster) => (
-                        <ListItemButton key={monster.id}>
-                            <ListItemText primary={monster.name} />
-                            <ListItemText primary={monster.AC} />
-                            <ListItemText primary={monster.reflexSave} />
-                        </ListItemButton>
-                    ))}
-                </List>
+        <div className="dashboardData">
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <TextField
+                    onChange={(e) => setDataSearch(e.target.value)}
+                    label="Filled"
+                    variant="filled"
+                    sx={{ width: '75%' }}
+                />
             </div>
-        </>
-    )
+            <Tabs
+                value={tabValue}
+                centered
+                onChange={handleTabChange}
+                aria-label="basic tabs example"
+            >
+                <Tab label="Characters" value={'Characters'} />
+                <Tab label="Monsters" value={'Monsters'} />
+            </Tabs>
+            <Divider />
+            <List component="nav" aria-label="secondary mailbox folder">
+                <ListSubheader>{tabValue}</ListSubheader>
+                {monsterList.map((monster, index) => (
+                    <div key={monster.id} sx={{ height: '500' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <ListItemButton
+                                onClick={(event) => handleListItemClick(event, index)}
+                            >
+                                <ListItemText primary={monster.name} />
+                            </ListItemButton>
+                            <Button
+                                variant="outlined"
+                                startIcon={<EditNoteIcon />}
+                                onClick={() => handleOpen(index)}
+                            />
+                            <Button
+                                variant="outlined"
+                                startIcon={<DeleteForeverTwoToneIcon />}
+                            />
+                        </div>
+                        <UpdateModal
+                            name={monster.name}
+                            initiative={monster.initiative}
+                            ac={monster.ac}
+                            reflexSave={monster.reflexSave}
+                            fortitudeSave={monster.fortitudeSave}
+                            willSave={monster.willSave}
+                            description={monster.description}
+                            open={openStates[index]} // Use the open state for this list item
+                            onClose={() => handleClose(index)} // Pass the index to handleClose
+                            id={monster.id}
+                            databaseRef={tabValue}
+                        />
+
+                        {selectedIndex === index && (
+                            <Grid container spacing={2}>
+                                <Grid item xs={3}>
+                                    <div sx={{ backgroundColor: 'white' }}>AC: {monster.ac}</div>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <div sx={{}}>Fortitude Save: {monster.fortitudeSave}</div>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <div sx={{}}>Will Save: {monster.willSave}</div>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div sx={{}}>description: {monster.description}</div>
+                                </Grid>
+                            </Grid>
+                        )}
+                    </div>
+                ))}
+            </List>
+        </div>
+    );
 }

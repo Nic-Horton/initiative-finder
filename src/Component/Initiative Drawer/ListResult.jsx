@@ -4,23 +4,29 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
+import CombatantModal from './CombatantModal';
 
 function ListResult({combatant}) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Box width='100%' sx={{borderBottom:'solid 1px'}}>
-    <ListItem key={combatant.id}
+    <ListItem 
       secondaryAction={
-        <IconButton aria-label="info">
-        <QuestionMarkIcon/>
+        <IconButton aria-label="info" edge='end' onClick={handleOpen}>
+        <PageviewOutlinedIcon/>
         </IconButton>
       }
+      disablePadding
     >
       <ListItemButton>
       <ListItemText primary={combatant.name}/>
       </ListItemButton>
     </ListItem>
+    <CombatantModal combatant={combatant} handleClose={handleClose} open={open}/>
     </Box>
   )
 }
