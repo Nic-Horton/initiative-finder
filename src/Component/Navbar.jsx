@@ -19,9 +19,9 @@ const appBarColor = blueGrey[900];
 
 
 const pages = [
-  { name: 'Dashboard', path: '/Dashboard' },
-  { name: 'InitiativeTracker', path: '/tracker' },
-  { name: 'Login', path: '/Login' },
+  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Initiative Tracker', path: '/tracker' },
+  { name: 'Login', path: '/login' },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
