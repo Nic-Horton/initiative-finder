@@ -82,10 +82,9 @@ export const Auth = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "right",
+              justifyContent: "right",
+              alignItems: "center",
               height: 700,
-              ml:100
             }}
           >
             <Box
@@ -115,7 +114,6 @@ export const Auth = () => {
                 borderRadius: 5,
                 marginTop: 5,
                 padding: 5,
-                
                 alignContent: "left",
                 marginLeft: 3,
                 width: 200,
@@ -139,7 +137,6 @@ export const Auth = () => {
                 color="success"
                 margin="normal"
                 onChange={(e) => setEmail(e.target.value)}
-                size="small"
               ></TextField>
 
               <TextField
@@ -150,7 +147,6 @@ export const Auth = () => {
                 id="outlined-basic"
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
-                size="small"
               />
 
               <Container

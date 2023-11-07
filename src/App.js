@@ -16,11 +16,11 @@ function App() {
 			<Navbar />
 			<Toolbar />
 			<Routes>
-				<Route path="/" element={<Login />} />
+				<Route path="/" element={<Home />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
 				<Route path="/Login" element={<Login />} />
-				<Route path="/dashboard" element={<Dashboard />} />
+				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
 			</Routes>
 		</div>
 	);
