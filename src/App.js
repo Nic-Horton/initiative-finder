@@ -1,14 +1,13 @@
 import './App.css';
 import Toolbar from '@mui/material/Toolbar';
-import Crud from './Component/Crud';
 import Navbar from './Component/Navbar';
-import Dashboard from './pages/Dashboard';
-import InitiativeTracker from './pages/InitiativeTracker';
-import Login from './pages/Login';
+import Dashboard from './Pages/Dashboard';
+import InitiativeTracker from './Pages/InitiativeTracker';
+import Login from './Pages/Login';
 import Register from './Component/Register';
 import { Routes, Route } from 'react-router-dom';
 import { Auth } from './Component/Auth';
-import Home from './pages/Home';
+import Home from './Pages/Home';
 
 function App() {
 	return (
@@ -17,7 +16,7 @@ function App() {
 			<Toolbar />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/home" element={<Home />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
 				<Route path="/Login" element={<Login />} />
 				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
