@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import BattleList from '../Component/InitiativeOrder/BattleList';
 import InitiativeOrderCard from './InitiativeOrder/InitiativeOrderCard';
+import InitiativeOrderAccordion from './InitiativeOrder/InitiativeOrderAccordion';
 
 function Crud() {
 	const [monsterList, setMonsterList] = useState([]);
@@ -201,7 +202,7 @@ function Crud() {
 					</div>
 					{unitsData?.map((unitsList) => unitsList?.map((unit) => {
 						
-						return <InitiativeOrderCard name={unit.name}
+						return <InitiativeOrderAccordion name={unit.name}
 						AC={unit.AC} 
 						fortitudeSave={unit.fortitudeSave}
 						willSave={unit.willSave}
