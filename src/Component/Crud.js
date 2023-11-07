@@ -5,10 +5,12 @@ import {
 	getDocs,
 	collection,
 	addDoc,
+	getDoc,
 	deleteDoc,
 	doc,
 	updateDoc,
 } from 'firebase/firestore';
+import BattleList from '../Component/InitiativeOrder/BattleList';
 
 function Crud() {
 	const [monsterList, setMonsterList] = useState([]);
@@ -20,17 +22,45 @@ function Crud() {
 
 	const [updatedMonsterAC, setUpdatedMonsterAC] = useState('');
 
-	const monsterCollectionRef = collection(db, 'Monsters');
+	const battleListRef = collection(db, 'battleList')
+	const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
+
 	const onSubmitMonster = async () => {
-		await addDoc(monsterCollectionRef, {
+		// Create the new monster object
+		const newMonster = {
 			name: monsterName,
 			AC: monsterAC,
 			fortitudeSave: monsterFortSave,
 			reflexSave: monsterReflexSave,
 			willSave: monsterWillSave,
-			userId: auth?.currentUser?.uid,
+		};
+
+		// Get the current data from the document
+		const unitsData = (await getDoc(unitsRef)).data();
+
+		// Check if the 'units' field exists, or create an empty array if it doesn't
+		const unitsArray = unitsData.units || [];
+
+		// Add the new monster data to the array
+		unitsArray.push(newMonster);
+
+		// Update the document with the updated array
+		await updateDoc(unitsRef, {
+			units: unitsArray,
 		});
 	};
+
+	const monsterCollectionRef = collection(db, 'battleList');
+	// const onSubmitMonster = async () => {
+	// 	await addDoc(battleListRef, {
+	// 		name: monsterName,
+	// 		AC: monsterAC,
+	// 		fortitudeSave: monsterFortSave,
+	// 		reflexSave: monsterReflexSave,
+	// 		willSave: monsterWillSave,
+	// 		userId: auth?.currentUser?.uid,
+	// 	});
+	// };
 
 	const deleteMonster = async (id) => {
 		const monsterDoc = doc(db, 'Monsters', id);
@@ -44,12 +74,12 @@ function Crud() {
 	useEffect(() => {
 		const getMonsterList = async () => {
 			try {
-				const data = await getDocs(monsterCollectionRef);
+				const data = await getDocs(battleListRef);
 				const filteredData = data.docs.map((doc) => ({
 					...doc.data(),
 					id: doc.id,
 				}));
-
+				console.log(data)
 				setMonsterList(filteredData);
 			} catch (err) {
 				console.error(err);
@@ -62,6 +92,7 @@ function Crud() {
 		<>
 			<div className="App">
 				<header className="App-header">
+					<BattleList/>
 					<Auth />
 					<div>
 						<input
