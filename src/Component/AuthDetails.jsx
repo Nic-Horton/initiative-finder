@@ -15,7 +15,7 @@ const AuthDetails = () => {
         })
     }, [])
     return (
-        <div>{ authUser ? <p>Signed In</p> : <p>Signed Out</p>}</div>
+        <div>{ authUser ? console.log("signed in") : console.log("signed out")}</div>
     )
 }
 
