@@ -18,7 +18,7 @@ import { lightBlue } from "@mui/material/colors";
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
 
-export default function InitiativeOrderCard() {
+export default function InitiativeOrderCard({name, AC, fortitudeSave, willSave, reflexSave}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
 
@@ -55,7 +55,7 @@ export default function InitiativeOrderCard() {
                 sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
               />
               <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Character Constitution
+                {name}
               </Typography>
               {/* Character Points */}
               <Grid container alignItems="center">
@@ -65,21 +65,21 @@ export default function InitiativeOrderCard() {
                 </Grid>
                 <Grid item xs={2}>
                   <Typography sx={{ color: "text.secondary" }}>AC</Typography>
-                  <Typography sx={{ color: "text.secondary" }}>##</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>{AC}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   <Typography sx={{ color: "text.secondary" }}>
                     Reflex
                   </Typography>
-                  <Typography sx={{ color: "text.secondary" }}>##</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>{reflexSave}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   <Typography sx={{ color: "text.secondary" }}>Fort</Typography>
-                  <Typography sx={{ color: "text.secondary" }}>##</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>{fortitudeSave}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   <Typography sx={{ color: "text.secondary" }}>Will</Typography>
-                  <Typography sx={{ color: "text.secondary" }}>##</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>{willSave}</Typography>
                 </Grid>
               </Grid>
             </AccordionSummary>
