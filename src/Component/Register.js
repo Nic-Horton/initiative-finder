@@ -63,9 +63,8 @@ export default function RegisterPage() {
       setTimeout(()=> { 
         setOpen(false);
       }, 3000);
-      
-
-
+    } catch (err) {
+      console.error(err);
 
       if (err.code === "auth/user-not-found") {
         // User doesn't exist, you can proceed to create a new user
@@ -95,7 +94,6 @@ export default function RegisterPage() {
       }
     }
   };
-  
 
 	
 	return (
