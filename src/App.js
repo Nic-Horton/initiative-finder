@@ -8,6 +8,7 @@ import Register from './Component/Register';
 import { Routes, Route } from 'react-router-dom';
 import { Auth } from './Component/Auth';
 import Home from './Pages/Home';
+import Crud from './Component/Crud';
 
 function App() {
 	return (
@@ -18,8 +19,9 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
-				<Route path="/Login" element={<Login />} />
+				<Route path="/login" element={<Login />} />
 				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
+				<Route path="/crud" element={<Crud />} />
 			</Routes>
 		</div>
 	);
