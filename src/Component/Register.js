@@ -142,6 +142,10 @@ export default function RegisterPage() {
       setAlertSeverity('success');
       setAlertMessage('Critical Success! User Created!');
       setShowAlert(true);
+      setTimeout(()=> { 
+        setOpen(false);
+      }, 3000);
+      
 
       // You can also hide the alert after a certain duration (e.g., 3 seconds)
       // setTimeout(() => {
@@ -159,6 +163,9 @@ export default function RegisterPage() {
           setAlertSeverity('success');
           setAlertMessage('Critical Success! User Created!');
           setShowAlert(true);
+          setTimeout(()=> { 
+            setOpen(false);
+          }, 3000);
 
         } catch (createErr) {
           console.error("Error creating user:", createErr);
@@ -168,6 +175,10 @@ export default function RegisterPage() {
         setAlertMessage('Error signing in: ' + err.message);
         setShowAlert(true);
         console.error("Error signing in:", err);
+        setOpen(true);
+        setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
       }
     }
   };

@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Container, FormControl, FormLabel } from "@mui/material";
 import Button from "@mui/material/Button";
 import Register from "./Register";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, googleProvider } from "../Config/firebase-config";
 import {
   signInWithEmailAndPassword,
@@ -15,6 +15,7 @@ import { Alert } from "@mui/material";
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   console.log(auth?.currentUser);
 
@@ -35,11 +36,11 @@ export const Auth = () => {
         password
       );
       if (userCredential.user) {
+        console.log(userCredential)
         alert("User Found-Critical Success!");
-      } else {
-        alert("No User Found- Please Create an Account");
       }
     } catch (err) {
+      alert("User Not Found"+ err);
       console.error(err);
     }
   };
@@ -55,6 +56,22 @@ export const Auth = () => {
   function handleClick() {
     alert("Account not found, Please create account first");
   }
+
+  useEffect(() => {
+    // Use onAuthStateChanged to listen for changes in authentication status
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser); // User is signed in
+      } else {
+        setUser(null); // User is signed out
+      }
+    });
+
+    return () => {
+      // Unsubscribe from the listener when the component unmounts
+      unsubscribe();
+    };
+  }, []);
 
   const imageURL = "https://cdn.paizo.com/image/content/Blog/20190624-4.jpg";
 
@@ -178,7 +195,7 @@ export const Auth = () => {
                   sx={{ marginTop: 1 }}
                   onClick={logout}
                   variant="contained"
-                  disabled
+                  disabled={!user}
                 >
                   Logout
                 </Button>
