@@ -7,8 +7,10 @@ import Login from './Pages/Login';
 import Register from './Component/Register';
 import { Routes, Route } from 'react-router-dom';
 import { Auth } from './Component/Auth';
+import AuthDetails from './Component/AuthDetails';
 import Home from './Pages/Home';
 import Crud from './Component/Crud';
+
 
 function App() {
 	return (
@@ -23,6 +25,7 @@ function App() {
 				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
 				<Route path="/crud" element={<Crud />} />
 			</Routes>
+			<AuthDetails />
 		</div>
 	);
 }
