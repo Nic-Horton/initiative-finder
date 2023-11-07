@@ -1,11 +1,13 @@
 import './App.css';
 import Toolbar from '@mui/material/Toolbar';
-import Crud from './Component/Crud';
 import Navbar from './Component/Navbar';
 import Dashboard from './Pages/Dashboard';
 import InitiativeTracker from './Pages/InitiativeTracker';
 import Login from './Pages/Login';
+import Register from './Component/Register';
 import { Routes, Route } from 'react-router-dom';
+import { Auth } from './Component/Auth';
+import Home from './Pages/Home';
 
 function App() {
 	return (
@@ -13,10 +15,11 @@ function App() {
 			<Navbar />
 			<Toolbar />
 			<Routes>
-				<Route path="/" element={<Crud />} />
+				<Route path="/" element={<Home />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
 				<Route path="/Login" element={<Login />} />
-				<Route path="/dashboard" element={<Dashboard />}></Route>
+				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
 			</Routes>
 		</div>
 	);

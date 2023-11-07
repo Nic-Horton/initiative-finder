@@ -170,7 +170,7 @@ function Crud() {
 			<div className="App">
 				<header className="App-header">
 					<BattleList />
-					<Auth />
+					{/* <Auth /> */}
 					<div>
 						<input
 							placeholder="Monster Entry...."
