@@ -4,21 +4,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import InitiativeOrderAccordion from "./InitiativeOrderAccordion";
 
-export default function InitiativeOrderCard({age, name, ac, fortitudeSave, willSave, reflexSave, hp}) {
+export default function InitiativeOrderCard() {
   return (
     <>
       <React.Fragment>
         <CssBaseline />
         <Card sx={{ minWidth: 275, backgroundColor: "lightblue" }}>
           <CardContent>
-            <InitiativeOrderAccordion 
-            age={age} 
-            name={name} 
-            ac={ac} 
-            fortitudeSave={fortitudeSave}
-            willSave={willSave}
-            reflexSave={reflexSave}
-            hp={hp}/>
+            <InitiativeOrderAccordion />
           </CardContent>
         </Card>
       </React.Fragment>
