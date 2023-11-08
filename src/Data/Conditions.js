@@ -70,19 +70,6 @@ export const Conditions = [
         ]
     },
     {
-        name: 'concealed',
-        definition: 'While you are concealed from a creature, such as in a thick fog, you are difficult for that creature to see. You can still be observed, but youre tougher to target. A creature that youre concealed from must succeed at a DC 5 flat check when targeting you with an attack, spell, or other effect. Area effects arent subject to this flat check. If the check fails, the attack, spell, or effect doesnt affect you.',
-        conditionEffects: [
-            {
-                stage: 1,
-                acEffect: null,
-                fortitudeEffect: null,
-                willEffect: null,
-                reflexEffect: null,
-            }
-        ]
-    },
-    {
         name: 'confused',
         definition: `You dont have your wits about you, and you attack wildly.
         You are flat-footed, you dont treat anyone as your ally (though they might still treat you as theirs), and you cant Delay, Ready, or use reactions. 
@@ -165,21 +152,21 @@ export const Conditions = [
             {
                 stage: 1,
                 acEffect: -1,
-                fortitudeEffect: null,
+                fortitudeEffect: -1,
                 willEffect: null,
                 reflexEffect: null,
             },
             {
                 stage: 2,
                 acEffect: -2,
-                fortitudeEffect: null,
+                fortitudeEffect: -2,
                 willEffect: null,
                 reflexEffect: null,
             },
             {
                 stage: 3,
                 acEffect: -3,
-                fortitudeEffect: null,
+                fortitudeEffect: -3,
                 willEffect: null,
                 reflexEffect: null,
             }
@@ -558,6 +545,20 @@ export const Conditions = [
                 willEffect: null,
                 reflexEffect: null,
             },
+            {
+                stage: 2,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: null,
+                reflexEffect: null,
+            },
+            {
+                stage: 3,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: null,
+                reflexEffect: null,
+            },
         ]
     },
     {
@@ -592,6 +593,13 @@ export const Conditions = [
                 willEffect: null,
                 reflexEffect: null,
             },
+            {
+                stage: 4,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: null,
+                reflexEffect: null,
+            },
             
         ]
     },
@@ -604,7 +612,28 @@ export const Conditions = [
                 stage: 1,
                 acEffect: null,
                 fortitudeEffect: null,
-                willEffect: null,
+                willEffect: -1,
+                reflexEffect: null,
+            },
+            {
+                stage: 2,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: -2,
+                reflexEffect: null,
+            },
+            {
+                stage: 3,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: -3,
+                reflexEffect: null,
+            },
+            {
+                stage: 4,
+                acEffect: null,
+                fortitudeEffect: null,
+                willEffect: -4,
                 reflexEffect: null,
             },
         ]

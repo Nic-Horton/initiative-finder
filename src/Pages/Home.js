@@ -176,7 +176,7 @@ export default function Home() {
 
       <div
         style={{
-          backgroundImage: `url('https://lh3.googleusercontent.com/pw/ADCreHfliqgS5LvWrAE8YV_KPcMaTMM9O6287ACwbizo8pnsZbnksv8jhwe5Qk6IXTzJ0LSRwn9VJ6xku4qWQUyP4ni2U2V2tbS77IWHQR05QA-FdkYFDpFU1-7Y1n0zbcn4iptkhqf9sEktIKjvxO9Jagu5MQDI7c1AyGMIwp-C2amAKpgClSylUNNKs0jJ7geimpwbXGttrapz1Id7THAJENdAajkOp1Po4K--rSlwXrEb5tQMdIHsm7-sAkgLQ8rln273gP6_WXKD28On1k9EFMmDSr6A6WR0rtE5ag_eWs6B2sZjDH2UxuzF7TrEkWiYhiSZRVji-dn3UPTZzVU_x1Jnrr-Ag3tqjWLbss93hGD8icsF21rZUD4DBMetolvT_FsOKEKW3aVx1uKRLphYkY0VbkEHD4CWoBXSoe2jkAvO1X4-2ln8w87_y7bvmGVjFZ7SDXfVPaaHwah9ZHtsXF1ukxfOeF025hqzuCQzYOHMCrwB298i9Al8eoaHUSzFWBsfF62eWX4DeGKhTzOKf2sLc9WLV4TOB7nR7vUbxPXWYBMFSA5JPaU2OqGxBj8chiRC4-_j3C9iQqve32s56_mU5006Tp9tPHPjzu9AweBda3IJ8cSvTIyXMEcImP56zX06uQyqP8vKMdga5JxO0r2rxhrwgEKyPqtJfthiCs7CtWBJ1LY78J4gWSHJWuFLcQ6CutWHNGwTx8l8PqASHfMlp5g5zI2MUvqeHDU0idPgvvz59Z8GaynsSdmCsRcVjLo3BM1VjnjmpOfMMNlTlCpOefrG-d81oo0GHXXWa4GeT2Fjps2_WFRWzd_4upQQpCHxcTO1XwRjsNmmafxELtaU1jhzvl62yOM-Adw3waPU9pj1eyLn4tPPGWWs_jW4bsTNgQZKNvTs1BnBmtiIYUccsjjVwOHa8Hq0k2ONiX2PwzG35hvwFjthntw=w1416-h1066-s-no?authuser=0')`,
+          backgroundImage: `url('https://slyflourish.com/images/printed_map.jpg')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

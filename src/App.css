@@ -43,3 +43,8 @@
         background-color: grey;
         margin-bottom: 10px;
 }
+
+.highlighted-card {
+  background-color: red; 
+  color: white; 
+}
