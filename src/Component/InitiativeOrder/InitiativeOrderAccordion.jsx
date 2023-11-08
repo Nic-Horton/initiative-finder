@@ -18,6 +18,7 @@ const accordionDrop = amber[500];
 export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
+  const [severityValues, setSeverityValues] = useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -32,6 +33,18 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
       setStatusValues([...statusValues, status]);
     }
   };
+
+  //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
+  const handleSeveritySelect = (severity) => {
+    if (severityValues.includes(severity)) {
+      setSeverityValues(
+        severityValues.filter((selectedSeverity) => selectedSeverity !== severity)
+      );
+    } else {
+      setSeverityValues([...severityValues, severity]);
+    }
+  };
+  // console.log(severityValues)
   return (
     <>
       <Accordion
@@ -62,15 +75,21 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Reflex</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{reflexSave}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {reflexSave}
+              </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Fort</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{fortitudeSave}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {fortitudeSave}
+              </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Will</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{willSave}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {willSave}
+              </Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
@@ -83,18 +102,23 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
                   <ConditionsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
-                    statusColor="Conditions"
+                    severityValues={severityValues}
+                    handleSeveritySelect={handleSeveritySelect}
                   />
                 </Grid>
                 <Grid item xs={3}>
                   <BuffsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
-                    statusColor="Buffs"
+                    severityValues={severityValues}
+                    handleSeveritySelect={handleSeveritySelect}
                   />
                 </Grid>
                 <Grid item xs={3}>
-                  <StatusButton statusValues={statusValues} />
+                  <StatusButton
+                    statusValues={statusValues}
+                    severityValues={severityValues}
+                  />
                 </Grid>
               </Grid>
             </Grid>
