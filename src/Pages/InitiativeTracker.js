@@ -20,11 +20,19 @@ function InitiativeTracker() {
 				<Main open={open}>
 					<Grid container spacing={2}>
 						<Grid item xs={12} lg>
-							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker</Paper>
+							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+								Dropdown selector and Save Tracker session button here
+							</Paper>
+							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+								Start/End button and round tracker here
+							</Paper>
+							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Paper>
 							<InitiativeOrderCard />
 						</Grid>
 						<Grid item xs>
-							<Paper sx={{ backgroundColor: 'green' }}>Character Details</Paper>
+							<Paper sx={{ backgroundColor: 'lightgreen' }}>
+								Combatant Details
+							</Paper>
 							<CombatantCard />
 						</Grid>
 					</Grid>

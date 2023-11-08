@@ -128,7 +128,7 @@ export default function Home() {
                   marginLeft: "auto",
                   marginRight: "auto",
                   border: 1,
-                  borderRadius: 2,
+                  borderRadius: 5,
                   marginBottom:25,
                   backgroundColor: "rgba(0,0,0,0.7)",
                 }}
