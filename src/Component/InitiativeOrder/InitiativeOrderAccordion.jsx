@@ -15,7 +15,7 @@ import { lightBlue } from "@mui/material/colors";
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
 
-export default function InitiativeOrderAccordion({name, AC, fortitudeSave, reflexSave, willSave}) {
+export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
@@ -69,6 +69,7 @@ export default function InitiativeOrderAccordion({name, AC, fortitudeSave, refle
           />
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
             Character Constitution
+            {name}
           </Typography>
           {/* Character Points */}
           <Grid container alignItems="center">
@@ -78,7 +79,7 @@ export default function InitiativeOrderAccordion({name, AC, fortitudeSave, refle
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>AC</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{AC}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>{ac}</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Reflex</Typography>
