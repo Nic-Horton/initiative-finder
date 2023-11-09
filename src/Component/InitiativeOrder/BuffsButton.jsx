@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import SeverityLevelDropdown from "./SeverityLevelDropdown";
+import SeverityLevelRadio from "./SeverityLevelRadio";
 import FlareIcon from "@mui/icons-material/Flare";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Buffs } from "../../Data/Buffs";
@@ -26,10 +26,16 @@ const BlueSwitch = styled(Switch)(({ theme }) => ({
 }));
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-export default function BuffsButton({ statusValues, handleStatusToggle }) {
+export default function BuffsButton({
+  statusValues,
+  handleStatusToggle,
+  severityValues,
+  handleSeveritySelect,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [ buffs, setBuffs ] = React.useState(Buffs);
 
   return (
     <div>
@@ -66,10 +72,15 @@ export default function BuffsButton({ statusValues, handleStatusToggle }) {
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={5} columns={8}>
                 {/* Conditions mapping */}
-                {Buffs.map((buff, index) => (
+                {buffs.map((buff, index) => (
                   <Grid item xs={4} sm={4} md={4} key={index}>
                     {buff.name}
-                    <SeverityLevelDropdown />
+                    <SeverityLevelRadio
+                      name={ buff.name }
+                      handleSeveritySelect={handleSeveritySelect}
+                      modifiers={buff}
+                      // setModifier={setBuffs}
+                    />
                     <BlueSwitch
                       {...label}
                       checked={statusValues.includes(buff.name)}

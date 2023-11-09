@@ -6,121 +6,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Main } from '../Component/Initiative Drawer/Drawer';
 import SearchDrawer from '../Component/Initiative Drawer/Drawer';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import InitiativeOrderCard from '../Component/InitiativeOrder/InitiativeOrderCard';
 import CombatantCard from '../Component/InititiativeDescription/CombatantCard';
-import BattleList from '../Component/InitiativeOrder/BattleList';
-import { Auth } from '../Component/Auth';
-import { db, auth } from '../Config/firebase-config';
-import {
-	getDocs,
-	collection,
-	addDoc,
-	getDoc,
-	deleteDoc,
-	doc,
-	updateDoc,
-	collectionGroup,
-	where,
-	query,
-} from 'firebase/firestore';
-const battleListCollectionRef = collection(db, 'battleList');
 
 function InitiativeTracker() {
-	// const searchTitle = 'test'
-	const [battleListTitle, setBattleListTitle] = useState('');
 	const [open, setOpen] = useState(true);
-	const [unitsData, setUnitsData] = useState()
-	const battleListRef = collection(db, 'battleList')
-	const [highlightedIndex, setHighlightedIndex] = useState(0);
-	const [battleLists, setBattleLists] = useState([])
 
-	const nextCard = () => {
-		if (highlightedIndex < unitsData.length - 1) {
-			setHighlightedIndex(highlightedIndex + 1);
-			console.log('Next card clicked. Highlighted Index:', highlightedIndex + 1);
-		}
-	};
-
-	const prevCard = () => {
-		if (highlightedIndex > 0) {
-			setHighlightedIndex(highlightedIndex - 1);
-			console.log('Previous card clicked. Highlighted Index:', highlightedIndex - 1);
-		}
-	};
-	// const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				// const battleListCollectionRef = collection(db, 'battleList');
-
-				// if (battleListTitle) {
-				// 	// If a title is provided, execute the query with the title filter
-				// 	const battleListQuery = query(battleListCollectionRef, where('title', '==', battleListTitle));
-				// 	const battleListQuerySnapshot = await getDocs(battleListQuery);
-				// 	setBattleLists(getFormattedData(battleListQuerySnapshot));
-				// 	setUnitsData(getUnitsData(battleListQuerySnapshot));
-				// } else {
-					// If no title is provided, fetch all battle lists
-					const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
-					setBattleLists(getFormattedData(battleListQuerySnapshot));
-				// }
-			} catch (error) {
-				console.error('Error fetching data:', error);
-			}
-		};
-
-		// Helper function to format battle list data
-		const getFormattedData = (querySnapshot) => {
-			const lists = [];
-			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				lists.push({
-					id: doc.id,
-					title: data.title,
-					// Add other fields as needed
-				});
-			});
-			return lists;
-		};
-
-		// Helper function to get units data
-		const getUnitsData = (querySnapshot) => {
-			const units = [];
-			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				if ('units' in data && Array.isArray(data.units)) {
-					units.push(data.units);
-				}
-			});
-			return units;
-		};
-
-		// Execute the fetchData function when the component mounts
-		fetchData();
-	}, []);
-
-	
-	const handleChangeBattleList = async (event) => {
-		setBattleListTitle(event.target.value);
-				// If a title is provided, execute the query with the title filter
-				
-				const getUnitsData = (querySnapshot) => {
-					const units = [];
-					querySnapshot.forEach((doc) => {
-						const data = doc.data();
-						if ('units' in data && Array.isArray(data.units)) {
-							units.push(data.units);
-						}
-					});
-					return units;
-				};
-				const battleListQuery = query(battleListCollectionRef, where('title', '==', battleListTitle));
-				const battleListQuerySnapshot = await getDocs(battleListQuery);
-				setUnitsData(getUnitsData(battleListQuerySnapshot));
-			}
-	;
-	
 	return (
 		<>
 			<Box sx={{ display: 'flex' }}>
@@ -130,27 +21,13 @@ function InitiativeTracker() {
 					<Grid container spacing={2}>
 						<Grid item xs={12} lg>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								<BattleList handleChangeBattleList={handleChangeBattleList} battleLists={battleLists} setBattleListTitle={setBattleListTitle} battleListTitle={battleListTitle} />
+								Dropdown selector and Save Tracker session button here
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								<button onClick={prevCard}>Previous</button>
-								<button onClick={nextCard}>Next</button>
+								Start/End button and round tracker here
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Paper>
-							{unitsData?.map((unitsList) =>
-								unitsList?.map((unit, index) => (
-									<InitiativeOrderCard
-										key={index}
-										name={unit.name}
-										ac={unit.AC}
-										fortitudeSave={unit.fortitudeSave}
-										willSave={unit.willSave}
-										reflexSave={unit.reflexSave}
-										hp={unit.hp}
-										className={index === highlightedIndex ? 'highlighted-card' : ''}
-									/>
-								))
-							)}
+							<InitiativeOrderCard />
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'lightgreen' }}>

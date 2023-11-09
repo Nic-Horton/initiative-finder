@@ -14,6 +14,7 @@ import {
 	query,
 } from 'firebase/firestore';
 import BattleList from '../Component/InitiativeOrder/BattleList';
+import InitiativeOrderCard from './InitiativeOrder/InitiativeOrderCard';
 import InitiativeOrderAccordion from './InitiativeOrder/InitiativeOrderAccordion';
 
 function Crud() {
@@ -97,7 +98,6 @@ function Crud() {
 
 	const [battleListData, setBattleListData] = useState([]); // Initialize state variable for data
 	const [unitsData, setUnitsData] = useState([])
-	const [battleListId, setBattleListId] = useState(null)
 	const searchTitle = 'test'
 	useEffect(() => {
 		const fetchUnitsData = async () => {
@@ -111,7 +111,6 @@ function Crud() {
 				// Execute the query to get matching documents
 				const battleListQuerySnapshot = await getDocs(battleListQuery);
 
-				
 				// Create an array to store the fetched units data
 				const units = [];
 
@@ -120,9 +119,7 @@ function Crud() {
 					const battleListData = battleListDoc.data();
 					// Check if the document has an 'units' field
 					if ('units' in battleListData && Array.isArray(battleListData.units)) {
-						units.push({units:battleListData.units,
-									id: battleListData.id
-						});
+						units.push(battleListData.units);
 					}
 				});
 
@@ -137,37 +134,7 @@ function Crud() {
 		// Execute the fetchUnitsData function when the component mounts
 		fetchUnitsData();
 	}, [])
-	
-	const deleteUnit = async (documentId, unitToDelete) => {
-		try {
-		  // Reference to the specific document containing the units
-		  const battleListDocumentRef = doc(db, 'battleList', documentId);
-	
-		  // Fetch the current data of the document
-		  const battleListDocumentSnapshot = await getDoc(battleListDocumentRef);
-	
-		  if (battleListDocumentSnapshot.exists()) {
-			const battleListData = battleListDocumentSnapshot.data();
-	
-			// Check if the document has an 'units' field and it's an array
-			if ('units' in battleListData && Array.isArray(battleListData.units)) {
-			  // Remove the unit to delete from the 'units' array
-			  const updatedUnits = battleListData.units.filter(unit => unit !== unitToDelete);
-	
-			  // Update the document with the new 'units' array
-			  await updateDoc(battleListDocumentRef, {
-				units: updatedUnits,
-			  });
-	
-			  // If you want to update the state to reflect the change, you can call the fetchUnitsData function again
-			  // fetchUnitsData();
-			}
-		  }
-		} catch (error) {
-		  console.error('Error deleting unit:', error);
-		}
-	  };
-	
+
 
 
 	// useEffect(() => {

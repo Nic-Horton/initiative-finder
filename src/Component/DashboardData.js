@@ -73,10 +73,6 @@ export default function DashboardData() {
         setOpenStates(updatedOpenStates);
     };
 
-    const deleteEntry = async (id) => {
-		const monsterDoc = doc(db, tabValue, id);
-		await deleteDoc(monsterDoc);
-	};
     return (
         <div className="dashboardData">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -113,7 +109,6 @@ export default function DashboardData() {
                                 onClick={() => handleOpen(index)}
                             />
                             <Button
-                                onClick={() => deleteEntry(monster.id)}
                                 variant="outlined"
                                 startIcon={<DeleteForeverTwoToneIcon />}
                             />

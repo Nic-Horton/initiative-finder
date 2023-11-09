@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function CombatantCard({name, ac, fortitudeSave, willSave, reflexSave, hp, conditions}) {
+function CombatantCard() {
   return (
     <Card sx={{ minWidth: 275, backgroundColor:'lightgreen' }}>
       <CardContent>
