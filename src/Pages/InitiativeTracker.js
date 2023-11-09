@@ -120,7 +120,7 @@ function InitiativeTracker() {
 		};
 		const battleListQuery = query(
 			battleListCollectionRef,
-			where('title', '==', battleListTitle)
+			where('title', '==', event.target.value)
 		);
 		const battleListQuerySnapshot = await getDocs(battleListQuery);
 		setUnitsData(getUnitsData(battleListQuerySnapshot));
