@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import StatusEntry from "./StatusEntry";
 
 export default function StatusButton({ statusValues, severityValues }) {
   const [open, setOpen] = React.useState(false);
@@ -49,9 +50,12 @@ export default function StatusButton({ statusValues, severityValues }) {
                 <div>No status effects selected.</div>
               ) : (
                 statusValues.map((status, index) => (
-                  <div key={index}>
-                    {status} stage {severityValues[index]}
-                  </div>
+                  <StatusEntry
+                    key={index}
+                    status={status}
+                    severityValues={severityValues}
+                    index={index}
+                  />
                 ))
               )}
             </Typography>

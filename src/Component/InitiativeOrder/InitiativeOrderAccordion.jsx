@@ -36,15 +36,22 @@ export default function InitiativeOrderAccordion({name, AC, fortitudeSave, refle
 
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
-    if (severityValues.includes(severity)) {
-      setSeverityValues(
-        severityValues.filter((selectedSeverity) => selectedSeverity !== severity)
-      );
+    const findSeverity = severityValues.find(item => item.name === severity.name);
+    
+  if (findSeverity) {
+    const updatedSeverityValues = severityValues.map(item =>
+      item.name === severity.name ? { ...item, stage: severity.stage } : item
+    );
+    setSeverityValues(updatedSeverityValues);
     } else {
       setSeverityValues([...severityValues, severity]);
     }
   };
-  // console.log(severityValues)
+
+
+  
+  
+  console.log(severityValues)
   return (
     <>
       <Accordion

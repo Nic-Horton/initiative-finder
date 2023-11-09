@@ -30,7 +30,7 @@ export default function ConditionsButton({ statusValues, handleStatusToggle, han
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const [ conditions, setConditions ] = React.useState(Conditions);
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -68,11 +68,15 @@ export default function ConditionsButton({ statusValues, handleStatusToggle, han
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={2} columns={12}>
                 {/* Conditions mapping */}
-                {Conditions.map((condition, index) => (
+                {conditions.map((condition, index) => (
                   <Grid item xs={5} sm={5} md={5} key={index}>
                     {condition.name}
                     <SeverityLevelRadio
                       handleSeveritySelect={handleSeveritySelect}
+                      name = {condition.name}
+                      stages = {condition.conditionEffects}
+                      modifiers = {condition}
+                      setModifiers={setConditions}
                     />
                     <RedSwitch
                       {...label}

@@ -35,6 +35,7 @@ export default function BuffsButton({
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [ buffs, setBuffs ] = React.useState(Buffs);
 
   return (
     <div>
@@ -71,12 +72,14 @@ export default function BuffsButton({
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={5} columns={8}>
                 {/* Conditions mapping */}
-                {Buffs.map((buff, index) => (
+                {buffs.map((buff, index) => (
                   <Grid item xs={4} sm={4} md={4} key={index}>
                     {buff.name}
                     <SeverityLevelRadio
-                      // checkSeverity={severityValues.includes()}
+                      name={ buff.name }
                       handleSeveritySelect={handleSeveritySelect}
+                      modifiers={buff}
+                      // setModifier={setBuffs}
                     />
                     <BlueSwitch
                       {...label}
