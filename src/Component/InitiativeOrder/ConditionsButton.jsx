@@ -6,7 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
+import Chip from "@mui/material/Chip";
 import SeverityLevelRadio from "./SeverityLevelRadio";
+import ModifierPopover from "./ModiferPopover";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Conditions } from "../../Data/Conditions";
@@ -26,11 +28,15 @@ const RedSwitch = styled(Switch)(({ theme }) => ({
 }));
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-export default function ConditionsButton({ statusValues, handleStatusToggle, handleSeveritySelect }) {
+export default function ConditionsButton({
+  statusValues,
+  handleStatusToggle,
+  handleSeveritySelect,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [ conditions, setConditions ] = React.useState(Conditions);
+  const [conditions, setConditions] = React.useState(Conditions);
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -70,12 +76,13 @@ export default function ConditionsButton({ statusValues, handleStatusToggle, han
                 {/* Conditions mapping */}
                 {conditions.map((condition, index) => (
                   <Grid item xs={5} sm={5} md={5} key={index}>
-                    {condition.name}
+                    {/* <Chip label={condition.name} color="error" /> */}
+                    <ModifierPopover condition={condition} type="condition" />
                     <SeverityLevelRadio
                       handleSeveritySelect={handleSeveritySelect}
-                      name = {condition.name}
-                      stages = {condition.conditionEffects}
-                      modifiers = {condition}
+                      name={condition.name}
+                      stages={condition.conditionEffects}
+                      modifiers={condition}
                       setModifiers={setConditions}
                     />
                     <RedSwitch
