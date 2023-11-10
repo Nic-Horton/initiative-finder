@@ -11,13 +11,13 @@ function CombatantCard({name, ac, fortitudeSave, willSave, reflexSave, hp, condi
           Combatant Details
         </Typography>
         <Typography variant="h5" component="div">
-          Combatant Name
+          Name : {name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Character or Monster
         </Typography>
         <Typography variant="body2">
-          Stat List
+          ac: {ac} fortSave: {fortitudeSave}, willSave: {willSave}, reflexSave: {reflexSave}, hp: {hp},
         </Typography>
         <br />
         <Typography variant="body2">

@@ -8,7 +8,12 @@ import SearchDrawer from '../Component/Initiative Drawer/Drawer';
 import { useState, useEffect } from 'react';
 import InitiativeOrderCard from '../Component/InitiativeOrder/InitiativeOrderCard';
 import CombatantCard from '../Component/InititiativeDescription/CombatantCard';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
 import BattleList from '../Component/InitiativeOrder/BattleList';
+import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
 import { db, auth } from '../Config/firebase-config';
 import {
@@ -30,28 +35,40 @@ function InitiativeTracker() {
 	const [open, setOpen] = useState(true);
 	const [unitsData, setUnitsData] = useState();
 	const battleListRef = collection(db, 'battleList');
-	const [highlightedIndex, setHighlightedIndex] = useState(0);
 	const [battleLists, setBattleLists] = useState([]);
+	const [selectedArray,setSelectedArray]=useState([])
+	const [selectedUnit, setSelectedUnit] =useState(false)
+	
+	//Combatant info that gets passed in when selecting more info on the character
+	const [combatantAC, setCombatantAC] = useState(null)
+	const [combatantInitiative, setCombatantInitiative] = useState(null)
+	const [combatantName, setCombatantName] = useState(null)
+	const [combatantHp, setCombatantHp] = useState(null)
+	const [combatantReflexSave, setCombatantReflexSave] = useState(null)
+	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null)
+	const [combatantWillSave, setCombatantWillSave] = useState(null)
+	
 
-	const nextCard = () => {
-		if (highlightedIndex < unitsData.length - 1) {
-			setHighlightedIndex(highlightedIndex + 1);
-			console.log(
-				'Next card clicked. Highlighted Index:',
-				highlightedIndex + 1
-			);
-		}
-	};
+	// const [activeStep, setActiveStep] = React.useState(0);
 
-	const prevCard = () => {
-		if (highlightedIndex > 0) {
-			setHighlightedIndex(highlightedIndex - 1);
-			console.log(
-				'Previous card clicked. Highlighted Index:',
-				highlightedIndex - 1
-			);
-		}
-	};
+	// const handleNext = () => {
+	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	// };
+  
+	// const handleBack = () => {
+	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	// };
+  
+	
+
+const handleSelectedCard=(i)=>{
+const tempArray =[...selectedArray]
+if(tempArray[i]==i){tempArray[i]=undefined}
+else {tempArray[i]=i}
+console.log(selectedArray)
+setSelectedArray(tempArray)
+}
+
 	// const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
 	useEffect(() => {
 		const fetchData = async () => {
@@ -133,7 +150,7 @@ function InitiativeTracker() {
 				<SearchDrawer open={open} setOpen={setOpen} />
 				<Main open={open}>
 					<Grid container spacing={2}>
-						<Grid item xs={12} lg>
+						<Grid item xs={12} lg >
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
 								<BattleList
 									handleChangeBattleList={handleChangeBattleList}
@@ -143,12 +160,14 @@ function InitiativeTracker() {
 								/>
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								<button onClick={prevCard}>Previous</button>
-								<button onClick={nextCard}>Next</button>
+								{/* <Button onClick={prevCard}>Previous</Button>
+								<Button onClick={nextCard}>Next</Button> */}
 							</Paper>
-							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Paper>
+							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
+							
 							{unitsData?.map((unitsList) =>
 								unitsList?.map((unit, index) => (
+									
 									<InitiativeOrderCard
 										key={index}
 										name={unit.name}
@@ -157,9 +176,15 @@ function InitiativeTracker() {
 										willSave={unit.willSave}
 										reflexSave={unit.reflexSave}
 										hp={unit.hp}
-										className={
-											index === highlightedIndex ? 'highlighted-card' : ''
-										}
+										setCombatantInitiative={setCombatantInitiative}
+										setCombatantHp={setCombatantHp}
+										setCombatantName={setCombatantName}
+										setCombatantAC={setCombatantAC}
+										setCombatantFortitudeSave={setCombatantFortitudeSave}
+										setCombatantReflexSave={setCombatantReflexSave}
+										setCombatantWillSave={setCombatantWillSave}
+										setSelectedUnit={setSelectedUnit}
+										selectedUnit={selectedUnit}
 									/>
 								))
 							)}
@@ -168,7 +193,15 @@ function InitiativeTracker() {
 							<Paper sx={{ backgroundColor: 'lightgreen' }}>
 								Combatant Details
 							</Paper>
-							<CombatantCard />
+							<CombatantCard 
+							name={combatantName}
+							ac={combatantAC}
+							hp={combatantHp}
+							initiative={combatantInitiative}
+							fortitudeSave={combatantFortitudeSave}
+							reflexSave={combatantReflexSave}
+							willSave={combatantWillSave}
+							/>
 						</Grid>
 					</Grid>
 				</Main>

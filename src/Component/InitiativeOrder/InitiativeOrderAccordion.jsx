@@ -11,11 +11,12 @@ import BuffsButton from "./BuffsButton";
 import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
+import Button from '@mui/material/Button';
 
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
 
-export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp}) {
+export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp, setCombatantAC, setCombatantName, setCombatantFortitudeSave, setCombatantReflexSave, setCombatantInitiative, setCombatantWillSave,setCombatantHp,setSelectedUnit, selectedUnit}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
@@ -48,7 +49,31 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
     }
   };
 
+    
+  const setCombatantDetails = () => {
 
+    setCombatantAC(ac)
+    setCombatantHp(hp)
+    setCombatantName(name)
+    setCombatantFortitudeSave(fortitudeSave)
+    setCombatantInitiative(0)
+    setCombatantReflexSave(reflexSave)
+    setCombatantWillSave(willSave)
+    setSelectedUnit(true)
+
+  }
+
+  const clearCombatantDetails = () => {
+    setCombatantAC('')
+    setCombatantHp('')
+    setCombatantName('')
+    setCombatantFortitudeSave('')
+    setCombatantInitiative(0)
+    setCombatantReflexSave('')
+    setCombatantWillSave('')
+    setSelectedUnit('')
+
+  }
   
   
   console.log(severityValues)
@@ -57,7 +82,8 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
-        sx={{ backgroundColor: accordionTop }}
+        onClick={() => (!expanded ? setCombatantDetails() : clearCombatantDetails)}
+        sx={{ backgroundColor: !expanded  ? accordionTop : 'yellow' }}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -98,6 +124,7 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
               <Typography sx={{ color: "text.secondary" }}>
                 {willSave}
               </Typography>
+              <Button > Adjust</Button>
             </Grid>
           </Grid>
         </AccordionSummary>
