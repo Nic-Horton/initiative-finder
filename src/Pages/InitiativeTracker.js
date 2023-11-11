@@ -15,6 +15,9 @@ import StepContent from '@mui/material/StepContent';
 import BattleList from '../Component/InitiativeOrder/BattleList';
 import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
+import Navbar from '../Component/Navbar';
+import { Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { db, auth } from '../Config/firebase-config';
 import {
 	getDocs,
