@@ -86,7 +86,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 
-function SearchDrawer({ open, setOpen }) {
+function SearchDrawer({addUnitsToBattle, open, setOpen }) {
 	const [category, setCategory] = useState('characters');
 
 	const handleTabChange = (event, newCategory) => {
@@ -164,7 +164,7 @@ function SearchDrawer({ open, setOpen }) {
 				</Box>
 				<Divider />
 				<Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
-					<SearchBar category={category} />
+					<SearchBar category={category} addUnitsToBattle={addUnitsToBattle}/>
 				</Box>
 			</Drawer>
 		</>

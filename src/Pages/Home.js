@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Avatar, Card, Container, tableBodyClasses } from "@mui/material";
@@ -6,68 +7,78 @@ import CardContent from "@mui/material/CardContent";
 import { Grid } from "@mui/material";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
+import StepButton from "@mui/material/StepButton";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
+import Button from "@mui/material/Button/";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
+import Navbar from "../Component/Navbar";
+import { useState } from "react";
+import AppSteps from "../Component/Stepper";
 
 const steps = [
-  "Select Campaign",
-  "Create Characters or Monsters",
-  "Add to Initiative Tracker",
-  "Roll Initiative!",
+	'Select Campaign',
+	'Create Characters or Monsters',
+	'Add to Initiative Tracker',
+	'Roll Initiative!',
 ];
 export default function Home() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
-
-  const isStepOptional = (step) => {
-    return step === 1;
+  const [activeStep, setActiveStep] = useState(0);
+  const [completed, setCompleted] = useState([]);
+  
+  const totalSteps = () => {
+    return steps.length;
   };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
+  const completedSteps = () => {
+    return Object.keys(completed).length;
+  };
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1;
+  };
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps();
   };
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
+    let newActiveStep;
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    if (isLastStep() && !allStepsCompleted()) {
+      newActiveStep = steps.findIndex((step, i) => !completed.includes(i));
+    } else {
+      newActiveStep = activeStep + 1;
+    }
+  
+    setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	const handleBack = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	};
+
+
+  const handleStep = (step: number) => () => {
+    setActiveStep(step);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
+  const handleComplete = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    handleNext();
   };
 
   const handleReset = () => {
     setActiveStep(0);
+    setCompleted({});
   };
 
-  function handleLearnMoreClick () {
-    alert("add github link here")
-  }
+
   return (
     <>
+    <Navbar />
       <div
         style={{
           backgroundImage: `url('https://w.wallhaven.cc/full/ox/wallhaven-oxq529.jpg')`,
@@ -81,62 +92,31 @@ export default function Home() {
       >
         <Grid container direction="column" alignItems="center" justify="center">
           <Grid item>
-            {/* <img
-              src="https://foundryvtt.s3.us-west-2.amazonaws.com/website-media-dev/user_671/asset/pathfinder-second-edition-system-logo-2023-01-20.webp"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "25vh",
-                width: "80vh",
-                marginTop:50,
-                
-              }}
-              alt="pathfinder logo"
-            ></img> */}
-          </Grid>
-        </Grid>
+					</Grid>
+				</Grid>
 
-        {/* <Box>
-        <Container sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignh1s: "flex-start",
-            
-          }}>
-            <h1>"hello" </h1></Container>
-            <Container sx={{
-                display: "flex",
-                flexDirection:"row",
-              }}><h2>"goodbye"</h2></Container>
-              <Grid xs={8}><h1>"Hello"</h1> </Grid> */}
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid
-            container
-            direction="row"
-            alignItems="flex-start"
-            columns={16}
-          >
+				<Box sx={{ flexGrow: 1 }}>
+					<Grid container direction="row" alignItems="flex-start" columns={16}>
+						<Typography
+							sx={{
+								textAlign: 'center',
+								marginTop: 10,
+								color: 'white',
+								maxWidth: 1000,
+								width: 800,
+								marginLeft: 'auto',
+								marginRight: 'auto',
+								border: 1,
+								borderRadius: 5,
+								marginBottom: 25,
+								backgroundColor: 'rgba(0,0,0,0.7)',
+							}}
+							variant="h1"
+							gutterBottom
+						>
+							Initiative Finder
+						</Typography>
 
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  marginTop: 10,
-                  color: "white",
-                  maxWidth: 1000,
-                  width:800,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  border: 1,
-                  borderRadius: 2,
-                  marginBottom:25,
-                  backgroundColor: "rgba(0,0,0,0.7)",
-                }}
-                variant="h1"
-                gutterBottom
-              >
-                Initiative Finder
-              </Typography>
 
             <Grid
               item
@@ -163,6 +143,7 @@ export default function Home() {
               >
                 Dive into the immersive world of Golarion with confidence and precision using the "Initiative Finder" app- the digital browser-based companion for Game Masters. Whether you're navigating a treacherous dungeon, facing off against fearsome foes, or weaving intricate tales of heroism with your friends, this app is your key to mastering the art of monster and character management in the thrilling and ever changing realm of Pathfinder 2nd Edition.
               </Typography>
+              
             </Grid>
           </Grid>
           
@@ -173,10 +154,12 @@ export default function Home() {
         </Button>
         </Box>
       </div>
-
+<div>
+  
+</div>
       <div
         style={{
-          backgroundImage: `url('https://lh3.googleusercontent.com/pw/ADCreHfliqgS5LvWrAE8YV_KPcMaTMM9O6287ACwbizo8pnsZbnksv8jhwe5Qk6IXTzJ0LSRwn9VJ6xku4qWQUyP4ni2U2V2tbS77IWHQR05QA-FdkYFDpFU1-7Y1n0zbcn4iptkhqf9sEktIKjvxO9Jagu5MQDI7c1AyGMIwp-C2amAKpgClSylUNNKs0jJ7geimpwbXGttrapz1Id7THAJENdAajkOp1Po4K--rSlwXrEb5tQMdIHsm7-sAkgLQ8rln273gP6_WXKD28On1k9EFMmDSr6A6WR0rtE5ag_eWs6B2sZjDH2UxuzF7TrEkWiYhiSZRVji-dn3UPTZzVU_x1Jnrr-Ag3tqjWLbss93hGD8icsF21rZUD4DBMetolvT_FsOKEKW3aVx1uKRLphYkY0VbkEHD4CWoBXSoe2jkAvO1X4-2ln8w87_y7bvmGVjFZ7SDXfVPaaHwah9ZHtsXF1ukxfOeF025hqzuCQzYOHMCrwB298i9Al8eoaHUSzFWBsfF62eWX4DeGKhTzOKf2sLc9WLV4TOB7nR7vUbxPXWYBMFSA5JPaU2OqGxBj8chiRC4-_j3C9iQqve32s56_mU5006Tp9tPHPjzu9AweBda3IJ8cSvTIyXMEcImP56zX06uQyqP8vKMdga5JxO0r2rxhrwgEKyPqtJfthiCs7CtWBJ1LY78J4gWSHJWuFLcQ6CutWHNGwTx8l8PqASHfMlp5g5zI2MUvqeHDU0idPgvvz59Z8GaynsSdmCsRcVjLo3BM1VjnjmpOfMMNlTlCpOefrG-d81oo0GHXXWa4GeT2Fjps2_WFRWzd_4upQQpCHxcTO1XwRjsNmmafxELtaU1jhzvl62yOM-Adw3waPU9pj1eyLn4tPPGWWs_jW4bsTNgQZKNvTs1BnBmtiIYUccsjjVwOHa8Hq0k2ONiX2PwzG35hvwFjthntw=w1416-h1066-s-no?authuser=0')`,
+          backgroundImage: `url('https://slyflourish.com/images/printed_map.jpg')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -184,87 +167,74 @@ export default function Home() {
           width: "100%",
         }}
       >
-        <Box
-          sx={{
-            color: "white",
-          }}
-        >
-          <h1
-            style={{
-              marginTop: 20,
-              textAlign: "center",
-              backgroundColor: "rgba(0,0,0,0.7)",
-              color: "#cfe8fc",
-            }}
-          >
-            How does it work?
-          </h1>
-          {/* rename to how to use? */}
-          <Container>
-            <Box sx={{ color: "white", width: "100%" }}>
-              <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-                  if (isStepOptional(index)) {
-                    labelProps.optional = (
-                      <Typography variant="caption">Optional</Typography>
-                    );
-                  }
-                  if (isStepSkipped(index)) {
-                    stepProps.completed = false;
-                  }
-                  return (
-                    <Step style={{ color: "white" }} key={label} {...stepProps}>
-                      <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    <Button onClick={handleReset}>Reset</Button>
-                  </Box>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    Step {activeStep + 1}
-                  </Typography>
-                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Button
-                      color="inherit"
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      sx={{ mr: 1 }}
-                    >
-                      Back
-                    </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    {isStepOptional(activeStep) && (
-                      <Button
-                        color="inherit"
-                        onClick={handleSkip}
-                        sx={{ mr: 1 }}
-                      >
-                        Skip
-                      </Button>
-                    )}
 
-                    <Button onClick={handleNext}>
-                      {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                  </Box>
-                </React.Fragment>
-              )}
+<Box sx={{ width: '100%' }}>
+      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+        {steps.map((label, index) => (
+          <Step sx={{backgroundColor:"red", color:'blue'}}key={label} completed={completed[index]}>
+            <StepButton sx={{p:0,
+              backgroundColor:"rgb(38,50,56)", 
+              border:1,
+              borderRadius:2,
+              borderColor:'white',
+            }} 
+              onClick={handleStep(index)}>
+            <Typography variant="button" sx={{fontSize:'large', color: 'white' }}>
+      {label}
+    </Typography>
+            </StepButton>
+          </Step>
+        ))}
+      </Stepper>
+      <div>
+        {allStepsCompleted() ? (
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+              <Box sx={{ flex: '1 1 auto' }} />
+              <Button onClick={handleReset}>Reset</Button>
             </Box>
-          </Container>
-        </Box>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Typography sx={{ backgroundColor:'red',mt: 2, mb: 1, py: 1 }}>
+              Step {activeStep + 1}
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              <Box sx={{ flex: '1 1 auto' }} />
+              <Button 
+              disabled={activeStep === 4} 
+              onClick={handleNext} 
+              sx={{ mr: 1 }}>
+                Next
+              </Button>
+              {/* {activeStep !== steps.length &&
+                (completed[activeStep] ? (
+                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                    Step {activeStep + 1} already completed
+                  </Typography>
+                ) : (
+                  <Button onClick={handleComplete}>
+                    {completedSteps() === totalSteps() - 1
+                      ? 'Finish'
+                      : 'Complete Step'}
+                  </Button>
+                ))} */}
+            </Box>
+          </React.Fragment>
+        )}
+      </div>
+    </Box>
       </div>
       <div>
         <Typography
@@ -358,7 +328,6 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button onClick={handleLearnMoreClick}size="small">Learn More</Button>
               </CardActions>
             </Card>
           </Container>

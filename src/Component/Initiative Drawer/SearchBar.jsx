@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 import { getDocs, collection, doc, updateDoc } from 'firebase/firestore'
 import SearchList from './SearchList';
 
-const monsterCollectionRef = collection(db, 'Monsters')
-const characterCollectionRef = collection(db, 'Characters')
 
-function SearchBar({category}) {
+function SearchBar({addUnitsToBattle,category}) {
+  const uid = auth.currentUser.uid;
+  const monsterCollectionRef = collection(db,'Users', uid,'Monsters')
+  const characterCollectionRef = collection(db,'Users',uid, 'Characters')
   const [search,setSearch] = useState('');
 
   const [filteredList, setFilteredList] = useState([]);
@@ -67,6 +68,7 @@ function SearchBar({category}) {
 				sx={{width:'90%'}}
 			/>
       <SearchList
+        addUnitsToBattle={addUnitsToBattle}
         search={search} 
         category={category} 
         filteredList={filteredList} 

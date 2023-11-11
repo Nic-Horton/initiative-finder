@@ -56,7 +56,7 @@ function CombatantModal({handleClose, open, combatant}) {
           </Typography>
             <List >
               <ListItem sx={{px:0}}>
-                <ListItemText>{'Armor Class: ' + combatant.AC}</ListItemText>
+                <ListItemText>{'Armor Class: ' + combatant.ac}</ListItemText>
               </ListItem>
               <ListItem sx={{px:0}}>
                 <ListItemText>{'Fortitude Save: ' + combatant.fortitudeSave}</ListItemText>
