@@ -22,8 +22,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton'
-import AddBattleList from './AddBattleList';
 
 
 export default function BattleList({ battleLists, handleChangeBattleList, setBattleListTitle, battleListTitle }) {
@@ -31,36 +29,40 @@ export default function BattleList({ battleLists, handleChangeBattleList, setBat
     const unitsRef = doc(battleListRef, 'ENTER-MONSTER-ID');
     //const [battleListTitle, setBattleListTitle] = useState('');
 
-    
+    const onSubmitBattleList = async () => {
+        await addDoc(battleListRef, {
+            name: battleListTitle,
+            userId: auth?.currentUser?.uid,
+        });
+    };
 
     return (
         <>
             <Grid container >
-            <Grid item xs={12} lg={6}>
-                <AddBattleList/>
-                </Grid>
-                <Grid item xs={12} lg={6} >
-                
-                    <FormControl  sx={{display:'flex', flexDirection:'row'}}>
-                        <InputLabel id="battleList-select-label">Battles</InputLabel>
+                <Grid item xs={12}  sx={{display:'flex'}}>
+                    <FormControl fullWidth>
+                        <InputLabel id="battleList-select-label">Select BattleList</InputLabel>
                         <Select
                             labelId="battleList-select-label"
                             id="battleList-select"
                             value={battleListTitle}
                             label="Battle List"
                             onChange={handleChangeBattleList}
-                            variant='outlined'
-                            fullWidth
                         >
-                            {battleLists?.map((battle => {
-                                return <MenuItem key={battle.title} value={battle.title}>{battle.title}</MenuItem>
+                            {battleLists.map((battle => {
+                                return <MenuItem value={battle.title}>{battle.title}</MenuItem>
                             }))}
 
                         </Select>
-                        <IconButton><SaveIcon /></IconButton>
-                        <IconButton><DeleteIcon /></IconButton>
                     </FormControl>
-                    
+                    {/* <Stack direction="row" spacing={1} height={'100%'} > */}
+                        <Button variant="contained" size='large' startIcon={<SaveIcon />}>
+                            Save
+                        </Button>
+                        <Button variant="outlined" size='large' startIcon={<DeleteIcon />}>
+                            Delete
+                        </Button>
+                    {/* </Stack> */}
                 </Grid>
             </Grid>
         </>
