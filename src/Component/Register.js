@@ -40,16 +40,22 @@ export default function RegisterPage() {
 		);
 	};
 
+	const handleCancel = () => {
+		setAlertSeverity('error');
+		setAlertMessage('Critical Failure');
+		setShowAlert(true);
+		console.error('Error signing in:');
+		setTimeout(() => {
+			setOpen(false);
+			setShowAlert(false);
+		}, 3000);
+	};
+
 	const handleShowAlertClickO = () => setShowAlert(true);
 	const handleShowAlertClickC = () => setShowAlert(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
-	};
-
-	const handleCancel = () => {
-		setOpen(false);
-		alert('Critical Fail!');
 	};
 
 	const handleCloseReg = async () => {
@@ -59,19 +65,16 @@ export default function RegisterPage() {
 				email,
 				password
 			);
-
-			//creates user doc in firebase
 			const user = userCredential.user;
-			const userUID = user.uid;
-			const userDocRef = doc(db, 'Users', userUID);
-			await setDoc(userDocRef, { placeholder: null });
-
 			console.log('User Created!');
 			setAlertSeverity('success');
-			setAlertMessage('Critical Success! User Created!');
+			setAlertMessage(
+				'Critical Success! User Created! Please hold, while you are redirected'
+			);
 			setShowAlert(true);
 			setTimeout(() => {
 				setOpen(false);
+				window.location.href = '/dashboard';
 			}, 3000);
 		} catch (err) {
 			console.error(err);
@@ -84,17 +87,12 @@ export default function RegisterPage() {
 						email,
 						password
 					);
-
-					//creates user doc in firebase
 					const user = userCredential.user;
-					const userUID = user.uid;
-					const userDocRef = doc(db, 'Users', userUID);
-					await setDoc(userDocRef, { placeholder: null });
-
 					console.log('User created:', user);
 					setAlertSeverity('success');
 					setAlertMessage('Critical Success! User Created!');
 					setShowAlert(true);
+
 					setTimeout(() => {
 						setOpen(false);
 					}, 3000);
