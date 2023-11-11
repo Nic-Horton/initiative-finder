@@ -5,11 +5,9 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
 import Switch from "@mui/material/Switch";
 import SeverityLevelRadio from "./SeverityLevelRadio";
 import FlareIcon from "@mui/icons-material/Flare";
-import ModifierPopover from "./ModiferPopover";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Buffs } from "../../Data/Buffs";
 import { alpha } from "@mui/material/styles";
@@ -31,12 +29,14 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 export default function BuffsButton({
   statusValues,
   handleStatusToggle,
+  severityValues,
   handleSeveritySelect,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [buffs, setBuffs] = React.useState(Buffs);
+  const [ buffs, setBuffs ] = React.useState(Buffs);
+
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -74,10 +74,9 @@ export default function BuffsButton({
                 {/* Conditions mapping */}
                 {buffs.map((buff, index) => (
                   <Grid item xs={4} sm={4} md={4} key={index}>
-                    {/* <Chip label={buff.name} color="primary" /> */}
-                    <ModifierPopover buff={buff} type="buff"/>
+                    {buff.name}
                     <SeverityLevelRadio
-                      name={buff.name}
+                      name={ buff.name }
                       handleSeveritySelect={handleSeveritySelect}
                       modifiers={buff}
                       // setModifier={setBuffs}
