@@ -6,15 +6,18 @@ import Grid from '@mui/material/Grid'
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton'
-import { db } from '../../Config/firebase-config'
+import { db,auth } from '../../Config/firebase-config'
 import {
   collection,
   addDoc,
   doc,
 } from 'firebase/firestore';
-const battleListRef = collection(db, 'battleList');
 
-function AddBattleList() {
+
+function AddBattleList({onBattleCreated, battleLists}) {
+  const uid = auth.currentUser.uid;
+  const battleListRef = collection(db,'Users', uid, 'Battles');
+  
   const [newTitle, setNewTitle] = React.useState('');
 
   const onHandleAddBattle = async (title) => {
@@ -22,11 +25,17 @@ function AddBattleList() {
       alert('Input is blank. Try Again.');
       return;
     }
+  
+    try {
+      const docRef = await addDoc(battleListRef, {title: title,rounds: 0, });
+      const newBattleList = [...battleLists, {id:docRef.id, title:title}]
 
-    await addDoc(battleListRef, {
-        title: title,
-        units: []
-    });
+      onBattleCreated(newBattleList);
+      
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+
     alert('Battle Created!')
     setNewTitle('');
 };

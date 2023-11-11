@@ -10,11 +10,18 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './Pages/Home';
 
+// import Crud from './Component/Crud';
+
+// function App() {
+// 	return (
+// 		<>
+// 			<Navbar />
+// 			<Toolbar />
+
 function App() {
 	return (
 		<div>
 			{/* <Toolbar /> */}
-
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/dashboard" element={<Dashboard />} />
