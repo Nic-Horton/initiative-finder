@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import CombatantModal from './CombatantModal';
 
-function ListResult({combatant}) {
+function ListResult({addUnitsToBattle,combatant}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,7 +22,7 @@ function ListResult({combatant}) {
       }
       disablePadding
     >
-      <ListItemButton>
+      <ListItemButton onClick={()=>addUnitsToBattle(combatant)}>
       <ListItemText primary={combatant.name}/>
       </ListItemButton>
     </ListItem>
