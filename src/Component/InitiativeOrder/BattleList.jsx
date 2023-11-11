@@ -26,18 +26,20 @@ import IconButton from '@mui/material/IconButton'
 import AddBattleList from './AddBattleList';
 
 
-export default function BattleList({ battleLists, handleChangeBattleList, setBattleListTitle, battleListTitle }) {
-    const battleListRef = collection(db, 'battleList');
-    const unitsRef = doc(battleListRef, 'ENTER-MONSTER-ID');
+
+export default function BattleList({onBattleCreated,deleteBattle, battleLists, handleChangeBattleList, battleListTitle }) {
+    const user = auth.currentUser;
+    const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
+    // const uid = user.uid;
+    // const battleListRef = collection(db,'Users', uid, 'Battles');
+    // const unitsRef = doc(battleListRef, 'ENTER-MONSTER-ID');
     //const [battleListTitle, setBattleListTitle] = useState('');
-
-    
-
+      
     return (
         <>
             <Grid container >
             <Grid item xs={12} lg={6}>
-                <AddBattleList/>
+                <AddBattleList onBattleCreated={onBattleCreated} battleLists={battleLists}/>
                 </Grid>
                 <Grid item xs={12} lg={6} >
                 
@@ -53,14 +55,13 @@ export default function BattleList({ battleLists, handleChangeBattleList, setBat
                             fullWidth
                         >
                             {battleLists?.map((battle => {
-                                return <MenuItem key={battle.title} value={battle.title}>{battle.title}</MenuItem>
+                                return <MenuItem key={battle.id} value={battle.id}>{battle.title}</MenuItem>
                             }))}
 
                         </Select>
                         <IconButton><SaveIcon /></IconButton>
-                        <IconButton><DeleteIcon /></IconButton>
-                    </FormControl>
-                    
+                        <IconButton onClick={deleteBattle}><DeleteIcon /></IconButton>
+                    </FormControl>        
                 </Grid>
             </Grid>
         </>

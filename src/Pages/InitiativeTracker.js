@@ -28,46 +28,50 @@ import {
 	where,
 	query,
 } from 'firebase/firestore';
-const battleListCollectionRef = collection(db, 'battleList');
+
+const user = auth.currentUser;
+const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
+// const uid = user.uid;
+const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
 
 function InitiativeTracker() {
 	const [battleListTitle, setBattleListTitle] = useState('');
 	const [open, setOpen] = useState(true);
-	const [unitsData, setUnitsData] = useState();
-	const battleListRef = collection(db, 'battleList');
+	const [unitsData, setUnitsData] = useState([]);
+	// const battleListRef = collection(db, 'battleList');
 	const [battleLists, setBattleLists] = useState([]);
-	const [selectedArray,setSelectedArray]=useState([])
-	const [selectedUnit, setSelectedUnit] =useState(false)
-	
+	const [selectedArray, setSelectedArray] = useState([]);
+	const [selectedUnit, setSelectedUnit] = useState(false);
+
 	//Combatant info that gets passed in when selecting more info on the character
-	const [combatantAC, setCombatantAC] = useState(null)
-	const [combatantInitiative, setCombatantInitiative] = useState(null)
-	const [combatantName, setCombatantName] = useState(null)
-	const [combatantHp, setCombatantHp] = useState(null)
-	const [combatantReflexSave, setCombatantReflexSave] = useState(null)
-	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null)
-	const [combatantWillSave, setCombatantWillSave] = useState(null)
-	
+	const [combatantAC, setCombatantAC] = useState(null);
+	const [combatantInitiative, setCombatantInitiative] = useState(null);
+	const [combatantName, setCombatantName] = useState(null);
+	const [combatantHp, setCombatantHp] = useState(null);
+	const [combatantReflexSave, setCombatantReflexSave] = useState(null);
+	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
+	const [combatantWillSave, setCombatantWillSave] = useState(null);
 
 	// const [activeStep, setActiveStep] = React.useState(0);
 
 	// const handleNext = () => {
 	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	// };
-  
+
 	// const handleBack = () => {
 	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	// };
-  
-	
 
-const handleSelectedCard=(i)=>{
-const tempArray =[...selectedArray]
-if(tempArray[i]==i){tempArray[i]=undefined}
-else {tempArray[i]=i}
-console.log(selectedArray)
-setSelectedArray(tempArray)
-}
+	const handleSelectedCard = (i) => {
+		const tempArray = [...selectedArray];
+		if (tempArray[i] == i) {
+			tempArray[i] = undefined;
+		} else {
+			tempArray[i] = i;
+		}
+		console.log(selectedArray);
+		setSelectedArray(tempArray);
+	};
 
 	// const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
 	useEffect(() => {
@@ -105,54 +109,86 @@ setSelectedArray(tempArray)
 			return lists;
 		};
 
-		// Helper function to get units data
-		const getUnitsData = (querySnapshot) => {
-			const units = [];
-			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				if ('units' in data && Array.isArray(data.units)) {
-					units.push(data.units);
-				}
-			});
-			return units;
-		};
-
 		// Execute the fetchData function when the component mounts
 		fetchData();
 	}, []);
 
+	//Onchange of selector this will render battlelist units
 	const handleChangeBattleList = async (event) => {
 		setBattleListTitle(event.target.value);
-		// If a title is provided, execute the query with the title filter
 
 		const getUnitsData = (querySnapshot) => {
 			const units = [];
 			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				if ('units' in data && Array.isArray(data.units)) {
-					units.push(data.units);
-				}
+				const data = { ...doc.data(), id: doc.id };
+				units.push(data);
 			});
 			return units;
 		};
-		const battleListQuery = query(
-			battleListCollectionRef,
-			where('title', '==', event.target.value)
+
+		const battleRef = doc(battleListCollectionRef, event.target.value);
+		const unitsQuery = query(collection(battleRef, 'Units'));
+		const unitDocs = await getDocs(unitsQuery);
+
+		setUnitsData(getUnitsData(unitDocs));
+		console.log(getUnitsData(unitDocs));
+	};
+
+	//updates battlelists when new battles are created
+	const onBattleCreated = async (newBattleList) => {
+		setBattleLists(newBattleList);
+		// console.log(battleLists);
+	};
+
+	//deletes battleLists
+	const deleteBattle = async () => {
+		const updatedBattles = battleLists.filter(
+			(battle) => battle.id !== battleListTitle
 		);
-		const battleListQuerySnapshot = await getDocs(battleListQuery);
-		setUnitsData(getUnitsData(battleListQuerySnapshot));
+		const battleDoc = doc(battleListCollectionRef, battleListTitle);
+		await deleteDoc(battleDoc);
+		setBattleLists(updatedBattles);
+		setBattleListTitle('');
+	};
+
+	//Adds units from drawer to battlelist and manipulates state for 'seamless' updating
+	const addUnitsToBattle = async (newUnit) => {
+		if (!battleListTitle) {
+			return alert('Select a Battle');
+		}
+
+		const battleUnitsRef = collection(
+			battleListCollectionRef,
+			battleListTitle,
+			'Units'
+		);
+		try {
+			const docRef = await addDoc(battleUnitsRef, newUnit);
+			const newUnitsData = [...unitsData, { ...newUnit, id: docRef.id }];
+			console.log(newUnitsData);
+
+			setUnitsData(newUnitsData);
+		} catch (error) {
+			console.error('Error adding document: ', error);
+		}
 	};
 
 	return (
 		<>
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
-				<SearchDrawer open={open} setOpen={setOpen} />
+				<SearchDrawer
+					addUnitsToBattle={addUnitsToBattle}
+					open={open}
+					setOpen={setOpen}
+				/>
 				<Main open={open}>
 					<Grid container spacing={2}>
 						<Grid item xs={12} md>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
 								<BattleList
+									onBattleCreated={onBattleCreated}
+									deleteBattle={deleteBattle}
 									handleChangeBattleList={handleChangeBattleList}
 									battleLists={battleLists}
 									setBattleListTitle={setBattleListTitle}
@@ -164,10 +200,10 @@ setSelectedArray(tempArray)
 								<Button onClick={nextCard}>Next</Button> */}
 							</Paper>
 							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
-							
-							{unitsData?.map((unitsList) =>
-								unitsList?.map((unit, index) => (
-									
+
+							{unitsData?.map(
+								(unit, index) => (
+									// unitsList?.map((unit, index) => (
 									<InitiativeOrderCard
 										key={index}
 										name={unit.name}
@@ -186,21 +222,22 @@ setSelectedArray(tempArray)
 										setSelectedUnit={setSelectedUnit}
 										selectedUnit={selectedUnit}
 									/>
-								))
+								)
+								// ))
 							)}
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'lightgreen' }}>
 								Combatant Details
 							</Paper>
-							<CombatantCard 
-							name={combatantName}
-							ac={combatantAC}
-							hp={combatantHp}
-							initiative={combatantInitiative}
-							fortitudeSave={combatantFortitudeSave}
-							reflexSave={combatantReflexSave}
-							willSave={combatantWillSave}
+							<CombatantCard
+								name={combatantName}
+								ac={combatantAC}
+								hp={combatantHp}
+								initiative={combatantInitiative}
+								fortitudeSave={combatantFortitudeSave}
+								reflexSave={combatantReflexSave}
+								willSave={combatantWillSave}
 							/>
 						</Grid>
 					</Grid>

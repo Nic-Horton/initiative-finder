@@ -25,8 +25,10 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
 export default function DashboardData() {
-	const monsterCollectionRef = collection(db, 'Monsters');
-	const characterCollectionRef = collection(db, 'Characters');
+	const user = auth.currentUser;
+	const uid = user.uid;
+	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
+	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 	const [tabValue, setTabValue] = React.useState('Characters');
 
 	const collectionRef =
@@ -35,12 +37,11 @@ export default function DashboardData() {
 		const getInformationList = async () => {
 			try {
 				const data = await getDocs(collectionRef);
-				const filteredData = data.docs
-					.map((doc) => ({
-						...doc.data(),
-						id: doc.id,
-					}))
-					.filter((doc) => doc.userId === auth.currentUser.uid);
+				const filteredData = data.docs.map((doc) => ({
+					...doc.data(),
+					id: doc.id,
+				}));
+				// .filter((doc) => doc.userId === auth.currentUser.uid);
 				setMonsterList(filteredData);
 			} catch (err) {
 				console.error(err);
@@ -82,7 +83,7 @@ export default function DashboardData() {
 	};
 
 	const deleteEntry = async (id) => {
-		const monsterDoc = doc(db, tabValue, id);
+		const monsterDoc = doc(collectionRef, id);
 		await deleteDoc(monsterDoc);
 	};
 
@@ -138,7 +139,7 @@ export default function DashboardData() {
 							open={openStates[index]} // Use the open state for this list item
 							onClose={() => handleClose(index)} // Pass the index to handleClose
 							id={monster.id}
-							databaseRef={tabValue}
+							databaseRef={collectionRef}
 						/>
 
 						{selectedIndex === index && (

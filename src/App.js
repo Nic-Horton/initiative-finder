@@ -10,11 +10,10 @@ import { Auth } from './Component/Auth';
 import AuthDetails from './Component/AuthDetails';
 import Home from './Pages/Home';
 import Crud from './Component/Crud';
-import { AuthProvider } from '../src/Component/AuthContext';
 
 function App() {
 	return (
-		<AuthProvider>
+		<>
 			<Navbar />
 			<Toolbar />
 			<Routes>
@@ -26,7 +25,7 @@ function App() {
 				<Route path="/crud" element={<Crud />} />
 			</Routes>
 			<AuthDetails />
-		</AuthProvider>
+		</>
 	);
 }
 

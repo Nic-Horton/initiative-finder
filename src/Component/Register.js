@@ -17,6 +17,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { auth } from '../Config/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { db } from '../Config/firebase-config';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 
 function BottomAlert({ open, severity, message }) {
 	return <div className={`bottom-alert ${severity}`}>{message}</div>;
@@ -29,7 +31,6 @@ export default function RegisterPage() {
 	const [alertMessage, setAlertMessage] = useState('');
 	const [alertSeverity, setAlertSeverity] = useState('info');
 	const [showAlert, setShowAlert] = useState(false);
-
 
 	const showBottomAlert = () => {
 		return (
@@ -46,56 +47,73 @@ export default function RegisterPage() {
 		setOpen(true);
 	};
 
-
 	const handleCancel = () => {
 		setOpen(false);
 		alert('Critical Fail!');
 	};
-  
-  const handleCloseReg = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("User Created!");
-      setAlertSeverity('success');
-      setAlertMessage('Critical Success! User Created!');
-      setShowAlert(true);
-      setTimeout(()=> { 
-        setOpen(false);
-      }, 3000);
-    } catch (err) {
-      console.error(err);
 
-      if (err.code === "auth/user-not-found") {
-        // User doesn't exist, you can proceed to create a new user
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          const user = userCredential.user;
-          console.log("User created:", user);
-          setAlertSeverity('success');
-          setAlertMessage('Critical Success! User Created!');
-          setShowAlert(true);
-          setTimeout(()=> { 
-            setOpen(false);
-          }, 3000);
+	const handleCloseReg = async () => {
+		try {
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
 
-        } catch (createErr) {
-          console.error("Error creating user:", createErr);
-        }
-      } else {
-        setAlertSeverity('error');
-        setAlertMessage('Error signing in: ' + err.message);
-        setShowAlert(true);
-        console.error("Error signing in:", err);
-        setOpen(true);
-        setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
-      }
-    }
-  };
+			//creates user doc in firebase
+			const user = userCredential.user;
+			const userUID = user.uid;
+			const userDocRef = doc(db, 'Users', userUID);
+			await setDoc(userDocRef, { placeholder: null });
 
-	
+			console.log('User Created!');
+			setAlertSeverity('success');
+			setAlertMessage('Critical Success! User Created!');
+			setShowAlert(true);
+			setTimeout(() => {
+				setOpen(false);
+			}, 3000);
+		} catch (err) {
+			console.error(err);
+
+			if (err.code === 'auth/user-not-found') {
+				// User doesn't exist, you can proceed to create a new user
+				try {
+					const userCredential = await createUserWithEmailAndPassword(
+						auth,
+						email,
+						password
+					);
+
+					//creates user doc in firebase
+					const user = userCredential.user;
+					const userUID = user.uid;
+					const userDocRef = doc(db, 'Users', userUID);
+					await setDoc(userDocRef, { placeholder: null });
+
+					console.log('User created:', user);
+					setAlertSeverity('success');
+					setAlertMessage('Critical Success! User Created!');
+					setShowAlert(true);
+					setTimeout(() => {
+						setOpen(false);
+					}, 3000);
+				} catch (createErr) {
+					console.error('Error creating user:', createErr);
+				}
+			} else {
+				setAlertSeverity('error');
+				setAlertMessage('Error signing in: ' + err.message);
+				setShowAlert(true);
+				console.error('Error signing in:', err);
+				setOpen(true);
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 3000);
+			}
+		}
+	};
+
 	return (
 		<>
 			<div>
