@@ -11,6 +11,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { Alert } from "@mui/material";
+import NavbarLogin from "./NavBarNoLogin";
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +39,11 @@ export const Auth = () => {
       if (userCredential.user) {
         console.log(userCredential)
         alert("User Found-Critical Success!");
+        setTimeout(()=> { 
+      window.location.href = "/dashboard";
+        }, 3000);
+  
+        // window.location.href = "/dashboard";
       }
     } catch (err) {
       alert("User Not Found"+ err);
@@ -87,6 +93,7 @@ export const Auth = () => {
       }}
     >
       <div>
+       <NavbarLogin />
         <Box
           component="form"
           sx={{
@@ -199,7 +206,9 @@ export const Auth = () => {
                 >
                   Logout
                 </Button>
-
+{/* //remove login from navbar  and avatar in top right. work on CSS for dashboard 
+edit user data and avatar button/ routing, NavBar, logout to login screen button 
+profile. add settings to small nav, take out dashboard, fix routes*/}
               </Container>
             </FormControl>
           </Container>

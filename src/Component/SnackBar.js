@@ -53,9 +53,10 @@ export default function SimpleSnackbar({open, error, setAlertSeverity, handleSho
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert
+          size="large"
           onClose={handleShowAlertClickC}
           severity={error ? 'error' : 'success'}
-          sx={{ width: '100%' }}
+          sx={{ fontSize:15, width: 300, height:100 }}
         >
           {alert}
         </Alert>

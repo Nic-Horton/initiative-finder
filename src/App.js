@@ -1,29 +1,28 @@
 import './App.css';
-import Toolbar from '@mui/material/Toolbar';
+
 import Crud from './Component/Crud';
-import Navbar from './Component/Navbar';
-import Dashboard from './pages/Dashboard';
-import InitiativeTracker from './pages/InitiativeTracker';
-import Login from './pages/Login';
-import Register from './Component/Register';
+
+import Dashboard from './Pages/Dashboard';
+import InitiativeTracker from './Pages/InitiativeTracker';
+import Login from './Pages/Login';
+
 import { Routes, Route } from 'react-router-dom';
-import { Auth } from './Component/Auth';
-import Home from './pages/Home';
-import AuthDetails from './Component/AuthDetails';
+
+import Home from './Pages/Home';
+
 
 function App() {
 	return (
 		<div>
-			<Navbar />
-			<Toolbar />
+			{/* <Toolbar /> */}
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/home" element={<Home />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/tracker" element={<InitiativeTracker />} />
-				<Route path="/Login" element={<Login />} />
-				{/* <Route path="/dashboard" element={<Dashboard />} /> */}
+				<Route path="/login" element={<Login />} />
+				<Route path="/crud" element={<Crud />} />
 			</Routes>
-			<AuthDetails />
+			{/* <AuthDetails /> */}
 		</div>
 	);
 }

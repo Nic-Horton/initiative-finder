@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Home from "../Pages/Home";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
@@ -15,7 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
-import { signOut } from "firebase/auth";
 
 const appBarColor = blueGrey[900];
 
@@ -23,11 +21,13 @@ const appBarColor = blueGrey[900];
 const pages = [
   { name: 'Character Creation', path: '/dashboard' },
   { name: 'Initiative Tracker', path: '/tracker' },
-  { name: 'Login', path: '/Login' },
 ];
-const settings = ["Profile", "Settings", "Logout"];
+// const settings = [
+//     "Profile", "Settings", "Logout"
+// ];
 
-function Navbar() {
+function NavbarLogin(loggedIn) {
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -50,13 +50,6 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const logout = async () => {
-    try {
-      await signOut();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <AppBar position="fixed" sx={{ backgroundColor: appBarColor,zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -68,8 +61,8 @@ function Navbar() {
           <Typography
             variant="h6"
             noWrap
-            component={NavLink}
-            to='/'
+            component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -112,17 +105,25 @@ function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+
+                <MenuItem onClick={handleCloseNavMenu}>
                   <Typography
                     textAlign="center"
                     component={NavLink}
-                    to={page.path}
+                    to ="/dashboard"
                   >
-                    {page.name}
+                    <Button>DashBoard</Button>
                   </Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={handleCloseNavMenu}>
+                <Typography
+                    textAlign="center"
+                    component={NavLink}
+                    to ="/tracker"
+                  >
+                    <Button>Initiative Tracker</Button>
+                  </Typography>
+                </MenuItem>
             </Menu>
           </Box>
 
@@ -162,60 +163,10 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/dashboard"
-                  >
-                    <Button>Profile</Button>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/tracker"
-                  >
-                    <Button>Settings</Button>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/login"
-                  >
-                    <Button>Log Out</Button>
-                  </Typography>
-                </MenuItem>
-            </Menu>
-          </Box>
+          
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default Navbar;
+export default NavbarLogin;

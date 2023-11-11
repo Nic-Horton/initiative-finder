@@ -35,17 +35,26 @@ export default function RegisterPage() {
   const [alertSeverity, setAlertSeverity] = useState('info');
   const [showAlert, setShowAlert] = useState(false);
 
-  const showBottomAlert = () => {
-    return (
-      <div>
-        {showAlert && (
-          <div className="bottom-alert">
-            This is a alert!
-          </div>
-        )}
-      </div>
-    );
-  }
+
+	const showBottomAlert = () => {
+		return (
+			<div>
+				{showAlert && <div className="bottom-alert">This is a alert!</div>}
+			</div>
+		);
+	};
+
+
+	const handleCancel = () => {
+		setAlertSeverity('error');
+        setAlertMessage('Critical Failure');
+        setShowAlert(true);
+        console.error("Error signing in:");
+        setTimeout(() => {
+		setOpen(false)
+        setShowAlert(false);
+      }, 3000);
+	};
   
   const handleShowAlertClickO = () => setShowAlert(true)
   const handleShowAlertClickC= () => setShowAlert(false)
@@ -55,22 +64,19 @@ export default function RegisterPage() {
     setOpen(true);
   };
 
-  const handleCancel = () => {
-    setOpen(false);
-    alert("Critical Fail!");
-  };
-
   const handleCloseReg = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("User Created!");
       setAlertSeverity('success');
-      setAlertMessage('Critical Success! User Created!');
+      setAlertMessage('Critical Success! User Created! Please hold, while you are redirected');
       setShowAlert(true);
       setTimeout(()=> { 
         setOpen(false);
+		window.location.href = "/dashboard";
       }, 3000);
+
     } catch (err) {
       console.error(err);
 
@@ -83,6 +89,7 @@ export default function RegisterPage() {
           setAlertSeverity('success');
           setAlertMessage('Critical Success! User Created!');
           setShowAlert(true);
+		  
           setTimeout(()=> { 
             setOpen(false);
           }, 3000);
