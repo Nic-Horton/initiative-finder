@@ -245,7 +245,7 @@ setSelectedArray(tempArray)
 				<SearchDrawer open={open} setOpen={setOpen} />
 				<Main open={open}>
 					<Grid container spacing={2}>
-						<Grid item xs={12} md>
+						<Grid item xs={12} lg >
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
 								<BattleList
 									handleChangeBattleList={handleChangeBattleList}
