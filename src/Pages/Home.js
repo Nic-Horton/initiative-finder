@@ -24,53 +24,6 @@ const steps = [
 export default function Home() {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState([]);
-  // const [skipped, setSkipped] = useState(new Set());
-
-  // const isStepOptional = (step) => {
-  //   return step === 1;
-  // };
-
-  // const isStepSkipped = (step) => {
-  //   return skipped.has(step);
-  // };
-
-  // const handleNext = () => {
-  //   let newSkipped = skipped;
-  //   if (isStepSkipped(activeStep)) {
-  //     newSkipped = new Set(newSkipped.values());
-  //     newSkipped.delete(activeStep);
-  //   }
-
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   setSkipped(newSkipped);
-  // };
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
-
-  // const handleSkip = () => {
-  //   if (!isStepOptional(activeStep)) {
-  //     // You probably want to guard against something like this,
-  //     // it should never occur unless someone's actively trying to break something.
-  //     throw new Error("You can't skip a step that isn't optional.");
-  //   }
-
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values());
-  //     newSkipped.add(activeStep);
-  //     return newSkipped;
-  //   });
-  // };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
-
-  // function handleLearnMoreClick () {
-  //   alert("add github link here")
-  // }
 
 
   
@@ -139,35 +92,10 @@ export default function Home() {
       >
         <Grid container direction="column" alignItems="center" justify="center">
           <Grid item>
-            {/* <img
-              src="https://foundryvtt.s3.us-west-2.amazonaws.com/website-media-dev/user_671/asset/pathfinder-second-edition-system-logo-2023-01-20.webp"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "25vh",
-                width: "80vh",
-                marginTop:50,
-                
-              }}
-              alt="pathfinder logo"
-            ></img> */}
           </Grid>
         </Grid>
 
-        {/* <Box>
-        <Container sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignh1s: "flex-start",
-            
-          }}>
-            <h1>"hello" </h1></Container>
-            <Container sx={{
-                display: "flex",
-                flexDirection:"row",
-              }}><h2>"goodbye"</h2></Container>
-              <Grid xs={8}><h1>"Hello"</h1> </Grid> */}
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
@@ -299,105 +227,11 @@ export default function Home() {
               sx={{ mr: 1 }}>
                 Next
               </Button>
-              {/* {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
-                ))} */}
             </Box>
           </React.Fragment>
         )}
       </div>
     </Box>
-        {/* <Box
-          sx={{
-            color: "white",
-          }}
-        >
-          <h1
-            style={{
-              marginTop: 20,
-              textAlign: "center",
-              backgroundColor: "rgba(0,0,0,0.7)",
-              color: "#cfe8fc",
-            }}
-          >
-            How does it work?
-          </h1>
-          <Container sx={{backgroundColor:'White'}}>
-            <Box sx={{ backgroundColor:'blue', width: "100%" }}>
-              <Stepper sx={{backgroundColor:'red', color:'red'}} alternativeLabel activeStep={activeStep}>
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-                  if (isStepOptional(index)) {
-                    labelProps.optional = (
-                      <Typography sx={{backgroundColor:'red' , color: 'success.main'}} variant="caption">Optional</Typography>
-                    );
-                  }
-                  if (isStepSkipped(index)) {
-                    stepProps.completed = false;
-                  }
-                  return (
-                    <Step key={label} {...stepProps}>
-                      <StepLabel style={{ color:'white'}}{...labelProps}>{label}</StepLabel>
-                    </Step>
-                  );
-                })}
-              </Stepper>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    <Button onClick={handleReset}>Reset</Button>
-                  </Box>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <Typography sx={{ color:'white', mt: 2, mb: 1 }}>
-                    Step {activeStep + 1}
-                  </Typography>
-                  <Box sx={{  display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Button
-                      color="inherit"
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      sx={{ 
-                        backgroundColor:"white",
-                        mr: 1 }}
-                    >
-                      Back
-                    </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    {isStepOptional(activeStep) && (
-                      <Button
-                        color="inherit"
-                        onClick={handleSkip}
-                        sx={{ mr: 1 }}
-                      >
-                        Skip
-                      </Button>
-                    )}
-
-                    <Button onClick={handleNext}>
-                      {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                  </Box>
-                </React.Fragment>
-              )}
-            </Box>
-          </Container>
-        </Box> */}
       </div>
       <div>
         <Typography

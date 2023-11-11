@@ -23,11 +23,11 @@ import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import Snackbar from "@mui/material/Snackbar";
 import CloseIcon from '@mui/icons-material/Close';
 
-const styles = {
-  container: {
-    width: 50
-  }
-}
+// const styles = {
+//   container: {
+//     width: 50
+//   }
+// }
 
 export default function MonsterSubmit() {
   const monsterCollectionRef = collection(db, "Monsters");
@@ -48,7 +48,7 @@ export default function MonsterSubmit() {
       }
     );
     setMonsterAC(10);
-    alert("Monster Submitted!");
+    alert("Stat Block Submitted!");
   };
 
   const [open, setOpen] = useState(false);
@@ -101,6 +101,7 @@ export default function MonsterSubmit() {
     setMonsterFortSave(10);
     setMonsterInitiative(10);
     setMonsterDescription("");
+    alert("Stat Block Reset!")
   }
   return (
     <>
