@@ -117,28 +117,6 @@ export default function Home() {
 							Initiative Finder
 						</Typography>
 
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  marginTop: 10,
-                  color: "white",
-                  maxWidth: 1000,
-                  width:800,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  border: 1,
-                  borderRadius: 5,
-                  marginBottom:25,
-                  backgroundColor: "rgba(0,0,0,0.7)",
-                }}
-                variant="h1"
-                gutterBottom
-              >
-                Initiative Finder
-              </Typography>
-              <div>
-                
-              </div>
 
             <Grid
               item
