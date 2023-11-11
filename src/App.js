@@ -10,21 +10,28 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./Pages/Home";
 
-function App() {
-  return (
-    <div>
-      {/* <Toolbar /> */}
+// import Crud from './Component/Crud';
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tracker" element={<InitiativeTracker />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/crud" element={<Crud />} />
-      </Routes>
-      {/* <AuthDetails /> */}
-    </div>
-  );
+// function App() {
+// 	return (
+// 		<>
+// 			<Navbar />
+// 			<Toolbar />
+
+function App() {
+	return (
+		<div>
+			{/* <Toolbar /> */}
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/tracker" element={<InitiativeTracker />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/crud" element={<Crud />} />
+			</Routes>
+			{/* <AuthDetails /> */}
+		</div>
+	);
 }
 
 export default App;
