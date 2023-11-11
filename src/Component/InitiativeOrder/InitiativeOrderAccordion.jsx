@@ -14,8 +14,15 @@ import { lightBlue } from "@mui/material/colors";
 
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
-//Test note for push
-export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp}) {
+
+export default function InitiativeOrderAccordion({
+  name,
+  ac,
+  fortitudeSave,
+  reflexSave,
+  willSave,
+  hp,
+}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
@@ -36,22 +43,21 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
 
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
-    const findSeverity = severityValues.find(item => item.name === severity.name);
-    
-  if (findSeverity) {
-    const updatedSeverityValues = severityValues.map(item =>
-      item.name === severity.name ? { ...item, stage: severity.stage } : item
+    const findSeverity = severityValues.find(
+      (item) => item.name === severity.name
     );
-    setSeverityValues(updatedSeverityValues);
+
+    if (findSeverity) {
+      const updatedSeverityValues = severityValues.map((item) =>
+        item.name === severity.name ? { ...item, stage: severity.stage } : item
+      );
+      setSeverityValues(updatedSeverityValues);
     } else {
       setSeverityValues([...severityValues, severity]);
     }
   };
 
-
-  
-  
-  console.log(severityValues)
+  console.log(severityValues);
   return (
     <>
       <Accordion
