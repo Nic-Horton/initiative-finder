@@ -11,16 +11,16 @@ export default function SeverityLevelRadio({
   name,
   stages,
   modifiers,
-  setModifiers
+  setModifiers,
 }) {
   const [selectedValue, setSelectedValue] = React.useState("0");
 
-  const handleChange = (name,stage) => {
+  const handleChange = (name, stage) => {
     setSelectedValue(stage);
     // const keyValueName = { [name]: name  };
     // const keyValueStage = { [stage]: stage  } // Create a key-value pair
     // handleSeveritySelect(keyValue); // Pass the key-value pair to the callback
-    handleSeveritySelect({name:name, stage:stage})
+    handleSeveritySelect({ name: name, stage: stage });
   };
 
   // const handleChange = (event) => {
@@ -48,32 +48,30 @@ export default function SeverityLevelRadio({
         row
         aria-labelledby="SeverityLevelInput"
         name="severity-radio-buttons-group" // Update the name
-
-        
       >
         {modifiers?.conditionEffects?.map((modifier) => {
           return (
-           <FormControlLabel
-          value={modifier.stage} // Use a string value
-          control={
-            <Radio
-              // {...controlProps(index,modifier.stage)}
-              checked = {selectedValue === modifier.stage}
-              onChange={()=>handleChange(modifiers.name,modifier.stage)}
-              sx={{
-                color: blueGrey[800],
-                "&.Mui-checked": {
-                  color: blueGrey[600],
-                },
-              }}
-              size="small"
+            <FormControlLabel
+              value={modifier.stage} // Use a string value
+              control={
+                <Radio
+                  // {...controlProps(index,modifier.stage)}
+                  checked={selectedValue === modifier.stage}
+                  onChange={() => handleChange(modifiers.name, modifier.stage)}
+                  sx={{
+                    color: blueGrey[800],
+                    "&.Mui-checked": {
+                      color: blueGrey[600],
+                    },
+                  }}
+                  size="small"
+                />
+              }
+              label={modifier.stage}
             />
-          }
-          label={modifier.stage}
-        />
-        )
+          );
         })}
-          
+
         {/* <FormControlLabel
           value="0" // Use a string value
           control={

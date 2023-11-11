@@ -1,12 +1,11 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormLabel } from '@mui/material';
-import Button from '@mui/material/Button';
-import Register from './Register';
-import { useState, useEffect } from 'react';
-import { auth, googleProvider } from '../Config/firebase-config';
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { Container, FormControl, FormLabel } from "@mui/material";
+import Button from "@mui/material/Button";
+import Register from "./Register";
+import { useState, useEffect } from "react";
+import { auth, googleProvider } from "../Config/firebase-config";
 import {
-
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -15,20 +14,19 @@ import { Alert } from "@mui/material";
 import NavbarLogin from "./NavBarNoLogin";
 
 export const Auth = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [user, setUser] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
-	console.log(auth?.currentUser);
+  console.log(auth?.currentUser);
 
-	const signInWithGoogle = async () => {
-		try {
-			await signInWithPopup(auth, googleProvider);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const signIn = async () => {
     try {
@@ -39,49 +37,49 @@ export const Auth = () => {
         password
       );
       if (userCredential.user) {
-        console.log(userCredential)
+        console.log(userCredential);
         alert("User Found-Critical Success!");
-        setTimeout(()=> { 
-      window.location.href = "/dashboard";
+        setTimeout(() => {
+          window.location.href = "/dashboard";
         }, 3000);
-  
+
         // window.location.href = "/dashboard";
       }
     } catch (err) {
-      alert("User Not Found"+ err);
+      alert("User Not Found" + err);
       console.error(err);
     }
   };
 
-	const logout = async () => {
-		try {
-			await signOut(auth);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-	function handleClick() {
-		alert('Account not found, Please create account first');
-	}
+  function handleClick() {
+    alert("Account not found, Please create account first");
+  }
 
-	useEffect(() => {
-		// Use onAuthStateChanged to listen for changes in authentication status
-		const unsubscribe = auth.onAuthStateChanged((authUser) => {
-			if (authUser) {
-				setUser(authUser); // User is signed in
-			} else {
-				setUser(null); // User is signed out
-			}
-		});
+  useEffect(() => {
+    // Use onAuthStateChanged to listen for changes in authentication status
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser); // User is signed in
+      } else {
+        setUser(null); // User is signed out
+      }
+    });
 
-		return () => {
-			// Unsubscribe from the listener when the component unmounts
-			unsubscribe();
-		};
-	}, []);
+    return () => {
+      // Unsubscribe from the listener when the component unmounts
+      unsubscribe();
+    };
+  }, []);
 
-	const imageURL = 'https://cdn.paizo.com/image/content/Blog/20190624-4.jpg';
+  const imageURL = "https://cdn.paizo.com/image/content/Blog/20190624-4.jpg";
 
   return (
     <div
@@ -95,7 +93,7 @@ export const Auth = () => {
       }}
     >
       <div>
-       <NavbarLogin />
+        <NavbarLogin />
         <Box
           component="form"
           sx={{
@@ -165,40 +163,39 @@ export const Auth = () => {
                 onChange={(e) => setEmail(e.target.value)}
               ></TextField>
 
+              <TextField
+                sx={{ marginBottom: 2 }}
+                value={password}
+                type="password"
+                placeholder="Enter Password"
+                id="outlined-basic"
+                variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-							<TextField
-								sx={{ marginBottom: 2 }}
-								value={password}
-								type="password"
-								placeholder="Enter Password"
-								id="outlined-basic"
-								variant="outlined"
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-
-							<Container
-								sx={{
-									display: 'flex',
-									flexDirection: 'column',
-									justifyContent: 'center',
-								}}
-							>
-								<Button
-									variant="contained"
-									color="success"
-									onClick={signIn}
-									sx={{ marginBottom: 1 }}
-								>
-									Login
-								</Button>
-								<Button
-									variant="contained"
-									color="secondary"
-									sx={{ marginBottom: 1 }}
-									onClick={signInWithGoogle}
-								>
-									Sign in with Google
-								</Button>
+              <Container
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={signIn}
+                  sx={{ marginBottom: 1 }}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ marginBottom: 1 }}
+                  onClick={signInWithGoogle}
+                >
+                  Sign in with Google
+                </Button>
 
                 <Register />
                 <Button
@@ -209,7 +206,7 @@ export const Auth = () => {
                 >
                   Logout
                 </Button>
-{/* //remove login from navbar  and avatar in top right. work on CSS for dashboard 
+                {/* //remove login from navbar  and avatar in top right. work on CSS for dashboard 
 edit user data and avatar button/ routing, NavBar, logout to login screen button 
 profile. add settings to small nav, take out dashboard, fix routes*/}
               </Container>
@@ -219,5 +216,4 @@ profile. add settings to small nav, take out dashboard, fix routes*/}
       </div>
     </div>
   );
-
 };

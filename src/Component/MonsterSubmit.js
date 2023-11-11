@@ -21,13 +21,13 @@ import ShieldTwoToneIcon from "@mui/icons-material/ShieldTwoTone";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import Snackbar from "@mui/material/Snackbar";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const styles = {
   container: {
-    width: 50
-  }
-}
+    width: 50,
+  },
+};
 
 export default function MonsterSubmit() {
   const monsterCollectionRef = collection(db, "Monsters");
@@ -57,11 +57,10 @@ export default function MonsterSubmit() {
     setTabValue(newValue);
     setOpen(true);
     setTimeout(() => {
-      setOpen(false)
-        },800);
-  }
+      setOpen(false);
+    }, 800);
+  };
 
-  
   const handleClose = () => {
     setOpen(false);
   };
@@ -104,16 +103,16 @@ export default function MonsterSubmit() {
   }
   return (
     <>
-        <div>
-      <Snackbar
-        open={open}
-        autoHideDuration={300}
-        action={action}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity="success">"Tab Changed!"</Alert>
-  </Snackbar>
-    </div>
+      <div>
+        <Snackbar
+          open={open}
+          autoHideDuration={300}
+          action={action}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert severity="success">"Tab Changed!"</Alert>
+        </Snackbar>
+      </div>
       <Paper
         sx={{
           width: 700,
@@ -432,7 +431,7 @@ export default function MonsterSubmit() {
               display: "flex",
               flexDirection: "column",
               height: 50,
-              p:3,
+              p: 3,
             }}
           >
             <Button
@@ -455,7 +454,7 @@ export default function MonsterSubmit() {
               display: "flex",
               flexDirection: "column",
               height: 50,
-              p:3,
+              p: 3,
             }}
           >
             <Button

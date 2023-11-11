@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import InitiativeOrderCard from '../Component/InitiativeOrder/InitiativeOrderCard';
 import CombatantCard from '../Component/InititiativeDescription/CombatantCard';
 import BattleList from '../Component/InitiativeOrder/BattleList';
+import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
 import Navbar from '../Component/Navbar';
 import { Typography } from '@mui/material';
@@ -256,7 +257,7 @@ setSelectedArray(tempArray)
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
 								<button onClick={prevCard}>Previous</button>
-								<button onClick={nextCard}>Next</button>
+								{/* <button onClick={nextCard}>Next</button> */}
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Paper>
 							{unitsData?.map((unitsList) =>

@@ -3,6 +3,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -11,6 +12,7 @@ import BuffsButton from "./BuffsButton";
 import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
+import Button from "@mui/material/Button";
 
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
@@ -22,6 +24,15 @@ export default function InitiativeOrderAccordion({
   reflexSave,
   willSave,
   hp,
+  setCombatantAC,
+  setCombatantName,
+  setCombatantFortitudeSave,
+  setCombatantReflexSave,
+  setCombatantInitiative,
+  setCombatantWillSave,
+  setCombatantHp,
+  setSelectedUnit,
+  selectedUnit,
 }) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
@@ -57,13 +68,38 @@ export default function InitiativeOrderAccordion({
     }
   };
 
+  const setCombatantDetails = () => {
+    setCombatantAC(ac);
+    setCombatantHp(hp);
+    setCombatantName(name);
+    setCombatantFortitudeSave(fortitudeSave);
+    setCombatantInitiative(0);
+    setCombatantReflexSave(reflexSave);
+    setCombatantWillSave(willSave);
+    setSelectedUnit(true);
+  };
+
+  const clearCombatantDetails = () => {
+    setCombatantAC("");
+    setCombatantHp("");
+    setCombatantName("");
+    setCombatantFortitudeSave("");
+    setCombatantInitiative(0);
+    setCombatantReflexSave("");
+    setCombatantWillSave("");
+    setSelectedUnit("");
+  };
+
   console.log(severityValues);
   return (
     <>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
-        sx={{ backgroundColor: accordionTop }}
+        onClick={() =>
+          !expanded ? setCombatantDetails() : clearCombatantDetails
+        }
+        sx={{ backgroundColor: !expanded ? accordionTop : "yellow" }}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -104,6 +140,7 @@ export default function InitiativeOrderAccordion({
               <Typography sx={{ color: "text.secondary" }}>
                 {willSave}
               </Typography>
+              <Button> Adjust</Button>
             </Grid>
           </Grid>
         </AccordionSummary>

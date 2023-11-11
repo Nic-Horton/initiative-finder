@@ -1,31 +1,40 @@
-import React from 'react'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
-function CombatantCard({name, ac, fortitudeSave, willSave, reflexSave, hp, conditions}) {
+function CombatantCard({
+  name,
+  ac,
+  fortitudeSave,
+  willSave,
+  reflexSave,
+  hp,
+  conditions,
+}) {
   return (
-    <Card sx={{ minWidth: 275, backgroundColor:'lightgreen' }}>
+    <Card sx={{ minWidth: 275, backgroundColor: "lightgreen" }}>
       <CardContent>
-        <Typography variant='h4' color="text.secondary" gutterBottom>
+        <Typography variant="h4" color="text.secondary" gutterBottom>
           Combatant Details
         </Typography>
         <Typography variant="h5" component="div">
-          Combatant Name
+          Name : {name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Character or Monster
         </Typography>
         <Typography variant="body2">
-          Stat List
+          ac: {ac} fortSave: {fortitudeSave}, willSave: {willSave}, reflexSave:{" "}
+          {reflexSave}, hp: {hp},
         </Typography>
         <br />
         <Typography variant="body2">
           Conditions applied List (if any)
-        </Typography>    
+        </Typography>
       </CardContent>
     </Card>
-  )
+  );
 }
 
-export default CombatantCard
+export default CombatantCard;

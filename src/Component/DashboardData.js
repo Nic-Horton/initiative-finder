@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -170,8 +169,8 @@ export default function DashboardData() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            color:"black",
-            backgroundColor:'white',
+            color: "black",
+            backgroundColor: "white",
             border: "5px solid rgba(54,69,79,0.5)",
           }}
         >
@@ -183,7 +182,7 @@ export default function DashboardData() {
           sx={{
             color: "black",
             maxWidth: 390,
-            width:"100%",
+            width: "100%",
             backgroundColor: "white",
             border: "5px solid rgba(54,69,79,0.5)",
             borderRadius: 2,
@@ -191,13 +190,15 @@ export default function DashboardData() {
             flexDirection: "column",
             maxHeight: 350,
             height: "100%",
-            mt:2,
+            mt: 2,
             overflow: "auto",
           }}
         >
-
           {monsterList.map((monster, index) => (
-            <Grid key={monster.id} sx={{ height: "100", backgroundColor:"white"}}>
+            <Grid
+              key={monster.id}
+              sx={{ height: "100", backgroundColor: "white" }}
+            >
               <Grid
                 sx={{
                   border: 1,
@@ -209,10 +210,7 @@ export default function DashboardData() {
                 <ListItemButton
                   onClick={(event) => handleListItemClick(event, index)}
                 >
-                  <ListItemText
-                    sx={{color: "red" }}
-                    primary={monster.name}
-                  />
+                  <ListItemText sx={{ color: "red" }} primary={monster.name} />
                 </ListItemButton>
                 <Button
                   variant="outlined"
