@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Avatar, Card, Container, tableBodyClasses } from "@mui/material";
@@ -16,10 +17,10 @@ import { useState } from "react";
 import AppSteps from "../Component/Stepper";
 
 const steps = [
-  "Select Campaign",
-  "Create Characters or Monsters",
-  "Add to Initiative Tracker",
-  "Roll Initiative!",
+	'Select Campaign',
+	'Create Characters or Monsters',
+	'Add to Initiative Tracker',
+	'Roll Initiative!',
 ];
 export default function Home() {
   const [activeStep, setActiveStep] = useState(0);
@@ -55,9 +56,10 @@ export default function Home() {
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+	const handleBack = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	};
+
 
   const handleStep = (step: number) => () => {
     setActiveStep(step);
@@ -92,40 +94,31 @@ export default function Home() {
       >
         <Grid container direction="column" alignItems="center" justify="center">
           <Grid item>
-          </Grid>
-        </Grid>
+					</Grid>
+				</Grid>
 
+				<Box sx={{ flexGrow: 1 }}>
+					<Grid container direction="row" alignItems="flex-start" columns={16}>
+						<Typography
+							sx={{
+								textAlign: 'center',
+								marginTop: 10,
+								color: 'white',
+								maxWidth: 1000,
+								width: 800,
+								marginLeft: 'auto',
+								marginRight: 'auto',
+								border: 1,
+								borderRadius: 5,
+								marginBottom: 25,
+								backgroundColor: 'rgba(0,0,0,0.7)',
+							}}
+							variant="h1"
+							gutterBottom
+						>
+							Initiative Finder
+						</Typography>
 
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid
-            container
-            direction="row"
-            alignItems="flex-start"
-            columns={16}
-          >
-
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  marginTop: 10,
-                  color: "white",
-                  maxWidth: 1000,
-                  width:800,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  border: 1,
-                  borderRadius: 5,
-                  marginBottom:25,
-                  backgroundColor: "rgba(0,0,0,0.7)",
-                }}
-                variant="h1"
-                gutterBottom
-              >
-                Initiative Finder
-              </Typography>
-              <div>
-                
-              </div>
 
             <Grid
               item
@@ -325,7 +318,6 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
-                {/* <Button onClick={handleLearnMoreClick}size="small">Learn More</Button> */}
               </CardActions>
             </Card>
           </Container>
