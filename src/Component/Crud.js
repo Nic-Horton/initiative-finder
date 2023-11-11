@@ -232,8 +232,9 @@ function Crud() {
 						/>
 						<button onClick={() => onSubmitMonster()}>Submit Monster</button>
 					</div>
-					{unitsData?.map((unitsList) =>
-						unitsList?.map(
+					{unitsData
+								?.flat() // Flatten the nested arrays
+								.map((unit, index) => (
 							(unit) => {
 								return (
 									<InitiativeOrderAccordion
@@ -264,7 +265,7 @@ function Crud() {
 							// 	</button>
 							// </>
 						)
-					)}
+					)} 
 				</header>
 			</div>
 		</>

@@ -17,10 +17,30 @@ import Button from '@mui/material/Button';
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
 
-export default function InitiativeOrderAccordion({name, ac, fortitudeSave, reflexSave, willSave, hp, setCombatantAC, setCombatantName, setCombatantFortitudeSave, setCombatantReflexSave, setCombatantInitiative, setCombatantWillSave,setCombatantHp,setSelectedUnit, selectedUnit}) {
+export default function InitiativeOrderAccordion({
+  name, 
+  ac, 
+  fortitudeSave, 
+  reflexSave, 
+  willSave, 
+  hp,
+  initiative, 
+  rolledInitiative,
+  onRolledInitiativeChange,
+  setRolledInitiative, 
+  setCombatantAC, 
+  setCombatantName, 
+  setCombatantFortitudeSave, 
+  setCombatantReflexSave, 
+  setCombatantInitiative, 
+  setCombatantWillSave,
+  setCombatantHp,
+  setSelectedUnit, 
+  selectedUnit}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
+  
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -50,6 +70,7 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
     }
   };
 
+  
     
   const setCombatantDetails = () => {
 
@@ -57,33 +78,51 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
     setCombatantHp(hp)
     setCombatantName(name)
     setCombatantFortitudeSave(fortitudeSave)
-    setCombatantInitiative(0)
+    setCombatantInitiative(initiative)
     setCombatantReflexSave(reflexSave)
     setCombatantWillSave(willSave)
     setSelectedUnit(true)
-
   }
+
 
   const clearCombatantDetails = () => {
-    setCombatantAC('')
-    setCombatantHp('')
-    setCombatantName('')
-    setCombatantFortitudeSave('')
-    setCombatantInitiative(0)
-    setCombatantReflexSave('')
-    setCombatantWillSave('')
-    setSelectedUnit('')
+    setCombatantAC(null)
+    setCombatantHp(null)
+    setCombatantName(null)
+    setCombatantFortitudeSave(null)
+    setCombatantInitiative(null)
+    setCombatantReflexSave(null)
+    setCombatantWillSave(null)
+    setSelectedUnit(null)
 
   }
   
   
+  const handleRolledInitiative = (item) => {
+    const finalValue = roll20SidedDieWithModifier(item);
+    setRolledInitiative(finalValue);
+    onRolledInitiativeChange(finalValue);
+  };
+
+  function roll20SidedDieWithModifier(modifier) {
+  
+    const rollResult = Math.floor(Math.random() * 20) + 1;
+    
+    
+    const finalResult = rollResult + modifier;
+    console.log(finalResult)
+    return finalResult;
+  }
+
+  
+
   console.log(severityValues)
   return (
     <>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
-        onClick={() => (!expanded ? setCombatantDetails() : clearCombatantDetails)}
+        onClick={() => (!expanded ? setCombatantDetails() : clearCombatantDetails())}
         sx={{ backgroundColor: !expanded  ? accordionTop : 'yellow' }}
       >
         <AccordionSummary
@@ -95,14 +134,17 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            Character Constitution
             {name}
           </Typography>
           {/* Character Points */}
           <Grid container alignItems="center">
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>HP</Typography>
-              <Typography sx={{ color: "text.secondary" }}></Typography>
+              <Typography sx={{ color: "text.secondary" }}>{hp}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography sx={{ color: "text.secondary" }}>rolled</Typography>
+              <Typography sx={{ color: "text.secondary" }}>{rolledInitiative}</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>AC</Typography>
@@ -121,12 +163,18 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
               </Typography>
             </Grid>
             <Grid item xs={2}>
+              <Typography sx={{ color: "text.secondary" }}>Init</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {initiative}
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Will</Typography>
               <Typography sx={{ color: "text.secondary" }}>
                 {willSave}
               </Typography>
-              <Button > Adjust</Button>
             </Grid>
+            
           </Grid>
         </AccordionSummary>
         {/* Dropdown Buttons */}
@@ -155,6 +203,9 @@ export default function InitiativeOrderAccordion({name, ac, fortitudeSave, refle
                     statusValues={statusValues}
                     severityValues={severityValues}
                   />
+                </Grid>
+                <Grid item xs={3}>
+                <Button onClick={() => handleRolledInitiative(initiative)}>roll it</Button>
                 </Grid>
               </Grid>
             </Grid>

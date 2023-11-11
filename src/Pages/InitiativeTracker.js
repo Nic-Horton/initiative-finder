@@ -36,9 +36,10 @@ function InitiativeTracker() {
 	const [unitsData, setUnitsData] = useState();
 	const battleListRef = collection(db, 'battleList');
 	const [battleLists, setBattleLists] = useState([]);
-	const [selectedArray,setSelectedArray]=useState([])
-	const [selectedUnit, setSelectedUnit] =useState(false)
-	
+	const [selectedArray, setSelectedArray] = useState([])
+	const [selectedUnit, setSelectedUnit] = useState(false)
+	const [rolledInitiative, setRolledInitiative] = useState(null);
+
 	//Combatant info that gets passed in when selecting more info on the character
 	const [combatantAC, setCombatantAC] = useState(null)
 	const [combatantInitiative, setCombatantInitiative] = useState(null)
@@ -47,27 +48,16 @@ function InitiativeTracker() {
 	const [combatantReflexSave, setCombatantReflexSave] = useState(null)
 	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null)
 	const [combatantWillSave, setCombatantWillSave] = useState(null)
-	
 
-	// const [activeStep, setActiveStep] = React.useState(0);
 
-	// const handleNext = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// };
-  
-	// const handleBack = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	// };
-  
-	
 
-const handleSelectedCard=(i)=>{
-const tempArray =[...selectedArray]
-if(tempArray[i]==i){tempArray[i]=undefined}
-else {tempArray[i]=i}
-console.log(selectedArray)
-setSelectedArray(tempArray)
-}
+	const handleSelectedCard = (i) => {
+		const tempArray = [...selectedArray]
+		if (tempArray[i] == i) { tempArray[i] = undefined }
+		else { tempArray[i] = i }
+		console.log(selectedArray)
+		setSelectedArray(tempArray)
+	}
 
 	// const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
 	useEffect(() => {
@@ -121,6 +111,10 @@ setSelectedArray(tempArray)
 		fetchData();
 	}, []);
 
+	const handleChildRolledInitiative = (value) => {
+		setRolledInitiative(value);
+	  };
+
 	const handleChangeBattleList = async (event) => {
 		setBattleListTitle(event.target.value);
 		// If a title is provided, execute the query with the title filter
@@ -160,14 +154,15 @@ setSelectedArray(tempArray)
 								/>
 							</Paper>
 							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								{/* <Button onClick={prevCard}>Previous</Button>
-								<Button onClick={nextCard}>Next</Button> */}
 							</Paper>
 							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
-							
-							{unitsData?.map((unitsList) =>
-								unitsList?.map((unit, index) => (
-									
+
+							{unitsData
+								?.flat() 
+								.sort((a, b) => {
+									console.log("Sorting:", a.rolledInitiative, b.rolledInitiative);
+								return b.rolledInitiative - a.rolledInitiative}) 
+								.map((unit, index) => (
 									<InitiativeOrderCard
 										key={index}
 										name={unit.name}
@@ -176,6 +171,11 @@ setSelectedArray(tempArray)
 										willSave={unit.willSave}
 										reflexSave={unit.reflexSave}
 										hp={unit.hp}
+										initiative={unit.initiative}
+										initiativeBonus={unit.initiative}
+										rolledInitiative={unit.rolledInitiative}
+										onRolledInitiativeChange={handleChildRolledInitiative}
+										setRolledInitiative={setRolledInitiative}
 										setCombatantInitiative={setCombatantInitiative}
 										setCombatantHp={setCombatantHp}
 										setCombatantName={setCombatantName}
@@ -186,21 +186,20 @@ setSelectedArray(tempArray)
 										setSelectedUnit={setSelectedUnit}
 										selectedUnit={selectedUnit}
 									/>
-								))
-							)}
+								))}
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'lightgreen' }}>
 								Combatant Details
 							</Paper>
-							<CombatantCard 
-							name={combatantName}
-							ac={combatantAC}
-							hp={combatantHp}
-							initiative={combatantInitiative}
-							fortitudeSave={combatantFortitudeSave}
-							reflexSave={combatantReflexSave}
-							willSave={combatantWillSave}
+							<CombatantCard
+								name={combatantName}
+								ac={combatantAC}
+								hp={combatantHp}
+								initiative={combatantInitiative}
+								fortitudeSave={combatantFortitudeSave}
+								reflexSave={combatantReflexSave}
+								willSave={combatantWillSave}
 							/>
 						</Grid>
 					</Grid>
