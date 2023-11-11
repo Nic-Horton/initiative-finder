@@ -30,8 +30,7 @@ const styles = {
 };
 
 export default function MonsterSubmit() {
-	const user = auth.currentUser;
-	const uid = user.uid;
+	const uid = auth.currentUser.uid;
 	// const uid = user.uid;
 	// const monsterCollectionRef = collection(db, 'Monsters');
 	// const characterCollectionRef = collection(db, 'Characters');

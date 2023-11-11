@@ -7,9 +7,7 @@ import SearchList from './SearchList';
 
 
 function SearchBar({addUnitsToBattle,category}) {
-  const user = auth.currentUser;
-  const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
-  // const uid = user.uid;
+  const uid = auth.currentUser.uid;
   const monsterCollectionRef = collection(db,'Users', uid,'Monsters')
   const characterCollectionRef = collection(db,'Users',uid, 'Characters')
   const [search,setSearch] = useState('');

@@ -32,12 +32,76 @@ import {
 	query,
 } from 'firebase/firestore';
 
-const user = auth.currentUser;
-const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
-// const uid = user.uid;
-const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
+// if (auth.currentUser === null) {
+// 	return (
+// 		<>
+// 			<div
+// 				style={{
+// 					position: 'relative',
+// 					height: '100vh',
+// 					width: '100%',
+// 				}}
+// 			>
+// 				<div
+// 					style={{
+// 						position: 'absolute',
+// 						top: 0,
+// 						left: 0,
+// 						backgroundImage: `url('https://livingmythrpg.files.wordpress.com/2016/03/fairy-with-dying-warrior-wallpaper-1920x1080.jpg')`,
+// 						height: '100vh',
+// 						width: '100%',
+// 						backgroundSize: 'cover',
+// 						backgroundRepeat: 'no-repeat',
+// 						filter: 'blur(2px)',
+// 						zIndex: -1,
+// 					}}
+// 				></div>
+// 				<div
+// 					style={{
+// 						zIndex: 1,
+// 					}}
+// 				>
+// 					<Navbar />
+// 					<Box
+// 						textAlign="center"
+// 						sx={{
+// 							border: 3,
+// 							borderRadius: 2,
+// 							p: 3,
+// 							m: 'auto',
+// 							width: 700,
+// 							backgroundColor: 'rgba(0,0,0,.5)',
+// 							color: 'white',
+// 						}}
+// 					>
+// 						<Typography sx={{ color: 'Red', marginTop: 10 }} variant="h2">
+// 							Please login and try again
+// 						</Typography>
+// 					</Box>
+// 					<Box sx={{ mt: 20 }} textAlign="center">
+// 						<Button
+// 							sx={{
+// 								fontSize: 25,
+// 								width: 300,
+// 								height: 150,
+// 							}}
+// 							variant="contained"
+// 							component={NavLink}
+// 							color="error"
+// 							to="/Login"
+// 						>
+// 							Click here to go re-roll
+// 						</Button>
+// 					</Box>
+// 				</div>
+// 			</div>
+// 		</>
+// 	);
+// }
 
 function InitiativeTracker() {
+	const uid = auth.currentUser.uid;
+	const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
 	const [battleListTitle, setBattleListTitle] = useState('');
 	const [open, setOpen] = useState(true);
 	const [unitsData, setUnitsData] = useState([]);

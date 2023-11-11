@@ -15,9 +15,7 @@ import {
 
 
 function AddBattleList({onBattleCreated, battleLists}) {
-  const user = auth.currentUser;
-  const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
-  // const uid = user.uid;
+  const uid = auth.currentUser.uid;
   const battleListRef = collection(db,'Users', uid, 'Battles');
   
   const [newTitle, setNewTitle] = React.useState('');

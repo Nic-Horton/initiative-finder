@@ -28,9 +28,9 @@ import AddBattleList from './AddBattleList';
 
 
 export default function BattleList({onBattleCreated,deleteBattle, battleLists, handleChangeBattleList, battleListTitle }) {
-    const user = auth.currentUser;
-    const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
-    // const uid = user.uid;
+    // const user = auth.currentUser;
+    // const uid = 'IUrvXT56cFZ8VsU8InD7rriNdN23';
+    const uid = auth.currentUser.uid;
     // const battleListRef = collection(db,'Users', uid, 'Battles');
     // const unitsRef = doc(battleListRef, 'ENTER-MONSTER-ID');
     //const [battleListTitle, setBattleListTitle] = useState('');
