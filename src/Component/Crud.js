@@ -24,12 +24,12 @@ function Crud() {
 	const [monsterWillSave, setMonsterWillSave] = useState('');
 	const [monsterReflexSave, setMonsterReflexSave] = useState('');
 	const [monsterFortSave, setMonsterFortSave] = useState('');
-	const [unitTestArray, setUnitTestArray] = useState([])
+	const [unitTestArray, setUnitTestArray] = useState([]);
 
 	const [updatedMonsterAC, setUpdatedMonsterAC] = useState('');
 
-	const battleListRef = collection(db, 'battleList')
-	const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm')
+	const battleListRef = collection(db, 'battleList');
+	const unitsRef = doc(battleListRef, 'uJXIauGJluS61wWgwcNm');
 
 	const onSubmitMonster = async () => {
 		// Create the new monster object
@@ -94,20 +94,20 @@ function Crud() {
 	// 	getMonsterList();
 	// }, []);
 
-
-
 	const [battleListData, setBattleListData] = useState([]); // Initialize state variable for data
-	const [unitsData, setUnitsData] = useState([])
-	const searchTitle = 'test'
+	const [unitsData, setUnitsData] = useState([]);
+	const [battleListId, setBattleListId] = useState(null);
+	const searchTitle = 'test';
 	useEffect(() => {
 		const fetchUnitsData = async () => {
 			try {
 				// Reference to the "battleList" collection
 				const battleListCollectionRef = collection(db, 'battleList');
-
 				// Create a query to search for documents with a specific title
-				const battleListQuery = query(battleListCollectionRef, where('title', '==', searchTitle));
-
+				const battleListQuery = query(
+					battleListCollectionRef,
+					where('title', '==', searchTitle)
+				);
 				// Execute the query to get matching documents
 				const battleListQuerySnapshot = await getDocs(battleListQuery);
 
@@ -118,13 +118,16 @@ function Crud() {
 				battleListQuerySnapshot.forEach(async (battleListDoc) => {
 					const battleListData = battleListDoc.data();
 					// Check if the document has an 'units' field
-					if ('units' in battleListData && Array.isArray(battleListData.units)) {
-						units.push(battleListData.units);
+					if (
+						'units' in battleListData &&
+						Array.isArray(battleListData.units)
+					) {
+						units.push({ units: battleListData.units, id: battleListData.id });
 					}
 				});
 
 				// Set the state variable with the fetched units data
-				console.log(units)
+				console.log(units);
 				setUnitsData(units);
 			} catch (error) {
 				console.error('Error fetching data:', error);
@@ -133,9 +136,39 @@ function Crud() {
 
 		// Execute the fetchUnitsData function when the component mounts
 		fetchUnitsData();
-	}, [])
+	}, []);
 
+	const deleteUnit = async (documentId, unitToDelete) => {
+		try {
+			// Reference to the specific document containing the units
+			const battleListDocumentRef = doc(db, 'battleList', documentId);
 
+			// Fetch the current data of the document
+			const battleListDocumentSnapshot = await getDoc(battleListDocumentRef);
+
+			if (battleListDocumentSnapshot.exists()) {
+				const battleListData = battleListDocumentSnapshot.data();
+
+				// Check if the document has an 'units' field and it's an array
+				if ('units' in battleListData && Array.isArray(battleListData.units)) {
+					// Remove the unit to delete from the 'units' array
+					const updatedUnits = battleListData.units.filter(
+						(unit) => unit !== unitToDelete
+					);
+
+					// Update the document with the new 'units' array
+					await updateDoc(battleListDocumentRef, {
+						units: updatedUnits,
+					});
+
+					// If you want to update the state to reflect the change, you can call the fetchUnitsData function again
+					// fetchUnitsData();
+				}
+			}
+		} catch (error) {
+			console.error('Error deleting unit:', error);
+		}
+	};
 
 	// useEffect(() => {
 	// 	const fetchBattleListData = async () => {
@@ -164,7 +197,6 @@ function Crud() {
 
 	// 	fetchBattleListData(); // The empty dependency array means this effect runs once on component mount
 	// }, [])
-
 
 	return (
 		<>
@@ -200,33 +232,39 @@ function Crud() {
 						/>
 						<button onClick={() => onSubmitMonster()}>Submit Monster</button>
 					</div>
-					{unitsData?.map((unitsList) => unitsList?.map((unit) => {
-						
-						return <InitiativeOrderAccordion name={unit.name}
-						AC={unit.AC} 
-						fortitudeSave={unit.fortitudeSave}
-						willSave={unit.willSave}
-						reflexSave={unit.reflexSave} />
-					}
-						// <>
-						// 	<h1>Name: {monster.name}</h1>
-						// 	<h3>AC: {monster.AC}</h3>
-						// 	<h3>Reflex Save: {monster.reflexSave}</h3>
-						// 	<h3>fortitude Save:{monster.fortitudeSave}</h3>
-						// 	<h3>Will Save: {monster.willSave}</h3>
-						// 	<button onClick={() => deleteMonster(monster.id)}>
-						// 		Delete Monster
-						// 	</button>
-						// 	<input
-						// 		placeholder="Adjust AC"
-						// 		type="number"
-						// 		onChange={(e) => setUpdatedMonsterAC(Number(e.target.value))}
-						// 	></input>
-						// 	<button onClick={() => updateMonsterAC(monster.id)}>
-						// 		Update AC
-						// 	</button>
-						// </>
-					))}
+					{unitsData?.map((unitsList) =>
+						unitsList?.map(
+							(unit) => {
+								return (
+									<InitiativeOrderAccordion
+										name={unit.name}
+										AC={unit.AC}
+										fortitudeSave={unit.fortitudeSave}
+										willSave={unit.willSave}
+										reflexSave={unit.reflexSave}
+									/>
+								);
+							}
+							// <>
+							// 	<h1>Name: {monster.name}</h1>
+							// 	<h3>AC: {monster.AC}</h3>
+							// 	<h3>Reflex Save: {monster.reflexSave}</h3>
+							// 	<h3>fortitude Save:{monster.fortitudeSave}</h3>
+							// 	<h3>Will Save: {monster.willSave}</h3>
+							// 	<button onClick={() => deleteMonster(monster.id)}>
+							// 		Delete Monster
+							// 	</button>
+							// 	<input
+							// 		placeholder="Adjust AC"
+							// 		type="number"
+							// 		onChange={(e) => setUpdatedMonsterAC(Number(e.target.value))}
+							// 	></input>
+							// 	<button onClick={() => updateMonsterAC(monster.id)}>
+							// 		Update AC
+							// 	</button>
+							// </>
+						)
+					)}
 				</header>
 			</div>
 		</>

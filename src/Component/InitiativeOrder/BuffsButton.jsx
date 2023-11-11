@@ -5,9 +5,11 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Chip from "@mui/material/Chip";
 import Switch from "@mui/material/Switch";
-import SeverityLevelDropdown from "./SeverityLevelDropdown";
+import SeverityLevelRadio from "./SeverityLevelRadio";
 import FlareIcon from "@mui/icons-material/Flare";
+import ModifierPopover from "./ModiferPopover";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Buffs } from "../../Data/Buffs";
 import { alpha } from "@mui/material/styles";
@@ -26,11 +28,15 @@ const BlueSwitch = styled(Switch)(({ theme }) => ({
 }));
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
-export default function BuffsButton({ statusValues, handleStatusToggle }) {
+export default function BuffsButton({
+  statusValues,
+  handleStatusToggle,
+  handleSeveritySelect,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const [buffs, setBuffs] = React.useState(Buffs);
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -66,10 +72,16 @@ export default function BuffsButton({ statusValues, handleStatusToggle }) {
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Grid container spacing={5} columns={8}>
                 {/* Conditions mapping */}
-                {Buffs.map((buff, index) => (
+                {buffs.map((buff, index) => (
                   <Grid item xs={4} sm={4} md={4} key={index}>
-                    {buff.name}
-                    <SeverityLevelDropdown />
+                    {/* <Chip label={buff.name} color="primary" /> */}
+                    <ModifierPopover buff={buff} type="buff"/>
+                    <SeverityLevelRadio
+                      name={buff.name}
+                      handleSeveritySelect={handleSeveritySelect}
+                      modifiers={buff}
+                      // setModifier={setBuffs}
+                    />
                     <BlueSwitch
                       {...label}
                       checked={statusValues.includes(buff.name)}
