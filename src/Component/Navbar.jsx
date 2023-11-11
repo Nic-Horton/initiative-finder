@@ -23,7 +23,7 @@ const appBarColor = blueGrey[900];
 const pages = [
   { name: 'Character Creation', path: '/dashboard' },
   { name: 'Initiative Tracker', path: '/tracker' },
-  { name: 'Login', path: '/Login' },
+  { name: 'Login', path: '/login' },
 ];
 const settings = ["Profile", "Settings", "Logout"];
 

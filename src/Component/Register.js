@@ -1,22 +1,22 @@
-import * as React from "react";
-import { useState } from "react";
-import Button from "@mui/material/Button";
+import * as React from 'react';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Grid } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Backdrop from "@mui/material/Backdrop";
-import Snackbar from "./SnackBar"
+import { Grid } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Backdrop from '@mui/material/Backdrop';
+import Snackbar from './SnackBar';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { auth } from "../Config/firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../Config/firebase-config';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
 function BottomAlert ({ open, severity, message }) {

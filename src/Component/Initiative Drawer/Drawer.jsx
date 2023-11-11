@@ -86,12 +86,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 
-function SearchDrawer({open,setOpen}) {
+function SearchDrawer({ open, setOpen }) {
 	const [category, setCategory] = useState('characters');
 
-  const handleTabChange = (event, newCategory) => {
-    setCategory(newCategory);
-  };
+	const handleTabChange = (event, newCategory) => {
+		setCategory(newCategory);
+	};
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -101,74 +101,74 @@ function SearchDrawer({open,setOpen}) {
 		setOpen(false);
 	};
 
-  return (
-  <>
-    <Box sx={{mt:2}}>
-			<IconButton
-				color="inherit"
-				aria-label="open drawer"
-				onClick={handleDrawerOpen}
-				edge='end'
-				sx={{ml: 1, mr: 2, ...(open && { display: 'none' }) }}
-			>
-				<ChevronRightIcon />
-			</IconButton>
-		</Box>
-		<Drawer
-			sx={{
-				width: {
-					xs: drawerWidth.xs,
-					sm: drawerWidth.sm,
-					md: drawerWidth.md,
-					lg: drawerWidth.lg,
-				},
-				flexShrink: 0,
-				'& .MuiDrawer-paper': {
+	return (
+		<>
+			<Box sx={{ mt: 2 }}>
+				<IconButton
+					color="inherit"
+					aria-label="open drawer"
+					onClick={handleDrawerOpen}
+					edge='end'
+					sx={{ ml: 1, mr: 2, ...(open && { display: 'none' }) }}
+				>
+					<ChevronRightIcon />
+				</IconButton>
+			</Box>
+			<Drawer
+				sx={{
 					width: {
 						xs: drawerWidth.xs,
 						sm: drawerWidth.sm,
 						md: drawerWidth.md,
 						lg: drawerWidth.lg,
 					},
-					boxSizing: 'border-box',
-				},
-			}}
-			variant="persistent"
-			anchor="left"
-			open={open}
-		>
-			<DrawerHeader />
-			<Box sx={{mb:1, width: '100%', display:'flex', justifyContent:'center' }}>
-				<Typography variant='h5'>
-					{category==='characters'?'Add Characters' : 'Add Monsters' }
-				</Typography>
-			</Box>
-			<Box sx={{display:'flex', justifyContent:'space-between'}}>
-				<Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
-    			<Tabs
-    			  value={category}
-    			  onChange={handleTabChange}
-    			  // textColor="secondary"
-    			  // indicatorColor="secondary"
-    			  aria-label="secondary tabs example"
-    			>
-    			  <Tab value="characters" label="Characters" />
-    			  <Tab value="monsters" label="Monsters" />
-    			</Tabs>
-    		</Box>
-				<Box sx={{display:'flex', justifyContent:'flex-end'}}>
-					<IconButton color="inherit" onClick={handleDrawerClose} edge='start' >
-						<ChevronLeftIcon />
-					</IconButton>
+					flexShrink: 0,
+					'& .MuiDrawer-paper': {
+						width: {
+							xs: drawerWidth.xs,
+							sm: drawerWidth.sm,
+							md: drawerWidth.md,
+							lg: drawerWidth.lg,
+						},
+						boxSizing: 'border-box',
+					},
+				}}
+				variant="persistent"
+				anchor="left"
+				open={open}
+			>
+				<DrawerHeader />
+				<Box sx={{ mb: 1, width: '100%', display: 'flex', justifyContent: 'center' }}>
+					<Typography variant='h5'>
+						{category === 'characters' ? 'Add Characters' : 'Add Monsters'}
+					</Typography>
 				</Box>
-			</Box>
-			<Divider />
-			<Box sx={{ width: '100%', display:'flex', flexDirection:'column', alignItems:'center', mt:2 }}>
-				<SearchBar category={category}/>
-			</Box>
-		</Drawer>
-  </>
-  )
+				<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+					<Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+						<Tabs
+							value={category}
+							onChange={handleTabChange}
+							// textColor="secondary"
+							// indicatorColor="secondary"
+							aria-label="secondary tabs example"
+						>
+							<Tab value="characters" label="Characters" />
+							<Tab value="monsters" label="Monsters" />
+						</Tabs>
+					</Box>
+					<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+						<IconButton color="inherit" onClick={handleDrawerClose} edge='start' >
+							<ChevronLeftIcon />
+						</IconButton>
+					</Box>
+				</Box>
+				<Divider />
+				<Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+					<SearchBar category={category} />
+				</Box>
+			</Drawer>
+		</>
+	)
 }
 
 export default SearchDrawer
