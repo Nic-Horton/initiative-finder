@@ -19,6 +19,7 @@ export default function StatusButton({ statusValues, severityValues }) {
           variant="outlined"
           startIcon={<RocketLaunchIcon />}
           onClick={handleOpen}
+          color="warning"
         >
           <Typography
             sx={{
@@ -41,7 +42,7 @@ export default function StatusButton({ statusValues, severityValues }) {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: 400,
-              bgcolor: "background.paper",
+              bgcolor: "rgba(200,184,116)",
               border: "2px solid #000",
               boxShadow: 24,
               p: 4,
