@@ -15,12 +15,26 @@ export default function SeverityLevelRadio({
 }) {
   const [selectedValue, setSelectedValue] = React.useState("0");
 
-  const handleChange = (name, stage) => {
+  const handleChange = (
+    name,
+    stage,
+    acEffect,
+    fortitudeEffect,
+    willEffect,
+    reflexEffect
+  ) => {
     setSelectedValue(stage);
     // const keyValueName = { [name]: name  };
     // const keyValueStage = { [stage]: stage  } // Create a key-value pair
     // handleSeveritySelect(keyValue); // Pass the key-value pair to the callback
-    handleSeveritySelect({ name: name, stage: stage });
+    handleSeveritySelect({
+      name: name,
+      stage: stage,
+      acEffect: acEffect,
+      fortitudeEffect: fortitudeEffect,
+      willEffect: willEffect,
+      reflexEffect: reflexEffect,
+    });
   };
 
   // const handleChange = (event) => {
@@ -57,7 +71,16 @@ export default function SeverityLevelRadio({
                 <Radio
                   // {...controlProps(index,modifier.stage)}
                   checked={selectedValue === modifier.stage}
-                  onChange={() => handleChange(modifiers.name, modifier.stage)}
+                  onChange={() =>
+                    handleChange(
+                      modifiers.name,
+                      modifier.stage,
+                      modifier.acEffect,
+                      modifier.fortitudeEffect,
+                      modifier.willEffect,
+                      modifier.reflexEffect
+                    )
+                  }
                   sx={{
                     color: blueGrey[800],
                     "&.Mui-checked": {

@@ -52,6 +52,21 @@ export default function InitiativeOrderAccordion({
     }
   };
 
+  //To calculate each condition or buff modifier effect and "reduce" all of the array values for each effect to one value and subtract it from the character points below
+  const calculateCumulativeEffect = (effectType) => {
+    return severityValues.reduce(
+      (cumulativeEffect, severity) =>
+        cumulativeEffect + (severity[effectType] || 0),
+      0
+    );
+  };
+
+  const acCumulativeEffect = calculateCumulativeEffect("acEffect");
+  const fortitudeCumulativeEffect =
+    calculateCumulativeEffect("fortitudeEffect");
+  const willCumulativeEffect = calculateCumulativeEffect("willEffect");
+  const reflexCumulativeEffect = calculateCumulativeEffect("reflexEffect");
+
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
     const findSeverity = severityValues.find(
@@ -60,7 +75,16 @@ export default function InitiativeOrderAccordion({
 
     if (findSeverity) {
       const updatedSeverityValues = severityValues.map((item) =>
-        item.name === severity.name ? { ...item, stage: severity.stage } : item
+        item.name === severity.name
+          ? {
+              ...item,
+              stage: severity.stage,
+              acEffect: severity.acEffect,
+              fortitudeEffect: severity.fortitudeEffect,
+              willEffect: severity.willEffect,
+              reflexEffect: severity.reflexEffect,
+            }
+          : item
       );
       setSeverityValues(updatedSeverityValues);
     } else {
@@ -121,27 +145,29 @@ export default function InitiativeOrderAccordion({
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>AC</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{ac}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {ac + acCumulativeEffect}
+              </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Reflex</Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {reflexSave}
+                {reflexSave + reflexCumulativeEffect}
               </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Fort</Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {fortitudeSave}
+                {fortitudeSave + fortitudeCumulativeEffect}
               </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>Will</Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {willSave}
+                {willSave + willCumulativeEffect}
               </Typography>
-              <Button> Adjust</Button>
             </Grid>
+            <Button> Adjust</Button>
           </Grid>
         </AccordionSummary>
         {/* Dropdown Buttons */}
