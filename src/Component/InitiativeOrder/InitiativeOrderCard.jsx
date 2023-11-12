@@ -3,7 +3,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import InitiativeOrderAccordion from "./InitiativeOrderAccordion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { red } from "@mui/material/colors";
 
 export default function InitiativeOrderCard({
   age,
@@ -12,10 +13,13 @@ export default function InitiativeOrderCard({
   fortitudeSave,
   willSave,
   reflexSave,
+  portrait,
   hp,
   id,
   initiative,
   initiativeRoll,
+  isSelected,
+  handleSelectedCard,
   handleRolledInitiative,
   onRolledInitiativeChange,
   setCombatantName,
@@ -25,23 +29,33 @@ export default function InitiativeOrderCard({
   setCombatantFortitudeSave,
   setCombatantWillSave,
   setCombatantInitiative,
+  setCombatantPortrait,
   setSelectedUnit,
-  selectedUnit,
-}) {
+  selectedUnit
+}) 
+
+
+
+{
+
+  const cardStyles = {
+    // Define your card styles here
+    border: isSelected ? "green" : '2px solid transparent',
+    backgroundColor: isSelected ? "red" : "lightblue" ,
+    minWidth: 275
+    // Add other styles as needed
+  };
+
+  
+
+
+  
   return (
     <>
-      <React.Fragment>
-        <CssBaseline />
-        <Card
-          sx={{
-            minWidth: 275,
-            backgroundColor: "rgba(38, 50, 56,0.75)",
-            border: 5,
-            borderColor: "rgba(200,184,116)",
-            borderRadius: 5,
-          }}
-        >
-          <CardContent>
+      {/* <React.Fragment> */}
+        {/* <CssBaseline  /> */}
+        <Card isSelected={false} style={cardStyles}>
+          <CardContent >
             <InitiativeOrderAccordion
               age={age}
               name={name}
@@ -49,6 +63,7 @@ export default function InitiativeOrderCard({
               fortitudeSave={fortitudeSave}
               willSave={willSave}
               reflexSave={reflexSave}
+              portrait={portrait}
               hp={hp}
               id={id}
               initiative={initiative}
@@ -62,12 +77,13 @@ export default function InitiativeOrderCard({
               setCombatantFortitudeSave={setCombatantFortitudeSave}
               setCombatantReflexSave={setCombatantReflexSave}
               setCombatantWillSave={setCombatantWillSave}
+              setCombatantPortrait={setCombatantPortrait}
               setSelectedUnit={setSelectedUnit}
               selectedUnit={selectedUnit}
             />
           </CardContent>
         </Card>
-      </React.Fragment>
+      {/* </React.Fragment> */}
     </>
   );
 }

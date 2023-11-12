@@ -39,6 +39,7 @@ export default function InitiativeOrderAccordion({
   reflexSave,
   willSave,
   hp,
+  portrait,
   initiative,
   initiativeRoll, 
   id,
@@ -52,9 +53,10 @@ export default function InitiativeOrderAccordion({
   setCombatantInitiative,
   setCombatantWillSave,
   setCombatantHp,
-  setSelectedUnit,
-  selectedUnit,
-}) {
+  setCombatantPortrait,
+  setSelectedUnit, 
+  selectedUnit}) {
+
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
@@ -115,26 +117,36 @@ export default function InitiativeOrderAccordion({
   };
 
   const setCombatantDetails = () => {
-    setCombatantAC(ac);
-    setCombatantHp(hp);
-    setCombatantName(name);
-    setCombatantFortitudeSave(fortitudeSave);
-    setCombatantInitiative(initiative);
-    setCombatantReflexSave(reflexSave);
-    setCombatantWillSave(willSave);
-    setSelectedUnit(true);
-  };
+
+    setCombatantAC(ac)
+    setCombatantHp(hp)
+    setCombatantName(name)
+    setCombatantFortitudeSave(fortitudeSave)
+    setCombatantInitiative(initiative)
+    setCombatantReflexSave(reflexSave)
+    setCombatantWillSave(willSave)
+    setCombatantPortrait(portrait)
+    setSelectedUnit(true)
+  }
+
 
   const clearCombatantDetails = () => {
-    setCombatantAC(null);
-    setCombatantHp(null);
-    setCombatantName(null);
-    setCombatantFortitudeSave(null);
-    setCombatantInitiative(null);
-    setCombatantReflexSave(null);
-    setCombatantWillSave(null);
-    setSelectedUnit(null);
-  };
+    setCombatantAC(null)
+    setCombatantHp(null)
+    setCombatantName(null)
+    setCombatantFortitudeSave(null)
+    setCombatantInitiative(null)
+    setCombatantReflexSave(null)
+    setCombatantWillSave(null)
+    setCombatantPortrait(null)
+    setSelectedUnit(null)
+  }
+  
+  
+  
+
+  
+
 
   console.log(severityValues);
   return (

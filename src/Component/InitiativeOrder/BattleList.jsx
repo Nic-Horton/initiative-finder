@@ -41,7 +41,9 @@ export default function BattleList({
 
   return (
     <>
-      <Grid container>
+      <Grid container sx={{
+        backgroundColor: "white"
+      }}>
         <Grid item xs={12} lg={6}>
           <AddBattleList
             onBattleCreated={onBattleCreated}
@@ -49,8 +51,20 @@ export default function BattleList({
           />
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
-            <InputLabel id="battleList-select-label">Battles</InputLabel>
+          <FormControl sx={{ 
+            display: "flex",
+            flexDirection: "row",
+            backgroundColor: "rgba(38, 50, 56,0.75)",
+            borderColor: "rgba(200,184,116)",
+            borderRadius: 2,
+            paddingTop:1,
+            paddingBottom:1,
+            border:1}}>
+            {/* <InputLabel id="battleList-select-label"
+            sx={{
+              ml:13,
+              mt:1
+            }}>Battles</InputLabel> */}
             <Select
               labelId="battleList-select-label"
               id="battleList-select"
@@ -58,8 +72,16 @@ export default function BattleList({
               label="Battle List"
               onChange={handleChangeBattleList}
               variant="outlined"
-              fullWidth
-            >
+              sx={{
+                backgroundColor: 'white',
+                width:"80%",
+                minWidth:"50%",
+                ml: 4,
+                alignItems:'center'
+              }}
+              displayEmpty
+             
+            > 
               {battleLists?.map((battle) => {
                 return (
                   <MenuItem key={battle.id} value={battle.id}>
