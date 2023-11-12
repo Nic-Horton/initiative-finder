@@ -18,6 +18,7 @@ function SearchList({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
+        overflow:'scroll'
       }}
     >
       {!search ? (

@@ -6,6 +6,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import SideCreation from "./SideCreation";
 // import InfoIcon from '@mui/icons-material/Info';
 //For search
 import SearchBar from "./SearchBar";
@@ -182,7 +183,15 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             mt: 2,
           }}
         >
+          <Box sx={{ width: "100%",
+            height:'35%',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+             }}>
           <SearchBar category={category} addUnitsToBattle={addUnitsToBattle} />
+          </Box>
+          <SideCreation/>
         </Box>
       </Drawer>
     </>
