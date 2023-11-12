@@ -13,8 +13,10 @@ export default function InitiativeOrderCard({
   willSave,
   reflexSave,
   hp,
+  id,
   initiative,
   initiativeRoll,
+  handleRolledInitiative,
   onRolledInitiativeChange,
   setCombatantName,
   setCombatantAC,
@@ -28,24 +30,9 @@ export default function InitiativeOrderCard({
 }) 
 
 {
-  const [rolledInitiative, setRolledInitiative] = useState(0);
+  
 
-  const handleRolledInitiative = async(item) => {
-    const finalValue = roll20SidedDieWithModifier(item);
-    console.log("final" + finalValue)
-    onRolledInitiativeChange(finalValue)
-    setRolledInitiative(finalValue);
-    ;
-
-};
   
-function roll20SidedDieWithModifier(modifier) {
-  const rollResult = Math.floor(Math.random() * 20) + 1;
-  
-  
-  const finalResult = rollResult + modifier;
-  return finalResult;
-}
 
 
   
@@ -63,9 +50,9 @@ function roll20SidedDieWithModifier(modifier) {
               willSave={willSave}
               reflexSave={reflexSave}
               hp={hp}
+              id={id}
               initiative={initiative}
-              rolledInitiative={rolledInitiative}
-              setRolledInitiative={setRolledInitiative}
+              initiativeRoll={initiativeRoll}
               handleRolledInitiative={handleRolledInitiative}
               onRolledInitiativeChange={onRolledInitiativeChange}
               setCombatantInitiative={setCombatantInitiative}

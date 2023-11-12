@@ -31,13 +31,14 @@ import {
 function Tracker() {
 	const uid = auth.currentUser.uid;
 	const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
-  const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(true);
 	const [battleListTitle, setBattleListTitle] = useState('');
 	const [unitsData, setUnitsData] = useState([]);
 	// const battleListRef = collection(db, 'battleList');
 	const [battleLists, setBattleLists] = useState([]);
 	const [selectedArray, setSelectedArray] = useState([]);
 	const [selectedUnit, setSelectedUnit] = useState(false);
+	const [childRolledInitiative, setChildRolledInitiative] = useState(0);
 
 	//Combatant info that gets passed in when selecting more info on the character
 	const [combatantAC, setCombatantAC] = useState(null);
@@ -69,7 +70,7 @@ function Tracker() {
 		setSelectedArray(tempArray);
 	};
 
-  //Fetches Battles list for select TextField
+	//Fetches Battles list for select TextField
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -157,73 +158,138 @@ function Tracker() {
 		}
 	};
 
+	// const [rolledInitiative, setRolledInitiative] = useState(0);
+
+	const onRolledInitiativeChange = (value) => {
+		setChildRolledInitiative(value)
+		console.log("child" + childRolledInitiative)
+	}
+
+	const renderCards = () => {
+		if (unitsData) {
+			return unitsData
+				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
+				.map((unit, index) => (
+					<InitiativeOrderCard
+						key={index}
+						name={unit.name}
+						ac={unit.AC}
+						fortitudeSave={unit.fortitudeSave}
+						willSave={unit.willSave}
+						reflexSave={unit.reflexSave}
+						hp={unit.hp}
+						id={unit.id}
+						initiative={unit.initiative}
+						initiativeRoll={unit.initiativeRoll}
+						handleRolledInitiative={handleRolledInitiative}
+						onRolledInitiativeChange={onRolledInitiativeChange}
+						setCombatantInitiative={setCombatantInitiative}
+						setCombatantHp={setCombatantHp}
+						setCombatantName={setCombatantName}
+						setCombatantAC={setCombatantAC}
+						setCombatantFortitudeSave={setCombatantFortitudeSave}
+						setCombatantReflexSave={setCombatantReflexSave}
+						setCombatantWillSave={setCombatantWillSave}
+						setSelectedUnit={setSelectedUnit}
+						selectedUnit={selectedUnit}
+					/>
+				));
+		}
+	};
+
+	const handleRolledInitiative = (id,initiative) => {
+		const finalValue = roll20SidedDieWithModifier(initiative);
+		console.log("final" + finalValue)
+		// onRolledInitiativeChange(finalValue)
+		// setRolledInitiative(finalValue);
+		const index = unitsData.findIndex(u => u.id === id)
+		if (index != -1) {
+			const updatedUnits = [...unitsData];
+			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
+			setUnitsData(updatedUnits)
+		}
+	};
+
+	function roll20SidedDieWithModifier(modifier) {
+		const rollResult = Math.floor(Math.random() * 20) + 1;
+
+
+		const finalResult = rollResult + modifier;
+		return finalResult;
+	}
+
 	return (
 		<>
-      <SearchDrawer
-					addUnitsToBattle={addUnitsToBattle}
-					open={open}
-					setOpen={setOpen}
-				/>
-				<Main open={open}>
-					<Grid container spacing={2}>
-						<Grid item xs={12} md>
-							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								<BattleList
-									onBattleCreated={onBattleCreated}
-									deleteBattle={deleteBattle}
-									handleChangeBattleList={handleChangeBattleList}
-									battleLists={battleLists}
-									setBattleListTitle={setBattleListTitle}
-									battleListTitle={battleListTitle}
-								/>
-							</Paper>
-							<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-								{/* <Button onClick={prevCard}>Previous</Button>
-								<Button onClick={nextCard}>Next</Button> */}
-							</Paper>
-							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
-
-							{unitsData?.map(
-								(unit, index) => (
-									// unitsList?.map((unit, index) => (
-									<InitiativeOrderCard
-										key={index}
-										name={unit.name}
-										ac={unit.AC}
-										fortitudeSave={unit.fortitudeSave}
-										willSave={unit.willSave}
-										reflexSave={unit.reflexSave}
-										hp={unit.hp}
-										setCombatantInitiative={setCombatantInitiative}
-										setCombatantHp={setCombatantHp}
-										setCombatantName={setCombatantName}
-										setCombatantAC={setCombatantAC}
-										setCombatantFortitudeSave={setCombatantFortitudeSave}
-										setCombatantReflexSave={setCombatantReflexSave}
-										setCombatantWillSave={setCombatantWillSave}
-										setSelectedUnit={setSelectedUnit}
-										selectedUnit={selectedUnit}
-									/>
-								)
-								// ))
-							)}
-						</Grid>
-						<Grid item xs>
-							<Paper sx={{ backgroundColor: 'lightgreen' }}>
-								Combatant Details
-							</Paper>
-							<CombatantCard
-								name={combatantName}
-								ac={combatantAC}
-								hp={combatantHp}
-								initiative={combatantInitiative}
-								fortitudeSave={combatantFortitudeSave}
-								reflexSave={combatantReflexSave}
-								willSave={combatantWillSave}
+			<SearchDrawer
+				addUnitsToBattle={addUnitsToBattle}
+				open={open}
+				setOpen={setOpen}
+			/>
+			<Main open={open}>
+				<Grid container spacing={2}>
+					<Grid item xs={12} md>
+						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+							<BattleList
+								onBattleCreated={onBattleCreated}
+								deleteBattle={deleteBattle}
+								handleChangeBattleList={handleChangeBattleList}
+								battleLists={battleLists}
+								setBattleListTitle={setBattleListTitle}
+								battleListTitle={battleListTitle}
 							/>
-						</Grid>
+						</Paper>
+						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+							{/* <Button onClick={prevCard}>Previous</Button>
+								<Button onClick={nextCard}>Next</Button> */}
+						</Paper>
+						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
+						{renderCards()}
+						{/* {unitsData
+			
+						.map(
+							(unit, index) => (
+								<InitiativeOrderCard
+									key={index}
+									name={unit.name}
+									ac={unit.AC}
+									fortitudeSave={unit.fortitudeSave}
+									willSave={unit.willSave}
+									reflexSave={unit.reflexSave}
+									hp={unit.hp}
+									initiative={unit.initiative}
+									initiativeRoll={unit.initiativeRoll}
+									handleRolledInitiative={()=>handleRolledInitiative(unit)}
+									onRolledInitiativeChange={onRolledInitiativeChange}
+									setCombatantInitiative={setCombatantInitiative}
+									setCombatantHp={setCombatantHp}
+									setCombatantName={setCombatantName}
+									setCombatantAC={setCombatantAC}
+									setCombatantFortitudeSave={setCombatantFortitudeSave}
+									setCombatantReflexSave={setCombatantReflexSave}
+									setCombatantWillSave={setCombatantWillSave}
+									setSelectedUnit={setSelectedUnit}
+									selectedUnit={selectedUnit}
+								/>
+							)
+							// ))
+						)} */}
 					</Grid>
-          </Main>
+					<Grid item xs>
+						<Paper sx={{ backgroundColor: 'lightgreen' }}>
+							Combatant Details
+						</Paper>
+						<CombatantCard
+							name={combatantName}
+							ac={combatantAC}
+							hp={combatantHp}
+							initiative={combatantInitiative}
+							fortitudeSave={combatantFortitudeSave}
+							reflexSave={combatantReflexSave}
+							willSave={combatantWillSave}
+						/>
+					</Grid>
+				</Grid>
+			</Main>
 		</>
 	);
 }

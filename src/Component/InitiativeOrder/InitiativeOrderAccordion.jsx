@@ -13,7 +13,20 @@ import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
 import Button from '@mui/material/Button';
-
+import { Auth } from '../Auth';
+import { db, auth } from '../../Config/firebase-config';
+import {
+	getDocs,
+	collection,
+	addDoc,
+	getDoc,
+	deleteDoc,
+	doc,
+	updateDoc,
+	collectionGroup,
+	where,
+	query,
+} from 'firebase/firestore';
 
 const accordionTop = lightBlue[100];
 const accordionDrop = amber[500];
@@ -25,10 +38,11 @@ export default function InitiativeOrderAccordion({
   reflexSave, 
   willSave, 
   hp,
-  initiative, 
+  initiative,
+  initiativeRoll, 
+  id,
   rolledInitiative,
   onRolledInitiativeChange,
-  setRolledInitiative, 
   handleRolledInitiative,
   setCombatantAC, 
   setCombatantName, 
@@ -42,6 +56,7 @@ export default function InitiativeOrderAccordion({
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
+
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -157,7 +172,7 @@ export default function InitiativeOrderAccordion({
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>rolled</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{rolledInitiative}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>{initiativeRoll}</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography sx={{ color: "text.secondary" }}>AC</Typography>
@@ -227,7 +242,7 @@ export default function InitiativeOrderAccordion({
                   />
                 </Grid>
                 <Grid item xs={3}>
-                <Button onClick={() => handleRolledInitiative(initiative)}>roll it</Button>
+                <Button onClick={() => handleRolledInitiative(id, initiative)}>roll it</Button>
                 </Grid>
               </Grid>
             </Grid>
