@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Chip from "@mui/material/Chip";
 import Switch from "@mui/material/Switch";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -45,6 +46,7 @@ export default function ConditionsButton({
           variant="outlined"
           startIcon={<MonitorHeartIcon />}
           onClick={handleOpen}
+          color="error"
         >
           <Typography
             sx={{
@@ -67,7 +69,7 @@ export default function ConditionsButton({
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: 850,
-              bgcolor: "background.paper",
+              bgcolor: "rgba(38, 50, 56,0.75)",
               border: "2px solid #000",
               boxShadow: 24,
               p: 4,
@@ -81,23 +83,34 @@ export default function ConditionsButton({
             >
               <CloseIcon />
             </IconButton>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Conditions
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Chip label="Conditions" color="error" />
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <Grid container spacing={2} columns={12}>
+              <Grid container columns={12}>
                 {/* Conditions mapping */}
                 {conditions.map((condition, index) => (
                   <Grid
                     item
-                    xs={5}
-                    sm={5}
-                    md={5}
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    lg={3}
                     key={index}
                     sx={{
                       border: "1px solid #ccc",
                       padding: "8px",
                       borderColor: "error.main",
+                      bgcolor: "rgba(200,184,116)",
                     }}
                   >
                     {/* <Chip label={condition.name} color="error" /> */}

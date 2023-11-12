@@ -29,8 +29,8 @@ import {
 	query,
 } from 'firebase/firestore';
 
-const accordionTop = lightBlue[100];
-const accordionDrop = amber[500];
+const accordionTop = "rgba(200,184,116)";
+const accordionDrop = "rgba(150,134,66,0.75)";
 
 export default function InitiativeOrderAccordion({
   name,
@@ -145,7 +145,7 @@ export default function InitiativeOrderAccordion({
         onClick={() =>
           !expanded ? setCombatantDetails() : clearCombatantDetails()
         }
-        sx={{ backgroundColor: !expanded ? accordionTop : "yellow" }}
+        sx={{ backgroundColor: !expanded ? accordionTop : "rgba(200,184,116)" }}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -260,9 +260,9 @@ export default function InitiativeOrderAccordion({
                     severityValues={severityValues}
                   />
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item xs={12}>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
                     onClick={() => handleRolledInitiative(initiative)}
                   >

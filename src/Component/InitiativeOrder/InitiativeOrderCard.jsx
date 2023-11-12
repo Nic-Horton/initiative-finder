@@ -26,21 +26,21 @@ export default function InitiativeOrderCard({
   setCombatantWillSave,
   setCombatantInitiative,
   setSelectedUnit,
-  selectedUnit
-}) 
-
-{
-  
-
-  
-
-
-  
+  selectedUnit,
+}) {
   return (
     <>
       <React.Fragment>
         <CssBaseline />
-        <Card sx={{ minWidth: 275, backgroundColor: "lightblue" }}>
+        <Card
+          sx={{
+            minWidth: 275,
+            backgroundColor: "rgba(38, 50, 56,0.75)",
+            border: 5,
+            borderColor: "rgba(200,184,116)",
+            borderRadius: 5,
+          }}
+        >
           <CardContent>
             <InitiativeOrderAccordion
               age={age}
