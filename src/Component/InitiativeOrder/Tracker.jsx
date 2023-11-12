@@ -244,35 +244,6 @@ function Tracker() {
 						</Paper>
 						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
 						{renderCards()}
-						{/* {unitsData
-			
-						.map(
-							(unit, index) => (
-								<InitiativeOrderCard
-									key={index}
-									name={unit.name}
-									ac={unit.AC}
-									fortitudeSave={unit.fortitudeSave}
-									willSave={unit.willSave}
-									reflexSave={unit.reflexSave}
-									hp={unit.hp}
-									initiative={unit.initiative}
-									initiativeRoll={unit.initiativeRoll}
-									handleRolledInitiative={()=>handleRolledInitiative(unit)}
-									onRolledInitiativeChange={onRolledInitiativeChange}
-									setCombatantInitiative={setCombatantInitiative}
-									setCombatantHp={setCombatantHp}
-									setCombatantName={setCombatantName}
-									setCombatantAC={setCombatantAC}
-									setCombatantFortitudeSave={setCombatantFortitudeSave}
-									setCombatantReflexSave={setCombatantReflexSave}
-									setCombatantWillSave={setCombatantWillSave}
-									setSelectedUnit={setSelectedUnit}
-									selectedUnit={selectedUnit}
-								/>
-							)
-							// ))
-						)} */}
 					</Grid>
 					<Grid item xs>
 						<Paper sx={{ backgroundColor: 'lightgreen' }}>
