@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import SeverityLevelRadio from "./SeverityLevelRadio";
 import ModifierPopover from "./ModiferPopover";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
@@ -45,7 +46,13 @@ export default function ConditionsButton({
           startIcon={<MonitorHeartIcon />}
           onClick={handleOpen}
         >
-          Conditions
+          <Typography
+            sx={{
+              display: { md: "none", lg: "flex" },
+            }}
+          >
+            Conditions
+          </Typography>
         </Button>
         <Modal
           open={open}
@@ -68,6 +75,12 @@ export default function ConditionsButton({
               maxHeight: "60vh",
             }}
           >
+            <IconButton
+              onClick={handleClose}
+              sx={{ position: "absolute", right: 1, top: 1 }}
+            >
+              <CloseIcon />
+            </IconButton>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Conditions
             </Typography>
@@ -81,7 +94,11 @@ export default function ConditionsButton({
                     sm={5}
                     md={5}
                     key={index}
-                    sx={{ border: "1px solid #ccc", padding: "8px", borderColor: 'error.main'}}
+                    sx={{
+                      border: "1px solid #ccc",
+                      padding: "8px",
+                      borderColor: "error.main",
+                    }}
                   >
                     {/* <Chip label={condition.name} color="error" /> */}
                     <ModifierPopover condition={condition} type="condition" />

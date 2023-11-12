@@ -5,11 +5,12 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
 import Switch from "@mui/material/Switch";
 import SeverityLevelRadio from "./SeverityLevelRadio";
 import FlareIcon from "@mui/icons-material/Flare";
 import ModifierPopover from "./ModiferPopover";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Buffs } from "../../Data/Buffs";
 import { alpha } from "@mui/material/styles";
@@ -45,7 +46,13 @@ export default function BuffsButton({
           startIcon={<FlareIcon />}
           onClick={handleOpen}
         >
-          Buffs
+          <Typography
+            sx={{
+              display: { md: "none", lg: "flex" },
+            }}
+          >
+            Buffs
+          </Typography>
         </Button>
         <Modal
           open={open}
@@ -66,6 +73,12 @@ export default function BuffsButton({
               p: 4,
             }}
           >
+            <IconButton
+              onClick={handleClose}
+              sx={{ position: "absolute", right: 1, top: 1 }}
+            >
+              <CloseIcon />
+            </IconButton>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Buffs
             </Typography>
