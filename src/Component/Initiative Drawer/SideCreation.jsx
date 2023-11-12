@@ -11,6 +11,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import {
 	Alert,
+	AlertTitle,
 	Badge,
 	IconButton,
 	InputLabel,
@@ -23,13 +24,27 @@ import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const drawerWidth = {
-  xs: 270,
-  sm: 300,
-  md: 350,
-  lg: 450,
-};
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+    },
+  },
+  components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: 'rgb(264,0,0)', // Set the color of non-selected tabs to red
+          '&.Mui-selected': {
+            color: 'rgba(200, 184, 116)', // Set the color of the selected tab to your custom color
+          },
+        },
+      },
+    },
+  },
+});
 
 export default function SideCreation() {
 	const uid = auth.currentUser.uid;
@@ -58,17 +73,17 @@ export default function SideCreation() {
 			}
 		);
 		setMonsterAC(10);
-		alert('Monster Submitted!');
+		setOpen(true);
+		handleReset();
+		setTimeout(() => {
+			setOpen(false);
+		}, 800);
 	};
 
 	const [open, setOpen] = useState(false);
 
 	const handleTabChange = (event, newValue) => {
 		setTabValue(newValue);
-		setOpen(true);
-		setTimeout(() => {
-			setOpen(false);
-		}, 800);
 	};
 
 	const handleClose = () => {
@@ -113,16 +128,18 @@ export default function SideCreation() {
 	}
 	return (
 		<>
-			<Box>
+			{/* <Box> */}
 				<Snackbar
 					open={open}
-					autoHideDuration={300}
+					autoHideDuration={750}
 					action={action}
-					// anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+					anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
 				>
-					<Alert severity="success">"Tab Changed!"</Alert>
+					<Alert sx={{ p:1}} severity="success">
+					<AlertTitle sx={{fontSize: '1rem'}}>Combatant Created!</AlertTitle>
+					</Alert>
 				</Snackbar>
-			</Box>
+			{/* </Box> */}
 			<Paper
       component="form"
 				sx={{
@@ -148,22 +165,18 @@ export default function SideCreation() {
 							variant="h4"
 							sx={{ textAlign: 'center' }}
 						>
-							New Entry
+							{tabValue === 'Characters'? "New Character" : "New Monster"}
 						</Typography>
 					</Grid>
 				</Grid>
 
 				{/* character and monsters tabs */}
 				<Grid xs sx={{display:'flex', justifyContent:'center'}}>
+				<ThemeProvider theme={customTheme}>
 					<Tabs
 						sx={{
-							backgroundColor: 'white',
-							border: 1,
-							borderRadius: 3,
 							mb: 2,
 						}}
-						textColor="primary"
-						indicatorColor="secondary"
 						variant="fullWidth"
 						value={tabValue}
 						onChange={handleTabChange}
@@ -172,6 +185,7 @@ export default function SideCreation() {
 						<Tab label="Characters" value={'Characters'} />
 						<Tab label="Monsters" value={'Monsters'} />
 					</Tabs>
+					</ThemeProvider>
 				</Grid>
 
 				{/* AC and Name Row */}

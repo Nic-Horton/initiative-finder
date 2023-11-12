@@ -14,6 +14,28 @@ import { useState } from "react";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
+import { Paper } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+    },
+  },
+  components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: 'rgb(264,0,0)', // Set the color of non-selected tabs to red
+          '&.Mui-selected': {
+            color: 'rgba(200, 184, 116)', // Set the color of the selected tab to your custom color
+          },
+        },
+      },
+    },
+  },
+});
 
 //set width based on breakpoints
 const drawerWidth = {
@@ -82,6 +104,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
   marginTop: 12,
+  
 }));
 
 function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
@@ -101,7 +124,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
 
   return (
     <>
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ mt: 6,}}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -128,6 +151,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
               md: drawerWidth.md,
               lg: drawerWidth.lg,
             },
+            backgroundColor: 'rgba(38, 50, 56,0.75)',
             boxSizing: "border-box",
           },
         }}
@@ -144,32 +168,31 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h5">
+          <Typography variant="h5" sx={{color:'rgba(200,184,116)'}}>
             {category === "characters" ? "Add Characters" : "Add Monsters"}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between",  }}>
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
+            <ThemeProvider theme={customTheme}>
             <Tabs
               value={category}
               onChange={handleTabChange}
-              // textColor="secondary"
-              // indicatorColor="secondary"
               aria-label="secondary tabs example"
             >
               <Tab value="characters" label="Characters" />
               <Tab value="monsters" label="Monsters" />
             </Tabs>
+            </ThemeProvider>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{mb:1, display: "flex", justifyContent: "flex-end" }}>
             <IconButton
-              color="inherit"
               onClick={handleDrawerClose}
               edge="start"
             >
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{color:'rgba(200,184,116)'}} />
             </IconButton>
           </Box>
         </Box>
@@ -183,11 +206,12 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             mt: 2,
           }}
         >
-          <Box sx={{ width: "100%",
+          <Box component={Paper} sx={{ width: "90%",
             height:'35%',
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: 'rgba(38, 50, 56,0.75)'
              }}>
           <SearchBar category={category} addUnitsToBattle={addUnitsToBattle} />
           </Box>
