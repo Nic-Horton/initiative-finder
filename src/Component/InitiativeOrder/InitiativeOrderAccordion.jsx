@@ -3,12 +3,13 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
-import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ConditionsButton from "./ConditionsButton";
 import BuffsButton from "./BuffsButton";
+import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
+import Box from "@mui/material/Box";
 import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
@@ -28,31 +29,34 @@ import {
 	query,
 } from 'firebase/firestore';
 
-const accordionTop = lightBlue[100];
-const accordionDrop = amber[500];
+const accordionTop = "rgba(200,184,116)";
+const accordionDrop = "rgba(150,134,66,0.75)";
 
 export default function InitiativeOrderAccordion({
-  name, 
-  ac, 
-  fortitudeSave, 
-  reflexSave, 
-  willSave, 
+  name,
+  ac,
+  fortitudeSave,
+  reflexSave,
+  willSave,
   hp,
+  portrait,
   initiative,
   initiativeRoll, 
   id,
   rolledInitiative,
   onRolledInitiativeChange,
   handleRolledInitiative,
-  setCombatantAC, 
-  setCombatantName, 
-  setCombatantFortitudeSave, 
-  setCombatantReflexSave, 
-  setCombatantInitiative, 
+  setCombatantAC,
+  setCombatantName,
+  setCombatantFortitudeSave,
+  setCombatantReflexSave,
+  setCombatantInitiative,
   setCombatantWillSave,
   setCombatantHp,
+  setCombatantPortrait,
   setSelectedUnit, 
   selectedUnit}) {
+
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
@@ -112,8 +116,6 @@ export default function InitiativeOrderAccordion({
     }
   };
 
-  
-    
   const setCombatantDetails = () => {
 
     setCombatantAC(ac)
@@ -123,6 +125,7 @@ export default function InitiativeOrderAccordion({
     setCombatantInitiative(initiative)
     setCombatantReflexSave(reflexSave)
     setCombatantWillSave(willSave)
+    setCombatantPortrait(portrait)
     setSelectedUnit(true)
   }
 
@@ -135,8 +138,8 @@ export default function InitiativeOrderAccordion({
     setCombatantInitiative(null)
     setCombatantReflexSave(null)
     setCombatantWillSave(null)
+    setCombatantPortrait(null)
     setSelectedUnit(null)
-
   }
   
   
@@ -144,82 +147,110 @@ export default function InitiativeOrderAccordion({
 
   
 
-  console.log(severityValues)
+
+  console.log(severityValues);
   return (
     <>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
-        onClick={() => (!expanded ? setCombatantDetails() : clearCombatantDetails())}
-        sx={{ backgroundColor: !expanded  ? accordionTop : 'yellow' }}
+        onClick={() =>
+          !expanded ? setCombatantDetails() : clearCombatantDetails()
+        }
+        sx={{ backgroundColor: !expanded ? accordionTop : "rgba(200,184,116)" }}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <SentimentSatisfiedAltIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            {name}
-          </Typography>
-          {/* Character Points */}
-          <Grid container alignItems="center">
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>HP</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{hp}</Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              {/* First row */}
+              <Grid item xs={12}>
+                <Grid container alignItems="center">
+                  <Grid item xs={8}>
+                    <SentimentSatisfiedAltIcon
+                      sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                    />
+                    <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                      {name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      Init
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {initiative}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      rolled
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {rolledInitiative}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              {/* Second row */}
+              <Grid item xs={6} lg={12}>
+                {/* Character Points */}
+                <Grid container spacing={1}>
+                  <Grid item xs={4} lg={2}>
+                    <Typography sx={{ color: "text.secondary" }}>HP</Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {hp}
+                    </Typography>
+                  </Grid>
+                  {/* Add other items for the second row as needed */}
+                  <Grid item xs={4} lg={2}>
+                    <Typography sx={{ color: "text.secondary" }}>AC</Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {ac + acCumulativeEffect}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} lg={2}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      Reflex
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {reflexSave + reflexCumulativeEffect}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} lg={2}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      Fort
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {fortitudeSave + fortitudeCumulativeEffect}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} lg={2}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      Will
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {willSave + willCumulativeEffect}
+                    </Typography>
+                    <Grid item xs={4} lg={2}></Grid>
+                  </Grid>
+                  <Grid item xs={6} lg={2}>
+                    <Button> Adjust</Button>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>rolled</Typography>
-              <Typography sx={{ color: "text.secondary" }}>{initiativeRoll}</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>AC</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {ac + acCumulativeEffect}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Reflex</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {reflexSave + reflexCumulativeEffect}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Fort</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {fortitudeSave + fortitudeCumulativeEffect}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Init</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {initiative}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Init</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {initiative} 
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Will</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {willSave + willCumulativeEffect}
-              </Typography>
-            </Grid>
-            
-            <Button> Adjust</Button>
-          </Grid>
+          </Box>
         </AccordionSummary>
         {/* Dropdown Buttons */}
         <AccordionDetails sx={{ backgroundColor: accordionDrop }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={1}>
-                <Grid item xs={3}>
+                <Grid item lg={4}>
                   <ConditionsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
@@ -227,7 +258,7 @@ export default function InitiativeOrderAccordion({
                     handleSeveritySelect={handleSeveritySelect}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item lg={4}>
                   <BuffsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
@@ -235,14 +266,26 @@ export default function InitiativeOrderAccordion({
                     handleSeveritySelect={handleSeveritySelect}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item lg={4}>
                   <StatusButton
                     statusValues={statusValues}
                     severityValues={severityValues}
                   />
                 </Grid>
-                <Grid item xs={3}>
-                <Button onClick={() => handleRolledInitiative(id, initiative)}>roll it</Button>
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    startIcon={<CasinoOutlinedIcon />}
+                    onClick={() => handleRolledInitiative(initiative)}
+                  >
+                    <Typography
+                      sx={{
+                        display: { md: "none", lg: "flex" },
+                      }}
+                    >
+                      Roll it
+                    </Typography>
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

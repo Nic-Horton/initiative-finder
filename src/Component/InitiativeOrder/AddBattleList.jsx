@@ -40,7 +40,15 @@ function AddBattleList({ onBattleCreated, battleLists }) {
 
   return (
     <>
-      <Box component={"form"}>
+      <Box component={"form"}
+      sx={{
+        backgroundColor: "rgba(38, 50, 56,0.75)",
+        borderColor: "rgba(200,184,116)",
+        borderRadius: 2,
+        border:1,
+        paddingTop:1,
+        paddingBottom:1
+      }}>
         <TextField
           label="Create Battle"
           required
@@ -55,6 +63,13 @@ function AddBattleList({ onBattleCreated, battleLists }) {
                 <AddCircleOutlineOutlinedIcon />
               </IconButton>
             ),
+          }}
+          sx={{
+            backgroundColor:"white",
+            width: "82%",
+            alignItems:"center",
+            ml:4,
+            borderRadius: 1
           }}
         />
       </Box>

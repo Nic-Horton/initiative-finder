@@ -48,6 +48,7 @@ function Tracker() {
 	const [combatantReflexSave, setCombatantReflexSave] = useState(null);
 	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
 	const [combatantWillSave, setCombatantWillSave] = useState(null);
+	const [combatantPortrait, setCombatantPortrait] = useState(null)
 
 	// const [activeStep, setActiveStep] = React.useState(0);
 
@@ -59,16 +60,6 @@ function Tracker() {
 	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	// };
 
-	const handleSelectedCard = (i) => {
-		const tempArray = [...selectedArray];
-		if (tempArray[i] == i) {
-			tempArray[i] = undefined;
-		} else {
-			tempArray[i] = i;
-		}
-		console.log(selectedArray);
-		setSelectedArray(tempArray);
-	};
 
 	//Fetches Battles list for select TextField
 	useEffect(() => {
@@ -173,14 +164,17 @@ function Tracker() {
 					<InitiativeOrderCard
 						key={index}
 						name={unit.name}
-						ac={unit.AC}
+						ac={unit.ac}
 						fortitudeSave={unit.fortitudeSave}
 						willSave={unit.willSave}
 						reflexSave={unit.reflexSave}
+						portrait={unit.portrait}
 						hp={unit.hp}
 						id={unit.id}
 						initiative={unit.initiative}
 						initiativeRoll={unit.initiativeRoll}
+						isSelected={selectedCardIndex === index}
+						handleSelectedCard={() => setSelectedCardIndex(index)}
 						handleRolledInitiative={handleRolledInitiative}
 						onRolledInitiativeChange={onRolledInitiativeChange}
 						setCombatantInitiative={setCombatantInitiative}
@@ -191,12 +185,13 @@ function Tracker() {
 						setCombatantReflexSave={setCombatantReflexSave}
 						setCombatantWillSave={setCombatantWillSave}
 						setSelectedUnit={setSelectedUnit}
+						setCombatantPortrait={setCombatantPortrait}
 						selectedUnit={selectedUnit}
 					/>
 				));
 		}
 	};
-
+	const characterPortrait = "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1"
 	const handleRolledInitiative = (id,initiative) => {
 		const finalValue = roll20SidedDieWithModifier(initiative);
 		console.log("final" + finalValue)
@@ -216,6 +211,25 @@ function Tracker() {
 
 		const finalResult = rollResult + modifier;
 		return finalResult;
+	}
+	const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+
+	const selectNextCard = () => {
+		if (unitsData.length === 0) return; 
+	
+		let newIndex = selectedCardIndex === null ? 0 : selectedCardIndex + 1;
+	
+		
+		if (newIndex >= unitsData.length) {
+		  newIndex = 0;
+		}
+	
+		setSelectedCardIndex(newIndex);
+		console.log(selectedCardIndex)
+	  };
+	
+	const handleSelectedCard = (cardIndex) => {
+		
 	}
 
 	return (
@@ -239,40 +253,11 @@ function Tracker() {
 							/>
 						</Paper>
 						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-							{/* <Button onClick={prevCard}>Previous</Button>
-								<Button onClick={nextCard}>Next</Button> */}
+
+						<Button onClick={selectNextCard}>Select Next Card</Button>
 						</Paper>
 						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
 						{renderCards()}
-						{/* {unitsData
-			
-						.map(
-							(unit, index) => (
-								<InitiativeOrderCard
-									key={index}
-									name={unit.name}
-									ac={unit.AC}
-									fortitudeSave={unit.fortitudeSave}
-									willSave={unit.willSave}
-									reflexSave={unit.reflexSave}
-									hp={unit.hp}
-									initiative={unit.initiative}
-									initiativeRoll={unit.initiativeRoll}
-									handleRolledInitiative={()=>handleRolledInitiative(unit)}
-									onRolledInitiativeChange={onRolledInitiativeChange}
-									setCombatantInitiative={setCombatantInitiative}
-									setCombatantHp={setCombatantHp}
-									setCombatantName={setCombatantName}
-									setCombatantAC={setCombatantAC}
-									setCombatantFortitudeSave={setCombatantFortitudeSave}
-									setCombatantReflexSave={setCombatantReflexSave}
-									setCombatantWillSave={setCombatantWillSave}
-									setSelectedUnit={setSelectedUnit}
-									selectedUnit={selectedUnit}
-								/>
-							)
-							// ))
-						)} */}
 					</Grid>
 					<Grid item xs>
 						<Paper sx={{ backgroundColor: 'lightgreen' }}>
@@ -286,10 +271,11 @@ function Tracker() {
 							fortitudeSave={combatantFortitudeSave}
 							reflexSave={combatantReflexSave}
 							willSave={combatantWillSave}
+							portrait={combatantPortrait}
 						/>
 					</Grid>
-				</Grid>
-			</Main>
+         </Grid>
+         </Main>
 		</>
 	);
 }
