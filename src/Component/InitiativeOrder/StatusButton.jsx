@@ -20,7 +20,13 @@ export default function StatusButton({ statusValues, severityValues }) {
           startIcon={<RocketLaunchIcon />}
           onClick={handleOpen}
         >
-          Statuses
+          <Typography
+            sx={{
+              display: { md: "none", lg: "flex" },
+            }}
+          >
+            Statuses
+          </Typography>
         </Button>
         <Modal
           open={open}

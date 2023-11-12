@@ -241,26 +241,50 @@ function Tracker() {
 						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
 							{/* <Button onClick={prevCard}>Previous</Button>
 								<Button onClick={nextCard}>Next</Button> */}
-						</Paper>
-						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
-						{renderCards()}
+							</Paper>
+							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
+
+							{unitsData?.map(
+								(unit, index) => (
+									// unitsList?.map((unit, index) => (
+									<InitiativeOrderCard
+										key={index}
+										name={unit.name}
+										ac={unit.ac}
+										fortitudeSave={unit.fortitudeSave}
+										willSave={unit.willSave}
+										reflexSave={unit.reflexSave}
+										hp={unit.hp}
+										setCombatantInitiative={setCombatantInitiative}
+										setCombatantHp={setCombatantHp}
+										setCombatantName={setCombatantName}
+										setCombatantAC={setCombatantAC}
+										setCombatantFortitudeSave={setCombatantFortitudeSave}
+										setCombatantReflexSave={setCombatantReflexSave}
+										setCombatantWillSave={setCombatantWillSave}
+										setSelectedUnit={setSelectedUnit}
+										selectedUnit={selectedUnit}
+									/>
+								)
+								// ))
+							)}
+						</Grid>
+						<Grid item xs>
+							<Paper sx={{ backgroundColor: 'lightgreen' }}>
+								Combatant Details
+							</Paper>
+							<CombatantCard
+								name={combatantName}
+								ac={combatantAC}
+								hp={combatantHp}
+								initiative={combatantInitiative}
+								fortitudeSave={combatantFortitudeSave}
+								reflexSave={combatantReflexSave}
+								willSave={combatantWillSave}
+							/>
+						</Grid>
 					</Grid>
-					<Grid item xs>
-						<Paper sx={{ backgroundColor: 'lightgreen' }}>
-							Combatant Details
-						</Paper>
-						<CombatantCard
-							name={combatantName}
-							ac={combatantAC}
-							hp={combatantHp}
-							initiative={combatantInitiative}
-							fortitudeSave={combatantFortitudeSave}
-							reflexSave={combatantReflexSave}
-							willSave={combatantWillSave}
-						/>
-					</Grid>
-				</Grid>
-			</Main>
+          </Main>
 		</>
 	);
 }
