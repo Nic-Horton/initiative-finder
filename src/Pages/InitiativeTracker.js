@@ -109,7 +109,7 @@ function InitiativeTracker() {
 	const [battleLists, setBattleLists] = useState([]);
 	const [selectedArray, setSelectedArray] = useState([])
 	const [selectedUnit, setSelectedUnit] = useState(false)
-	const [rolledInitiative, setRolledInitiative] = useState(null);
+	const [childRolledInitiative, setChildRolledInitiative] = useState(0);
 
 	//Combatant info that gets passed in when selecting more info on the character
 	const [combatantAC, setCombatantAC] = useState(null);
@@ -160,6 +160,7 @@ function InitiativeTracker() {
 				// If no title is provided, fetch all battle lists
 				const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
 				setBattleLists(getFormattedData(battleListQuerySnapshot));
+				console.log(unitsData)
 				// }
 			} catch (error) {
 				console.error('Error fetching data:', error);
@@ -182,7 +183,7 @@ function InitiativeTracker() {
 
 		// Execute the fetchData function when the component mounts
 		fetchData();
-	}, []);
+	}, [childRolledInitiative]);
 
 	//Onchange of selector this will render battlelist units
 	const handleChangeBattleList = async (event) => {
@@ -196,6 +197,7 @@ function InitiativeTracker() {
 			});
 			return units;
 		};
+
 
 		const battleRef = doc(battleListCollectionRef, event.target.value);
 		const unitsQuery = query(collection(battleRef, 'Units'));
@@ -258,6 +260,9 @@ function InitiativeTracker() {
 			unsubscribe();
 		};
 	}, []);
+
+
+
 
 	if (user === null) {
 		return (
@@ -325,6 +330,24 @@ function InitiativeTracker() {
 			</>
 		);
 	}
+	//rolling initiative for the cards
+
+
+	const onRolledInitiativeChange = (value) => {
+		setChildRolledInitiative(value)
+		console.log("child" + childRolledInitiative)
+	}
+
+	// const handleChildRolledInitiative = (value) => {
+	// 	setRolledInitiative(value);
+	//   };
+
+
+
+
+
+
+
 
 	return (
 		<>
@@ -352,35 +375,36 @@ function InitiativeTracker() {
 							</Paper>
 							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
 
-							{unitsData?.map(
-								(unit, index) => (
-									// unitsList?.map((unit, index) => (
-									<InitiativeOrderCard
-										key={index}
-										name={unit.name}
-										ac={unit.AC}
-										fortitudeSave={unit.fortitudeSave}
-										willSave={unit.willSave}
-										reflexSave={unit.reflexSave}
-										hp={unit.hp}
-										initiative={unit.initiative}
-										initiativeBonus={unit.initiative}
-										rolledInitiative={unit.rolledInitiative}
-										onRolledInitiativeChange={handleChildRolledInitiative}
-										setRolledInitiative={setRolledInitiative}
-										setCombatantInitiative={setCombatantInitiative}
-										setCombatantHp={setCombatantHp}
-										setCombatantName={setCombatantName}
-										setCombatantAC={setCombatantAC}
-										setCombatantFortitudeSave={setCombatantFortitudeSave}
-										setCombatantReflexSave={setCombatantReflexSave}
-										setCombatantWillSave={setCombatantWillSave}
-										setSelectedUnit={setSelectedUnit}
-										selectedUnit={selectedUnit}
-									/>
-								)
-								// ))
-							)}
+							{unitsData?.sort((a, b) => {
+								return b.initiative - a.initiative;
+							})
+								.map(
+									(unit, index) => (
+										// unitsList?.map((unit, index) => (
+										<InitiativeOrderCard
+											key={index}
+											name={unit.name}
+											ac={unit.AC}
+											fortitudeSave={unit.fortitudeSave}
+											willSave={unit.willSave}
+											reflexSave={unit.reflexSave}
+											hp={unit.hp}
+											initiative={unit.initiative}
+											childRolledInitiative={childRolledInitiative}
+											onRolledInitiativeChange={onRolledInitiativeChange}
+											setCombatantInitiative={setCombatantInitiative}
+											setCombatantHp={setCombatantHp}
+											setCombatantName={setCombatantName}
+											setCombatantAC={setCombatantAC}
+											setCombatantFortitudeSave={setCombatantFortitudeSave}
+											setCombatantReflexSave={setCombatantReflexSave}
+											setCombatantWillSave={setCombatantWillSave}
+											setSelectedUnit={setSelectedUnit}
+											selectedUnit={selectedUnit}
+										/>
+									)
+									// ))
+								)}
 						</Grid>
 						<Grid item xs>
 							<Paper sx={{ backgroundColor: 'lightgreen' }}>

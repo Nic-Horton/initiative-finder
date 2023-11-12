@@ -28,6 +28,7 @@ export default function InitiativeOrderAccordion({
   rolledInitiative,
   onRolledInitiativeChange,
   setRolledInitiative, 
+  handleRolledInitiative,
   setCombatantAC, 
   setCombatantName, 
   setCombatantFortitudeSave, 
@@ -98,21 +99,7 @@ export default function InitiativeOrderAccordion({
   }
   
   
-  const handleRolledInitiative = (item) => {
-    const finalValue = roll20SidedDieWithModifier(item);
-    setRolledInitiative(finalValue);
-    onRolledInitiativeChange(finalValue);
-  };
-
-  function roll20SidedDieWithModifier(modifier) {
   
-    const rollResult = Math.floor(Math.random() * 20) + 1;
-    
-    
-    const finalResult = rollResult + modifier;
-    console.log(finalResult)
-    return finalResult;
-  }
 
   
 
