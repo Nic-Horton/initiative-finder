@@ -38,6 +38,7 @@ export default function InitiativeOrderAccordion({
   reflexSave, 
   willSave, 
   hp,
+  portrait,
   initiative,
   initiativeRoll, 
   id,
@@ -51,6 +52,7 @@ export default function InitiativeOrderAccordion({
   setCombatantInitiative, 
   setCombatantWillSave,
   setCombatantHp,
+  setCombatantPortrait,
   setSelectedUnit, 
   selectedUnit}) {
   const [expanded, setExpanded] = React.useState(false);
@@ -123,6 +125,7 @@ export default function InitiativeOrderAccordion({
     setCombatantInitiative(initiative)
     setCombatantReflexSave(reflexSave)
     setCombatantWillSave(willSave)
+    setCombatantPortrait(portrait)
     setSelectedUnit(true)
   }
 
@@ -135,8 +138,8 @@ export default function InitiativeOrderAccordion({
     setCombatantInitiative(null)
     setCombatantReflexSave(null)
     setCombatantWillSave(null)
+    setCombatantPortrait(null)
     setSelectedUnit(null)
-
   }
   
   
@@ -196,12 +199,6 @@ export default function InitiativeOrderAccordion({
               <Typography sx={{ color: "text.secondary" }}>Init</Typography>
               <Typography sx={{ color: "text.secondary" }}>
                 {initiative}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography sx={{ color: "text.secondary" }}>Init</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {initiative} 
               </Typography>
             </Grid>
             <Grid item xs={2}>
