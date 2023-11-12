@@ -14,10 +14,13 @@ function SearchList({
   return (
     <List
       sx={{
-        width: "90%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
+        overflow:'scroll',
+        backgroundColor: 'rgba(38, 50, 56,0.75)',
+        color:'rgba(200,184,116)'
       }}
     >
       {!search ? (
