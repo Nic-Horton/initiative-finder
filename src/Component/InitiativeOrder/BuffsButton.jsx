@@ -10,6 +10,8 @@ import Switch from "@mui/material/Switch";
 import SeverityLevelRadio from "./SeverityLevelRadio";
 import FlareIcon from "@mui/icons-material/Flare";
 import ModifierPopover from "./ModiferPopover";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { Buffs } from "../../Data/Buffs";
 import { alpha } from "@mui/material/styles";
@@ -44,8 +46,15 @@ export default function BuffsButton({
           variant="outlined"
           startIcon={<FlareIcon />}
           onClick={handleOpen}
+          color="success"
         >
-          Buffs
+          <Typography
+            sx={{
+              display: { md: "none", lg: "flex" },
+            }}
+          >
+            Buffs
+          </Typography>
         </Button>
         <Modal
           open={open}
@@ -60,17 +69,32 @@ export default function BuffsButton({
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: 500,
-              bgcolor: "background.paper",
+              bgcolor: "rgba(38, 50, 56,0.75)",
               border: "2px solid #000",
               boxShadow: 24,
               p: 4,
             }}
           >
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Buffs
+            <IconButton
+              onClick={handleClose}
+              sx={{ position: "absolute", right: 1, top: 1 }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Chip label="Buffs" color="primary" />
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <Grid container spacing={5} columns={8}>
+              <Grid container spacing={2} columns={8}>
                 {/* Conditions mapping */}
                 {buffs.map((buff, index) => (
                   <Grid
@@ -83,6 +107,7 @@ export default function BuffsButton({
                       border: "1px solid #ccc",
                       padding: "8px",
                       borderColor: "primary.main",
+                      bgcolor: "rgba(200,184,116)",
                     }}
                   >
                     {/* <Chip label={buff.name} color="primary" /> */}

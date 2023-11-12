@@ -253,6 +253,7 @@ function Tracker() {
 							/>
 						</Paper>
 						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+
 						<Button onClick={selectNextCard}>Select Next Card</Button>
 						</Paper>
 						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
@@ -273,8 +274,8 @@ function Tracker() {
 							portrait={combatantPortrait}
 						/>
 					</Grid>
-				</Grid>
-			</Main>
+         </Grid>
+         </Main>
 		</>
 	);
 }
