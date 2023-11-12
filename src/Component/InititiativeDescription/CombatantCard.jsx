@@ -3,15 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-function CombatantCard({
-  name,
-  ac,
-  fortitudeSave,
-  willSave,
-  reflexSave,
-  hp,
-  conditions,
-}) {
+function CombatantCard({name, ac, fortitudeSave, willSave, reflexSave, hp, conditions, initiative}) {
   return (
     <Card sx={{ minWidth: 275, backgroundColor: "lightgreen" }}>
       <CardContent>
@@ -25,8 +17,7 @@ function CombatantCard({
           Character or Monster
         </Typography>
         <Typography variant="body2">
-          ac: {ac} fortSave: {fortitudeSave}, willSave: {willSave}, reflexSave:{" "}
-          {reflexSave}, hp: {hp},
+          ac: {ac} fortSave: {fortitudeSave}, willSave: {willSave}, reflexSave: {reflexSave}, hp: {hp}, initiative: {initiative}
         </Typography>
         <br />
         <Typography variant="body2">

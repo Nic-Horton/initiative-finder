@@ -198,77 +198,78 @@ function Crud() {
   // 	fetchBattleListData(); // The empty dependency array means this effect runs once on component mount
   // }, [])
 
-  return (
-    <>
-      <div className="App">
-        <header className="App-header">
-          <BattleList />
-          {/* <Auth /> */}
-          <div>
-            <input
-              placeholder="Monster Entry...."
-              type="string"
-              onChange={(e) => setMonsterName(e.target.value)}
-            />
-            <input
-              placeholder="AC"
-              type="number"
-              onChange={(e) => setMonsterAC(Number(e.target.value))}
-            />
-            <input
-              placeholder="Will Save"
-              type="number"
-              onChange={(e) => setMonsterWillSave(Number(e.target.value))}
-            />
-            <input
-              placeholder="Fortitude Save"
-              type="number"
-              onChange={(e) => setMonsterFortSave(Number(e.target.value))}
-            />
-            <input
-              placeholder="Reflex Save"
-              type="number"
-              onChange={(e) => setMonsterReflexSave(Number(e.target.value))}
-            />
-            <button onClick={() => onSubmitMonster()}>Submit Monster</button>
-          </div>
-          {unitsData?.map((unitsList) =>
-            unitsList?.map(
-              (unit) => {
-                return (
-                  <InitiativeOrderAccordion
-                    name={unit.name}
-                    AC={unit.AC}
-                    fortitudeSave={unit.fortitudeSave}
-                    willSave={unit.willSave}
-                    reflexSave={unit.reflexSave}
-                  />
-                );
-              }
-              // <>
-              // 	<h1>Name: {monster.name}</h1>
-              // 	<h3>AC: {monster.AC}</h3>
-              // 	<h3>Reflex Save: {monster.reflexSave}</h3>
-              // 	<h3>fortitude Save:{monster.fortitudeSave}</h3>
-              // 	<h3>Will Save: {monster.willSave}</h3>
-              // 	<button onClick={() => deleteMonster(monster.id)}>
-              // 		Delete Monster
-              // 	</button>
-              // 	<input
-              // 		placeholder="Adjust AC"
-              // 		type="number"
-              // 		onChange={(e) => setUpdatedMonsterAC(Number(e.target.value))}
-              // 	></input>
-              // 	<button onClick={() => updateMonsterAC(monster.id)}>
-              // 		Update AC
-              // 	</button>
-              // </>
-            )
-          )}
-        </header>
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="App">
+				<header className="App-header">
+					<BattleList />
+					{/* <Auth /> */}
+					<div>
+						<input
+							placeholder="Monster Entry...."
+							type="string"
+							onChange={(e) => setMonsterName(e.target.value)}
+						/>
+						<input
+							placeholder="AC"
+							type="number"
+							onChange={(e) => setMonsterAC(Number(e.target.value))}
+						/>
+						<input
+							placeholder="Will Save"
+							type="number"
+							onChange={(e) => setMonsterWillSave(Number(e.target.value))}
+						/>
+						<input
+							placeholder="Fortitude Save"
+							type="number"
+							onChange={(e) => setMonsterFortSave(Number(e.target.value))}
+						/>
+						<input
+							placeholder="Reflex Save"
+							type="number"
+							onChange={(e) => setMonsterReflexSave(Number(e.target.value))}
+						/>
+						<button onClick={() => onSubmitMonster()}>Submit Monster</button>
+					</div>
+					{unitsData
+								?.flat() // Flatten the nested arrays
+								.map((unit, index) => (
+							(unit) => {
+								return (
+									<InitiativeOrderAccordion
+										name={unit.name}
+										AC={unit.AC}
+										fortitudeSave={unit.fortitudeSave}
+										willSave={unit.willSave}
+										reflexSave={unit.reflexSave}
+									/>
+								);
+							}
+							// <>
+							// 	<h1>Name: {monster.name}</h1>
+							// 	<h3>AC: {monster.AC}</h3>
+							// 	<h3>Reflex Save: {monster.reflexSave}</h3>
+							// 	<h3>fortitude Save:{monster.fortitudeSave}</h3>
+							// 	<h3>Will Save: {monster.willSave}</h3>
+							// 	<button onClick={() => deleteMonster(monster.id)}>
+							// 		Delete Monster
+							// 	</button>
+							// 	<input
+							// 		placeholder="Adjust AC"
+							// 		type="number"
+							// 		onChange={(e) => setUpdatedMonsterAC(Number(e.target.value))}
+							// 	></input>
+							// 	<button onClick={() => updateMonsterAC(monster.id)}>
+							// 		Update AC
+							// 	</button>
+							// </>
+						)
+					)} 
+				</header>
+			</div>
+		</>
+	);
 }
 
 export default Crud;
