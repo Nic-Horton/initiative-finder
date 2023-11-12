@@ -14,6 +14,7 @@ export default function InitiativeOrderCard({
   reflexSave,
   hp,
   initiative,
+  initiativeRoll,
   onRolledInitiativeChange,
   setCombatantName,
   setCombatantAC,

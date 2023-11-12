@@ -123,16 +123,6 @@ function InitiativeTracker() {
 	//usestate for user
 	const [user, setUser] = useState(null);
 
-	// const [activeStep, setActiveStep] = React.useState(0);
-
-	// const handleNext = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// };
-
-	// const handleBack = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	// };
-
 	const handleSelectedCard = (i) => {
 		const tempArray = [...selectedArray];
 		if (tempArray[i] == i) {
@@ -376,7 +366,7 @@ function InitiativeTracker() {
 							<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
 
 							{unitsData?.sort((a, b) => {
-								return b.initiative - a.initiative;
+								return b.initiativeRoll - a.initiativeRoll;
 							})
 								.map(
 									(unit, index) => (
@@ -390,6 +380,7 @@ function InitiativeTracker() {
 											reflexSave={unit.reflexSave}
 											hp={unit.hp}
 											initiative={unit.initiative}
+											initiativeRoll = {unit.initiativeRoll}
 											childRolledInitiative={childRolledInitiative}
 											onRolledInitiativeChange={onRolledInitiativeChange}
 											setCombatantInitiative={setCombatantInitiative}
