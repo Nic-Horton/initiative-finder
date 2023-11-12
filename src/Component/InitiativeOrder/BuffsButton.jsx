@@ -59,7 +59,7 @@ export default function BuffsButton({
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: 500,
               bgcolor: "background.paper",
               border: "2px solid #000",
               boxShadow: 24,
@@ -73,19 +73,30 @@ export default function BuffsButton({
               <Grid container spacing={5} columns={8}>
                 {/* Conditions mapping */}
                 {buffs.map((buff, index) => (
-                  <Grid item xs={4} sm={4} md={4} key={index}>
+                  <Grid
+                    item
+                    xs={4}
+                    sm={4}
+                    md={4}
+                    key={index}
+                    sx={{
+                      border: "1px solid #ccc",
+                      padding: "8px",
+                      borderColor: "primary.main",
+                    }}
+                  >
                     {/* <Chip label={buff.name} color="primary" /> */}
-                    <ModifierPopover buff={buff} type="buff"/>
+                    <ModifierPopover buff={buff} type="buff" />
+                    <BlueSwitch
+                      {...label}
+                      checked={statusValues.includes(buff.name)}
+                      onChange={() => handleStatusToggle(buff.name)}
+                    />
                     <SeverityLevelRadio
                       name={buff.name}
                       handleSeveritySelect={handleSeveritySelect}
                       modifiers={buff}
                       // setModifier={setBuffs}
-                    />
-                    <BlueSwitch
-                      {...label}
-                      checked={statusValues.includes(buff.name)}
-                      onChange={() => handleStatusToggle(buff.name)}
                     />
                   </Grid>
                 ))}

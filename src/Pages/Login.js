@@ -9,11 +9,10 @@ import { Auth } from "../Component/Auth";
 import NavbarLogin from "../Component/NavBarNoLogin";
 
 function Login() {
-
   return (
     <>
-    <NavbarLogin />
-    <Auth /> 
+      <NavbarLogin />
+      <Auth />
     </>
   );
 }

@@ -52,6 +52,11 @@ export default function UpdateModal({
 	const updateInformation = async (id) => {
 		const monsterDoc = doc(databaseRef, id);
 		await updateDoc(monsterDoc, {
+			// ac: Number(acValue),
+			// fortitudeSave: Number(fortValue),
+			// willSave: Number(willValue),
+			// reflexSave: Number(reflexValue),
+			// description: Number(descriptionValue),
 			ac: acValue,
 			fortitudeSave: fortValue,
 			willSave: willValue,

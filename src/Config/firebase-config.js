@@ -1,7 +1,7 @@
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 //MAIN for when we are not over our limit
 
@@ -28,13 +28,13 @@ import { getFirestore } from 'firebase/firestore';
 
 // Nics BackUp
 const firebaseConfig = {
-	apiKey: 'AIzaSyBslYGnaswFPmBy_shXwdX3QwJ9RCgzO44',
-	authDomain: 'initfindr.firebaseapp.com',
-	projectId: 'initfindr',
-	storageBucket: 'initfindr.appspot.com',
-	messagingSenderId: '545377912753',
-	appId: '1:545377912753:web:f51b88a18b16e60d4c1f90',
-	measurementId: 'G-QFXXNVNLL3',
+  apiKey: "AIzaSyBslYGnaswFPmBy_shXwdX3QwJ9RCgzO44",
+  authDomain: "initfindr.firebaseapp.com",
+  projectId: "initfindr",
+  storageBucket: "initfindr.appspot.com",
+  messagingSenderId: "545377912753",
+  appId: "1:545377912753:web:f51b88a18b16e60d4c1f90",
+  measurementId: "G-QFXXNVNLL3",
 };
 
 // Initialize Firebase
