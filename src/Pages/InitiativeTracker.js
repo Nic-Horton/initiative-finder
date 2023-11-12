@@ -20,6 +20,9 @@ import Toolbar from '@mui/material/Toolbar';
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import Tracker from '../Component/InitiativeOrder/Tracker';
+import CircularProgress, {
+	circularProgressClasses,
+} from '@mui/material/CircularProgress';
 import { db, auth } from '../Config/firebase-config';
 import {
 	getDocs,
@@ -37,6 +40,7 @@ import {
 function InitiativeTracker() {
 	//usestate for user
 	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	// Checks if user is signed in
 	useEffect(() => {
@@ -46,12 +50,40 @@ function InitiativeTracker() {
 			} else {
 				setUser(null);
 			}
+			setLoading(false);
 		});
 
 		return () => {
 			unsubscribe();
 		};
 	}, []);
+
+	if (loading) {
+		return (
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100vh',
+				}}
+			>
+				<CircularProgress
+					variant="indeterminate"
+					sx={{
+						color: 'red',
+						animationDuration: '600ms',
+						[`& .${circularProgressClasses.circle}`]: {
+							strokeLinecap: 'round',
+						},
+					}}
+					size={80}
+					thickness={4}
+					value={100}
+				/>
+			</Box>
+		);
+	}
 
 	if (user === null) {
 		return (
