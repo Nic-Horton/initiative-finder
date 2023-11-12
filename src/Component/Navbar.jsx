@@ -19,11 +19,10 @@ import { signOut } from "firebase/auth";
 
 const appBarColor = blueGrey[900];
 
-
 const pages = [
-  { name: 'Character Creation', path: '/dashboard' },
-  { name: 'Initiative Tracker', path: '/tracker' },
-  { name: 'Login', path: '/login' },
+  { name: "Character Creation", path: "/dashboard" },
+  { name: "Initiative Tracker", path: "/tracker" },
+  { name: "Login", path: "/login" },
 ];
 const settings = ["Profile", "Settings", "Logout"];
 
@@ -59,7 +58,13 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: appBarColor,zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: appBarColor,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <CasinoOutlinedIcon
@@ -69,7 +74,7 @@ function Navbar() {
             variant="h6"
             noWrap
             component={NavLink}
-            to='/'
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -185,32 +190,28 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/dashboard"
-                  >
-                    <Button>Profile</Button>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
                 <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/tracker"
-                  >
-                    <Button>Settings</Button>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
+                  textAlign="center"
+                  component={NavLink}
+                  to="/dashboard"
+                >
+                  <Button>Profile</Button>
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/login"
-                  >
-                    <Button>Log Out</Button>
-                  </Typography>
-                </MenuItem>
+                  textAlign="center"
+                  component={NavLink}
+                  to="/tracker"
+                >
+                  <Button>Settings</Button>
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center" component={NavLink} to="/login">
+                  <Button>Log Out</Button>
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

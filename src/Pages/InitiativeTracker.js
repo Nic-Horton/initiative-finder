@@ -151,6 +151,11 @@ function InitiativeTracker() {
 			</>
 		);
 	}
+	//rolling initiative for the cards
+
+	// const handleChildRolledInitiative = (value) => {
+	// 	setRolledInitiative(value);
+	//   };
 
 	return (
 		<>
@@ -158,6 +163,7 @@ function InitiativeTracker() {
 			<Toolbar />
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
+
 				<Tracker />
 			</Box>
 		</>
