@@ -62,24 +62,23 @@ function CombatantModal({ handleClose, open, combatant }) {
           >
             {combatant.name.toUpperCase()}
           </Typography>
-          <List>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText>{"Armor Class: " + combatant.ac}</ListItemText>
-            </ListItem>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText>
-                {"Fortitude Save: " + combatant.fortitudeSave}
-              </ListItemText>
-            </ListItem>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText>
-                {"Reflex Save: " + combatant.reflexSave}
-              </ListItemText>
-            </ListItem>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText>{"Will Save: " + combatant.willSave}</ListItemText>
-            </ListItem>
-          </List>
+            <List >
+              <ListItem sx={{px:0}}>
+                <ListItemText>{'AC: ' + combatant.ac}</ListItemText>
+              </ListItem>
+              <ListItem sx={{px:0}}>
+                <ListItemText>{'HP: ' + combatant.hp}</ListItemText>
+              </ListItem>
+              <ListItem sx={{px:0}}>
+                <ListItemText>{'FS: ' + combatant.fortitudeSave}</ListItemText>
+              </ListItem>
+              <ListItem sx={{px:0}}>
+                <ListItemText>{'RS: ' + combatant.reflexSave}</ListItemText>
+              </ListItem>
+              <ListItem sx={{px:0}}>
+                <ListItemText>{'WS: ' + combatant.willSave}</ListItemText>
+              </ListItem>
+            </List>
         </Box>
       </Modal>
     </Box>
