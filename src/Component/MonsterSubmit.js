@@ -42,13 +42,13 @@ export default function MonsterSubmit() {
 			tabValue === 'Characters' ? characterCollectionRef : monsterCollectionRef,
 			{
 				name: monsterName,
-				ac: monsterAC,
-				fortitudeSave: monsterFortSave,
-				reflexSave: monsterReflexSave,
-				willSave: monsterWillSave,
-				initiative: monsterInitiative,
+				hp: Number(monsterHP),
+				ac: Number(monsterAC),
+				fortitudeSave: Number(monsterFortSave),
+				reflexSave: Number(monsterReflexSave),
+				willSave: Number(monsterWillSave),
+				initiative: Number(monsterInitiative),
 				description: monsterDescription,
-				userId: auth?.currentUser?.uid,
 			}
 		);
 		setMonsterAC(10);
