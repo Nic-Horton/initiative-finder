@@ -125,10 +125,7 @@ function InitiativeTracker() {
 	//rolling initiative for the cards
 
 
-	const onRolledInitiativeChange = (value) => {
-		setChildRolledInitiative(value)
-		console.log("child" + childRolledInitiative)
-	}
+	
 
 	// const handleChildRolledInitiative = (value) => {
 	// 	setRolledInitiative(value);
