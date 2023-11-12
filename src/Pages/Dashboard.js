@@ -16,15 +16,14 @@ function Dashboard() {
       if (authUser) {
         setUser(authUser);
       } else {
-        setUser(null); 
+        setUser(null);
       }
     });
 
     return () => {
-      unsubscribe(); 
+      unsubscribe();
     };
   }, []);
-
 
   if (user === null) {
     return (
@@ -36,20 +35,20 @@ function Dashboard() {
             width: "100%",
           }}
         >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            backgroundImage: `url('https://livingmythrpg.files.wordpress.com/2016/03/fairy-with-dying-warrior-wallpaper-1920x1080.jpg')`,
-            height: "100vh",
-            width: "100%",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            filter: "blur(2px)",
-            zIndex: -1,
-          }}
-        ></div>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              backgroundImage: `url('https://livingmythrpg.files.wordpress.com/2016/03/fairy-with-dying-warrior-wallpaper-1920x1080.jpg')`,
+              height: "100vh",
+              width: "100%",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              filter: "blur(2px)",
+              zIndex: -1,
+            }}
+          ></div>
           <div
             style={{
               zIndex: 1,
@@ -88,7 +87,7 @@ function Dashboard() {
               </Button>
             </Box>
           </div>
-          </div>
+        </div>
       </>
     );
     // You can render a loading indicator or return null here

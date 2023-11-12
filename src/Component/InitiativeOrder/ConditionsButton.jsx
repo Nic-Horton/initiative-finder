@@ -59,7 +59,7 @@ export default function ConditionsButton({
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 650,
+              width: 850,
               bgcolor: "background.paper",
               border: "2px solid #000",
               boxShadow: 24,
@@ -75,21 +75,30 @@ export default function ConditionsButton({
               <Grid container spacing={2} columns={12}>
                 {/* Conditions mapping */}
                 {conditions.map((condition, index) => (
-                  <Grid item xs={5} sm={5} md={5} key={index}>
+                  <Grid
+                    item
+                    xs={5}
+                    sm={5}
+                    md={5}
+                    key={index}
+                    sx={{ border: "1px solid #ccc", padding: "8px", borderColor: 'error.main'}}
+                  >
                     {/* <Chip label={condition.name} color="error" /> */}
                     <ModifierPopover condition={condition} type="condition" />
-                    <SeverityLevelRadio
-                      handleSeveritySelect={handleSeveritySelect}
-                      name={condition.name}
-                      stages={condition.conditionEffects}
-                      modifiers={condition}
-                      setModifiers={setConditions}
-                    />
                     <RedSwitch
                       {...label}
                       checked={statusValues.includes(condition.name)}
                       onChange={() => handleStatusToggle(condition.name)}
                     />
+                    <div>
+                      <SeverityLevelRadio
+                        handleSeveritySelect={handleSeveritySelect}
+                        name={condition.name}
+                        stages={condition.conditionEffects}
+                        modifiers={condition}
+                        setModifiers={setConditions}
+                      />
+                    </div>
                   </Grid>
                 ))}
               </Grid>

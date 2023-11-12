@@ -35,9 +35,9 @@ import {
 } from 'firebase/firestore';
 
 function InitiativeTracker() {
+
 	//usestate for user
 	const [user, setUser] = useState(null);
-
 	// Checks if user is signed in
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -52,6 +52,9 @@ function InitiativeTracker() {
 			unsubscribe();
 		};
 	}, []);
+
+
+
 
 	if (user === null) {
 		return (
@@ -119,6 +122,21 @@ function InitiativeTracker() {
 			</>
 		);
 	}
+	//rolling initiative for the cards
+
+
+	
+
+	// const handleChildRolledInitiative = (value) => {
+	// 	setRolledInitiative(value);
+	//   };
+
+
+
+
+
+
+
 
 	return (
 		<>
@@ -126,6 +144,7 @@ function InitiativeTracker() {
 			<Toolbar />
 			<Box sx={{ display: 'flex' }}>
 				<CssBaseline />
+
 				<Tracker />
 			</Box>
 		</>

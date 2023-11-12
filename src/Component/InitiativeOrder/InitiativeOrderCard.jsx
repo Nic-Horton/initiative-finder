@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import InitiativeOrderAccordion from "./InitiativeOrderAccordion";
+import { useState } from "react";
 
 export default function InitiativeOrderCard({
   age,
@@ -12,6 +13,11 @@ export default function InitiativeOrderCard({
   willSave,
   reflexSave,
   hp,
+  id,
+  initiative,
+  initiativeRoll,
+  handleRolledInitiative,
+  onRolledInitiativeChange,
   setCombatantName,
   setCombatantAC,
   setCombatantHp,
@@ -21,7 +27,15 @@ export default function InitiativeOrderCard({
   setCombatantInitiative,
   setSelectedUnit,
   selectedUnit
-}) {
+}) 
+
+{
+  
+
+  
+
+
+  
   return (
     <>
       <React.Fragment>
@@ -36,6 +50,11 @@ export default function InitiativeOrderCard({
               willSave={willSave}
               reflexSave={reflexSave}
               hp={hp}
+              id={id}
+              initiative={initiative}
+              initiativeRoll={initiativeRoll}
+              handleRolledInitiative={handleRolledInitiative}
+              onRolledInitiativeChange={onRolledInitiativeChange}
               setCombatantInitiative={setCombatantInitiative}
               setCombatantHp={setCombatantHp}
               setCombatantName={setCombatantName}
