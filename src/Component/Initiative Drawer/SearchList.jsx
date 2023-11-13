@@ -3,6 +3,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListResult from "./ListResult";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function SearchList({
   addUnitsToBattle,
@@ -12,10 +14,29 @@ function SearchList({
   combatantList,
 }) {
 
-
+  // || [];
   const renderCards = () => {
     if (category === "characters") {
-      const characterList = combatantList?.characterList || [];
+      const characterList = combatantList?.characterList 
+      if(!characterList) {
+        return (
+          <Box width='100%' sx={{ display: 'flex', justifyContent:'center' }}>
+            <CircularProgress 
+            sx={{color:"rgba(200,184,116)"}}
+            variant="indeterminate"
+            size={50}
+            thickness={4}
+            value={100}
+            />
+          </Box>
+        );
+      }
+      if(characterList.length === 0){
+        return (<ListItem>
+          <ListItemText primary="No Characters created" />
+        </ListItem>
+              )
+      }
       return characterList
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
         .map((character) => (
@@ -26,7 +47,26 @@ function SearchList({
                 />
         ));
     } else {
-      const monsterList = combatantList?.monsterList || [];
+      const monsterList = combatantList?.monsterList 
+      if(!monsterList) {
+        return (
+          <Box width='100%' sx={{ display: 'flex', justifyContent:'center' }}>
+            <CircularProgress 
+            sx={{color:"rgba(200,184,116)"}}
+            variant="indeterminate"
+            size={40}
+            thickness={4}
+            value={100}
+            />
+          </Box>
+        );
+      }
+      if(monsterList.length === 0){
+        return (<ListItem>
+          <ListItemText primary="No Monsters created" />
+        </ListItem>
+              )
+      }
       return monsterList
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
         .map((monster) => (

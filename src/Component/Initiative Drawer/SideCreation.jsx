@@ -201,7 +201,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
             <Typography
               align="center"
               variant="h4"
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "center", color:"rgba(200,184,116)" }}
             >
               {tabValue === "Characters" ? "New Character" : "New Monster"}
             </Typography>
