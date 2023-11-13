@@ -17,7 +17,7 @@ function ListResult({ addUnitsToBattle, combatant }) {
       <ListItem
         secondaryAction={
           <IconButton aria-label="info" edge="end" onClick={handleOpen}>
-            <PageviewOutlinedIcon />
+            <PageviewOutlinedIcon sx={{color:'rgba(200,184,116)'}}/>
           </IconButton>
         }
         disablePadding

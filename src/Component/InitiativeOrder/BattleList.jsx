@@ -19,15 +19,17 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
+import CasinoIcon from '@mui/icons-material/Casino';
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import AddBattleList from "./AddBattleList";
+import DTwentyIcon from "../DTwentyIcon";
 
 export default function BattleList({
   onBattleCreated,
   deleteBattle,
+  handleMassRoll,
   battleLists,
   handleChangeBattleList,
   battleListTitle,
@@ -41,7 +43,9 @@ export default function BattleList({
 
   return (
     <>
-      <Grid container>
+      <Grid container sx={{
+        backgroundColor: "white"
+      }}>
         <Grid item xs={12} lg={6}>
           <AddBattleList
             onBattleCreated={onBattleCreated}
@@ -49,8 +53,20 @@ export default function BattleList({
           />
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl sx={{ display: "flex", flexDirection: "row" }}>
-            <InputLabel id="battleList-select-label">Battles</InputLabel>
+          <FormControl sx={{ 
+            display: "flex",
+            flexDirection: "row",
+            backgroundColor: "rgba(38, 50, 56,0.75)",
+            borderColor: "rgba(200,184,116)",
+            borderRadius: 2,
+            paddingTop:1,
+            paddingBottom:1,
+            border:1}}>
+            {/* <InputLabel id="battleList-select-label"
+            sx={{
+              ml:13,
+              mt:1
+            }}>Battles</InputLabel> */}
             <Select
               labelId="battleList-select-label"
               id="battleList-select"
@@ -58,8 +74,16 @@ export default function BattleList({
               label="Battle List"
               onChange={handleChangeBattleList}
               variant="outlined"
-              fullWidth
-            >
+              sx={{
+                backgroundColor: 'white',
+                width:"80%",
+                minWidth:"50%",
+                ml: 4,
+                alignItems:'center'
+              }}
+              displayEmpty
+             
+            > 
               {battleLists?.map((battle) => {
                 return (
                   <MenuItem key={battle.id} value={battle.id}>
@@ -68,11 +92,12 @@ export default function BattleList({
                 );
               })}
             </Select>
-            <IconButton>
-              <SaveIcon />
+            <IconButton onClick={handleMassRoll}>
+              {/* <CasinoIcon /> */}
+              <DTwentyIcon />
             </IconButton>
             <IconButton onClick={deleteBattle}>
-              <DeleteIcon />
+              <DeleteIcon sx={{color:"#D90000"}} />
             </IconButton>
           </FormControl>
         </Grid>
