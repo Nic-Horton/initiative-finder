@@ -94,7 +94,7 @@ function SearchBar({ addUnitsToBattle, category, combatantList, setCombatantList
     setSearch(e.target.value.toLowerCase());
 
     if (category === "characters") {
-      const filteredResult = combatantList.characterList.filter((character) => {
+      const filteredResult = combatantList?.characterList?.filter((character) => {
         if (
           character.name.toLowerCase().includes(e.target.value.toLowerCase())
         ) {
@@ -104,7 +104,7 @@ function SearchBar({ addUnitsToBattle, category, combatantList, setCombatantList
       });
       setFilteredList(filteredResult);
     } else {
-      const filteredResult = combatantList.monsterList.filter((monster) => {
+      const filteredResult = combatantList?.monsterList?.filter((monster) => {
         if (monster.name.toLowerCase().includes(e.target.value.toLowerCase())) {
           return true;
         }

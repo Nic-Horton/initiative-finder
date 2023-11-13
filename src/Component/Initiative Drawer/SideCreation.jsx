@@ -237,7 +237,7 @@ export default function SideCreation({combatantList,setCombatantList}) {
 									variant="outlined"
 									type="tel"
 									color="error"
-									value={monsterAC}
+									value={monsterAC === '' ? 0 : monsterAC}
 									InputProps={{
 										style: {
 											display: 'flex',
@@ -252,11 +252,11 @@ export default function SideCreation({combatantList,setCombatantList}) {
 									onChange={(e) => {
 										const input = e.target.value;
 										if (/^\d*$/.test(input)) {
-											const limitedAC = Math.min(
+											const limitedAC = input === '' ? 0 : Math.min(
 												parseInt(input.slice(0, 3), 10),
 												99
 											);
-											setMonsterAC(limitedAC);
+											setMonsterAC(limitedAC === '' ? 0 : limitedAC);
 										} else {
 											alert('Numbers Only Please');
 										}
