@@ -181,7 +181,7 @@ export default function InitiativeOrderAccordion({
                       rolled
                     </Typography>
                     <Typography sx={{ color: "text.secondary" }}>
-                      {rolledInitiative}
+                      {initiativeRoll}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -267,7 +267,7 @@ export default function InitiativeOrderAccordion({
                   <Button
                     variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
-                    onClick={() => handleRolledInitiative(initiative)}
+                    onClick={() => handleRolledInitiative(id,initiative)}
                   >
                     <Typography
                       sx={{

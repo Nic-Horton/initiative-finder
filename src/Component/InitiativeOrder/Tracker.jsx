@@ -156,58 +156,54 @@ function Tracker() {
     console.log("child" + childRolledInitiative);
   };
 
-  const renderCards = () => {
-    if (unitsData) {
-      return unitsData
-        .sort((a, b) => b.initiativeRoll - a.initiativeRoll)
-        .map((unit, index) => (
-          <InitiativeOrderCard
-            key={index}
-            name={unit.name}
-            ac={unit.ac}
-            fortitudeSave={unit.fortitudeSave}
-            willSave={unit.willSave}
-            reflexSave={unit.reflexSave}
-            portrait={unit.portrait}
-            hp={unit.hp}
-            id={unit.id}
-            initiative={unit.initiative}
-            initiativeRoll={unit.initiativeRoll}
-            isSelected={selectedCardIndex === index}
-            handleSelectedCard={() => setSelectedCardIndex(index)}
-            handleRolledInitiative={handleRolledInitiative}
-            onRolledInitiativeChange={onRolledInitiativeChange}
-            setCombatantInitiative={setCombatantInitiative}
-            setCombatantHp={setCombatantHp}
-            setCombatantName={setCombatantName}
-            setCombatantAC={setCombatantAC}
-            setCombatantFortitudeSave={setCombatantFortitudeSave}
-            setCombatantReflexSave={setCombatantReflexSave}
-            setCombatantWillSave={setCombatantWillSave}
-            setSelectedUnit={setSelectedUnit}
-            setCombatantPortrait={setCombatantPortrait}
-            selectedUnit={selectedUnit}
-          />
-        ));
-    }
-  };
-  const characterPortrait =
-    "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1";
-  const handleRolledInitiative = (id, initiative) => {
-    const finalValue = roll20SidedDieWithModifier(initiative);
-    console.log("final" + finalValue);
-    // onRolledInitiativeChange(finalValue)
-    // setRolledInitiative(finalValue);
-    const index = unitsData.findIndex((u) => u.id === id);
-    if (index != -1) {
-      const updatedUnits = [...unitsData];
-      updatedUnits[index] = {
-        ...updatedUnits[index],
-        initiativeRoll: finalValue,
-      };
-      setUnitsData(updatedUnits);
-    }
-  };
+	const renderCards = () => {
+		if (unitsData) {
+			return unitsData
+				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
+				.map((unit, index) => (
+					<InitiativeOrderCard
+						key={index}
+						name={unit.name}
+						ac={unit.ac}
+						fortitudeSave={unit.fortitudeSave}
+						willSave={unit.willSave}
+						reflexSave={unit.reflexSave}
+						portrait={unit.portrait}
+						hp={unit.hp}
+						id={unit.id}
+						initiative={unit.initiative}
+						initiativeRoll={unit.initiativeRoll}
+						isSelected={selectedCardIndex === index}
+						handleSelectedCard={() => setSelectedCardIndex(index)}
+						handleRolledInitiative={handleRolledInitiative}
+						onRolledInitiativeChange={onRolledInitiativeChange}
+						setCombatantInitiative={setCombatantInitiative}
+						setCombatantHp={setCombatantHp}
+						setCombatantName={setCombatantName}
+						setCombatantAC={setCombatantAC}
+						setCombatantFortitudeSave={setCombatantFortitudeSave}
+						setCombatantReflexSave={setCombatantReflexSave}
+						setCombatantWillSave={setCombatantWillSave}
+						setSelectedUnit={setSelectedUnit}
+						setCombatantPortrait={setCombatantPortrait}
+						selectedUnit={selectedUnit}
+					/>
+				));
+		}
+	};
+	const characterPortrait = "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1"
+	const handleRolledInitiative = (id,initiative) => {
+		const finalValue = roll20SidedDieWithModifier(initiative);
+		console.log("final" + finalValue)
+		// onRolledInitiativeChange(finalValue)
+		// setRolledInitiative(finalValue);
+		const index = unitsData.findIndex(u => u.id === id)
+		if (index !== -1) {
+			const updatedUnits = [...unitsData];
+			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
+			setUnitsData(updatedUnits)
+		}
+	};
 
   function roll20SidedDieWithModifier(modifier) {
     const rollResult = Math.floor(Math.random() * 20) + 1;
