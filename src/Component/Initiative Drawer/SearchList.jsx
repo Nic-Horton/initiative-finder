@@ -11,6 +11,52 @@ function SearchList({
   filteredList,
   combatantList,
 }) {
+
+
+  const renderCards = () => {
+    if (category === "characters") {
+      return combatantList.characterList
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        .map((character) => (
+          <ListResult
+                  key={character.id}
+                  combatant={character}
+                  addUnitsToBattle={addUnitsToBattle}
+                />
+        ));
+    } else {
+      return combatantList.monsterList
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        .map((monster) => (
+          <ListResult
+                  key={monster.id}
+                  combatant={monster}
+                  addUnitsToBattle={addUnitsToBattle}
+                />
+        ));
+    }
+  }
+
+const renderSearchedCards = () => {
+    if (filteredList.length > 0) {
+      return filteredList
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        .map((combatant) => (
+          <ListResult
+                  key={combatant.id}
+                  combatant={combatant}
+                  addUnitsToBattle={addUnitsToBattle}
+                />
+        ));
+    } else {
+      return (
+      <ListItem>
+        <ListItemText primary="Nothing found" />
+      </ListItem>
+      )} 
+};
+
+
   return (
     <List
       sx={{
@@ -24,42 +70,10 @@ function SearchList({
       }}
     >
       {!search ? (
-        category === "characters" ? (
-          combatantList?.characterList?.map((character) => {
-            return (
-              <ListResult
-                key={character.id}
-                combatant={character}
-                addUnitsToBattle={addUnitsToBattle}
-              />
-            );
-          })
-        ) : (
-          combatantList?.monsterList?.map((monster) => {
-            return (
-              <ListResult
-                key={monster.id}
-                combatant={monster}
-                addUnitsToBattle={addUnitsToBattle}
-              />
-            );
-          })
-        )
-      ) : filteredList?.length > 0 ? (
-        filteredList?.map((combatant) => {
-          return (
-            <ListResult
-              key={combatant.id}
-              combatant={combatant}
-              addUnitsToBattle={addUnitsToBattle}
-            />
-          );
-        })
-      ) : (
-        <ListItem>
-          <ListItemText primary="Nothing found" />
-        </ListItem>
-      )}
+        renderCards()
+       ) : (
+        renderSearchedCards()
+       )}
     </List>
   );
 }
