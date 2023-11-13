@@ -149,6 +149,23 @@ function Tracker() {
     }
   };
 
+  //Deletes a unit from the battlelist it is in
+  const deleteUnitsFromBattle = async (unitID) => {
+    const updatedUnits = unitsData.filter(
+      (unit) => unit.id !== unitID
+    );
+
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    const unitDoc = doc(battleUnitsRef,unitID)
+    await deleteDoc(unitDoc)
+
+    setUnitsData(updatedUnits);
+  }
+
   // const [rolledInitiative, setRolledInitiative] = useState(0);
 
   const onRolledInitiativeChange = (value) => {
@@ -162,7 +179,7 @@ function Tracker() {
 				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
 				.map((unit, index) => (
 					<InitiativeOrderCard
-						key={index}
+						key={unit.id}
 						name={unit.name}
 						ac={unit.ac}
 						fortitudeSave={unit.fortitudeSave}
@@ -187,35 +204,54 @@ function Tracker() {
 						setSelectedUnit={setSelectedUnit}
 						setCombatantPortrait={setCombatantPortrait}
 						selectedUnit={selectedUnit}
+            deleteUnitsFromBattle={deleteUnitsFromBattle}
 					/>
 				));
 		}
 	};
 	const characterPortrait = "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1"
-	const handleRolledInitiative = (id,initiative) => {
+
+	const handleRolledInitiative = async (id,initiative) => {
 		const finalValue = roll20SidedDieWithModifier(initiative);
 		console.log("final" + finalValue)
-		// onRolledInitiativeChange(finalValue)
-		// setRolledInitiative(finalValue);
+		
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+
 		const index = unitsData.findIndex(u => u.id === id)
 		if (index !== -1) {
 			const updatedUnits = [...unitsData];
 			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
 			setUnitsData(updatedUnits)
+      const unitDoc = doc(battleUnitsRef, id);
+		  await updateDoc(unitDoc, { initiativeRoll: Number(finalValue)})
 		}
 	};
 
-	const handleMassRoll = () => {
+	const handleMassRoll = async () => {
 		if (!battleListTitle) {
 			return alert('Select a Battle!');
 		}
 		if (unitsData.length === 0 || !unitsData) {
 			return alert('Add Units to Battle!');
 		}
-			const massRollUnits = unitsData.map((unit) => {
-			const finalValue = roll20SidedDieWithModifier(unit.initiative);
-			return { ...unit, initiativeRoll: finalValue }	
-		})
+    
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    const massRollUnits =[];
+
+    for (const unit of unitsData) {
+      const finalValue = roll20SidedDieWithModifier(unit.initiative);
+      const unitDoc = doc(battleUnitsRef, unit.id);
+      await updateDoc(unitDoc, { initiativeRoll: Number(finalValue) });
+      massRollUnits.push({ ...unit, initiativeRoll: finalValue });
+    }
 			setUnitsData(massRollUnits)
 	};
 

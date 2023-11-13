@@ -185,7 +185,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
           border: 5,
           backgroundColor: "rgba(38, 50, 56,0.75)" ,
           borderColor: "rgba(200,184,116)",
-          borderRadius: 10,
+          borderRadius: 6,
           mt: 2,
           width: "97%",
         }}
@@ -201,7 +201,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
             <Typography
               align="center"
               variant="h4"
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "center", color:"rgba(200,184,116)" }}
             >
               {tabValue === "Characters" ? "New Character" : "New Monster"}
             </Typography>

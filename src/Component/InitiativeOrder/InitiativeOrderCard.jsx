@@ -1,8 +1,13 @@
 import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Card from "@mui/material/Card";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from '@mui/material/IconButton';
+import CardHeader from '@mui/material/CardHeader';
 import CardContent from "@mui/material/CardContent";
 import InitiativeOrderAccordion from "./InitiativeOrderAccordion";
+import Typography from '@mui/material/Typography';
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import { useState, useEffect } from "react";
 import { red } from "@mui/material/colors";
 
@@ -31,7 +36,8 @@ export default function InitiativeOrderCard({
   setCombatantInitiative,
   setCombatantPortrait,
   setSelectedUnit,
-  selectedUnit
+  selectedUnit,
+  deleteUnitsFromBattle
 }) 
 
 
@@ -63,6 +69,20 @@ export default function InitiativeOrderCard({
 					
 				}}
 >
+
+            <CardHeader
+            sx={{padding:0, mb:1}}
+            avatar={
+                <SentimentSatisfiedAltIcon sx={{color:'rgba(200,184,116)'}}/>
+            }
+            title={<Typography sx={{color:'rgba(200,184,116)'}} variant="h5">{name}</Typography>}
+            action={
+              <IconButton onClick={()=>deleteUnitsFromBattle(id)}>
+                <DeleteIcon  sx={{color:"#D90000"}} />
+              </IconButton>
+            }
+            />
+
             <InitiativeOrderAccordion
               age={age}
               name={name}
