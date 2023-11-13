@@ -97,7 +97,7 @@ export default function BattleList({
               <DTwentyIcon />
             </IconButton>
             <IconButton onClick={deleteBattle}>
-              <DeleteIcon />
+              <DeleteIcon sx={{color:"#D90000"}} />
             </IconButton>
           </FormControl>
         </Grid>
