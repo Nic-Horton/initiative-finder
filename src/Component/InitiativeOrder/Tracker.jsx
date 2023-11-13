@@ -198,7 +198,7 @@ function Tracker() {
 		// onRolledInitiativeChange(finalValue)
 		// setRolledInitiative(finalValue);
 		const index = unitsData.findIndex(u => u.id === id)
-		if (index != -1) {
+		if (index !== -1) {
 			const updatedUnits = [...unitsData];
 			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
 			setUnitsData(updatedUnits)
