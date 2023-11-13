@@ -149,6 +149,23 @@ function Tracker() {
     }
   };
 
+  //Deletes a unit from the battlelist it is in
+  const deleteUnitsFromBattle = async (unitID) => {
+    const updatedUnits = unitsData.filter(
+      (unit) => unit.id !== unitID
+    );
+
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    const unitDoc = doc(battleUnitsRef,unitID)
+    await deleteDoc(unitDoc)
+
+    setUnitsData(updatedUnits);
+  }
+
   // const [rolledInitiative, setRolledInitiative] = useState(0);
 
   const onRolledInitiativeChange = (value) => {
@@ -162,7 +179,7 @@ function Tracker() {
 				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
 				.map((unit, index) => (
 					<InitiativeOrderCard
-						key={index}
+						key={unit.id}
 						name={unit.name}
 						ac={unit.ac}
 						fortitudeSave={unit.fortitudeSave}
@@ -187,6 +204,7 @@ function Tracker() {
 						setSelectedUnit={setSelectedUnit}
 						setCombatantPortrait={setCombatantPortrait}
 						selectedUnit={selectedUnit}
+            deleteUnitsFromBattle={deleteUnitsFromBattle}
 					/>
 				));
 		}
