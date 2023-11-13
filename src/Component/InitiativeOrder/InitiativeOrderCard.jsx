@@ -40,9 +40,9 @@ export default function InitiativeOrderCard({
 
   const cardStyles = {
     // Define your card styles here
-    border: isSelected ? "green" : '2px solid transparent',
-    backgroundColor: isSelected ? "red" : "lightblue" ,
-    minWidth: 275
+    border: isSelected ? "green" : "2px solid transparent",
+    backgroundColor: isSelected ? "red" : "rgba(38, 50, 56,0.75)",
+    minWidth: 275,
     // Add other styles as needed
   };
 
@@ -55,7 +55,14 @@ export default function InitiativeOrderCard({
       {/* <React.Fragment> */}
         {/* <CssBaseline  /> */}
         <Card isSelected={false} style={cardStyles}>
-          <CardContent >
+          <CardContent 					sx={{
+					border: 5,
+					backgroundColor: 'rgba(38, 50, 56,0.75)',
+					borderColor: 'rgba(200,184,116)',
+					borderRadius: 10,
+					
+				}}
+>
             <InitiativeOrderAccordion
               age={age}
               name={name}
