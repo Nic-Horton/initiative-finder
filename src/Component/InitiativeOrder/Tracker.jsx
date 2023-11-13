@@ -205,6 +205,20 @@ function Tracker() {
 		}
 	};
 
+	const handleMassRoll = () => {
+		if (!battleListTitle) {
+			return alert('Select a Battle!');
+		}
+		if (unitsData.length === 0 || !unitsData) {
+			return alert('Add Units to Battle!');
+		}
+			const massRollUnits = unitsData.map((unit) => {
+			const finalValue = roll20SidedDieWithModifier(unit.initiative);
+			return { ...unit, initiativeRoll: finalValue }	
+		})
+			setUnitsData(massRollUnits)
+	};
+
   function roll20SidedDieWithModifier(modifier) {
     const rollResult = Math.floor(Math.random() * 20) + 1;
 
@@ -246,6 +260,7 @@ function Tracker() {
                 battleLists={battleLists}
                 setBattleListTitle={setBattleListTitle}
                 battleListTitle={battleListTitle}
+								handleMassRoll={handleMassRoll}
               />
             </Paper>
             <Paper

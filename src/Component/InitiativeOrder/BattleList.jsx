@@ -19,15 +19,17 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
+import CasinoIcon from '@mui/icons-material/Casino';
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import AddBattleList from "./AddBattleList";
+import DTwentyIcon from "../DTwentyIcon";
 
 export default function BattleList({
   onBattleCreated,
   deleteBattle,
+  handleMassRoll,
   battleLists,
   handleChangeBattleList,
   battleListTitle,
@@ -90,11 +92,12 @@ export default function BattleList({
                 );
               })}
             </Select>
-            <IconButton>
-              <SaveIcon />
+            <IconButton onClick={handleMassRoll}>
+              {/* <CasinoIcon /> */}
+              <DTwentyIcon />
             </IconButton>
             <IconButton onClick={deleteBattle}>
-              <DeleteIcon />
+              <DeleteIcon sx={{color:"#D90000"}} />
             </IconButton>
           </FormControl>
         </Grid>
