@@ -15,7 +15,8 @@ function SearchList({
 
   const renderCards = () => {
     if (category === "characters") {
-      return combatantList.characterList
+      const characterList = combatantList?.characterList || [];
+      return characterList
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
         .map((character) => (
           <ListResult
@@ -25,7 +26,8 @@ function SearchList({
                 />
         ));
     } else {
-      return combatantList.monsterList
+      const monsterList = combatantList?.monsterList || [];
+      return monsterList
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
         .map((monster) => (
           <ListResult
