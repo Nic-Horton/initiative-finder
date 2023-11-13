@@ -18,6 +18,7 @@ import AppSteps from "../Component/Stepper";
 
 const steps = [
 	'Select Campaign',
+  
 	'Create Characters or Monsters',
 	'Add to Initiative Tracker',
 	'Roll Initiative!',
@@ -173,7 +174,7 @@ export default function Home() {
 <Box sx={{ width: '100%' }}>
       <Stepper alternativeLabel nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
-          <Step sx={{backgroundColor:"red", color:'blue'}}key={label} completed={completed[index]}>
+          <Step sx={{mt:3, color:'blue'}}key={label} completed={completed[index]}>
             <StepButton sx={{p:0,
               backgroundColor:"rgb(38,50,56)", 
               border:1,
