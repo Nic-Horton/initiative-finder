@@ -46,7 +46,7 @@ const customTheme = createTheme({
   },
 });
 
-export default function SideCreation() {
+export default function SideCreation({combatantList,setCombatantList}) {
 	const uid = auth.currentUser.uid;
 	// const uid = user.uid;
 	// const monsterCollectionRef = collection(db, 'Monsters');
@@ -59,7 +59,7 @@ export default function SideCreation() {
       return
     }
     e.preventDefault();
-		await addDoc(
+		const docRef = await addDoc(
 			tabValue === 'Characters' ? characterCollectionRef : monsterCollectionRef,
 			{
 				name: monsterName,
@@ -72,6 +72,33 @@ export default function SideCreation() {
 				description: monsterDescription,
 			}
 		);
+		if(tabValue === 'Characters'){
+			const newCombatantList = [...combatantList.characterList, { 
+				id: docRef.id, 
+				name: monsterName,
+				hp: Number(monsterHP),
+				ac: Number(monsterAC),
+				fortitudeSave: Number(monsterFortSave),
+				reflexSave: Number(monsterReflexSave),
+				willSave: Number(monsterWillSave),
+				initiative: Number(monsterInitiative),
+				description: monsterDescription, 
+			}];
+			setCombatantList({characterList:newCombatantList, monsterList:[...combatantList.monsterList]});
+		} else {
+			const newCombatantList = [...combatantList.monsterList, { 
+				id: docRef.id, 
+				name: monsterName,
+				hp: Number(monsterHP),
+				ac: Number(monsterAC),
+				fortitudeSave: Number(monsterFortSave),
+				reflexSave: Number(monsterReflexSave),
+				willSave: Number(monsterWillSave),
+				initiative: Number(monsterInitiative),
+				description: monsterDescription, 
+			}];
+			setCombatantList({characterList:[...combatantList.characterList],monsterList:newCombatantList});
+		}
 		setMonsterAC(10);
 		setOpen(true);
 		handleReset();

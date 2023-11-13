@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getDocs, collection, doc, updateDoc } from "firebase/firestore";
 import SearchList from "./SearchList";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Divider from "@mui/material/Divider";
 
 // const customTheme = createTheme({
 //   palette: {
@@ -52,16 +53,16 @@ const customTheme = createTheme({
   },
 });
 
-function SearchBar({ addUnitsToBattle, category }) {
+function SearchBar({ addUnitsToBattle, category, combatantList, setCombatantList }) {
   const uid = auth.currentUser.uid;
   const monsterCollectionRef = collection(db, "Users", uid, "Monsters");
   const characterCollectionRef = collection(db, "Users", uid, "Characters");
   const [search, setSearch] = useState("");
 
   const [filteredList, setFilteredList] = useState([]);
-  const [combatantList, setCombatantList] = useState([
-    { monsterList: [], characterList: [] },
-  ]);
+  // const [combatantList, setCombatantList] = useState([
+  //   { monsterList: [], characterList: [] },
+  // ]);
 
   useEffect(() => {
     const getLists = async () => {
@@ -130,6 +131,7 @@ function SearchBar({ addUnitsToBattle, category }) {
           },}}
         
       />
+      <Divider sx={{ height:'10px'}}/>
       </ThemeProvider>
       <SearchList
         addUnitsToBattle={addUnitsToBattle}
