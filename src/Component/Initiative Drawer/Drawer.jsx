@@ -109,6 +109,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
   const [category, setCategory] = useState("characters");
+  const [combatantList, setCombatantList] = useState([
+    { monsterList: [], characterList: [] },
+  ]);
 
   const handleTabChange = (event, newCategory) => {
     setCategory(newCategory);
@@ -207,15 +210,15 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
           }}
         >
           <Box component={Paper} sx={{ width: "90%",
-            height:'35%',
+            height:'32vh',
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: 'rgba(38, 50, 56,0.75)'
              }}>
-          <SearchBar category={category} addUnitsToBattle={addUnitsToBattle} />
+          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} />
           </Box>
-          <SideCreation/>
+          <SideCreation combatantList={combatantList} setCombatantList={setCombatantList}/>
         </Box>
       </Drawer>
     </>
