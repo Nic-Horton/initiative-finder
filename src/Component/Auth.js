@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Container, FormControl, FormLabel } from "@mui/material";
+import { Container, FormControl, FormLabel, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Register from "./Register";
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
 import { auth, googleProvider } from "../Config/firebase-config";
 import {
   signInWithEmailAndPassword,
@@ -12,11 +12,13 @@ import {
 } from "firebase/auth";
 import { Alert } from "@mui/material";
 import NavbarLogin from "./NavBarNoLogin";
+import Navbar from "./Navbar";
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+
 
   console.log(auth?.currentUser);
 
@@ -41,7 +43,7 @@ export const Auth = () => {
         alert("User Found-Critical Success!");
         setTimeout(()=> { 
       window.location.href = "/dashboard";
-        }, 3000);
+        }, 500);
   
         // window.location.href = "/dashboard";
       }
@@ -54,6 +56,7 @@ export const Auth = () => {
   const logout = async () => {
     try {
       await signOut(auth);
+      setUser(null);
     } catch (err) {
       console.log(err);
     }
@@ -93,7 +96,7 @@ export const Auth = () => {
       }}
     >
       <div>
-       <NavbarLogin />
+
         <Box
           component="form"
           sx={{
@@ -119,14 +122,14 @@ export const Auth = () => {
                 alignItems: "center",
                 backgroundColor: "rgba(54,69,79,0.5)",
                 color: "white",
-                width: 500,
+                width: 800,
                 border: 1,
                 borderRadius: 10,
                 marginTop: 10,
                 marginBottom: 5,
               }}
             >
-              <h1>Initiative Finder</h1>
+            <Typography variant="h3">Please sign in or Register below!</Typography>
             </Box>
             <FormControl
               sx={{

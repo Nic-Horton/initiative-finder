@@ -16,6 +16,8 @@ import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
 import { signOut } from "firebase/auth";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation } from 'react-router-dom';
 
 const appBarColor = blueGrey[900];
 
@@ -28,6 +30,7 @@ const pages = [
 const settings = ["Profile", "Settings", "Logout"];
 
 function Navbar() {
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -163,7 +166,16 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+        {/* Disable the logout button if the current page is the login page */}
+        {location.pathname !== '/login'  && (
+          <Button onClick={logout}>
+            <Typography>Log out</Typography>
+            <LogoutIcon />
+          </Button>
+        )}
+      </Box>
+
+            {/* <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
@@ -210,9 +222,9 @@ function Navbar() {
                   >
                     <Button>Log Out</Button>
                   </Typography>
-                </MenuItem>
-            </Menu>
-          </Box>
+                </MenuItem> */}
+            {/* </Menu> */}
+
         </Toolbar>
       </Container>
     </AppBar>

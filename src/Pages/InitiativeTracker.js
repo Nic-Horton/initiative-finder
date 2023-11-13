@@ -16,6 +16,7 @@ import BattleList from '../Component/InitiativeOrder/BattleList';
 import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
 import Navbar from '../Component/Navbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { db, auth } from '../Config/firebase-config';
@@ -194,7 +195,7 @@ setSelectedArray(tempArray)
               zIndex: 1,
             }}
           >
-            <Navbar />
+<Navbar />
             <Box
               textAlign="center"
               sx={{
@@ -235,8 +236,9 @@ setSelectedArray(tempArray)
   
 	return (
 		<>
-			<Box sx={{ display: 'flex' }}>
-				<CssBaseline />
+		    <NavbarNoLogin />
+			<Box sx={{mt:6, display: 'flex' }}>
+
 				<SearchDrawer open={open} setOpen={setOpen} />
 				<Main open={open}>
 					<Grid container spacing={2}>

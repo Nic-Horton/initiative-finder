@@ -39,6 +39,7 @@ export default function MonsterSubmit() {
       {
         name: monsterName,
         ac: monsterAC,
+        hp: monsterHP,
         fortitudeSave: monsterFortSave,
         reflexSave: monsterReflexSave,
         willSave: monsterWillSave,
@@ -47,7 +48,14 @@ export default function MonsterSubmit() {
         userId: auth?.currentUser?.uid,
       }
     );
+    setMonsterName("");
     setMonsterAC(10);
+    setMonsterHP(10);
+    setMonsterWillSave(10);
+    setMonsterReflexSave(10);
+    setMonsterFortSave(10);
+    setMonsterInitiative(10);
+    setMonsterDescription("");
     alert("Stat Block Submitted!");
   };
 

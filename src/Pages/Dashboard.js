@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import DashboardData from "../Component/DashboardData";
 import MonsterSubmit from "../Component/MonsterSubmit";
 import Box from "@mui/material/Box";
 import Navbar from "../Component/Navbar";
+import NavbarNoLogin from "../Component/NavBarNoLogin";
 import { NavLink } from "react-router-dom";
 import { auth, googleProvider } from "../Config/firebase-config";
 import { Button, Container, Typography } from "@mui/material";
+
+
+// ADD DEATH SCENE and potential gif of zelda or fire from dark souls? 
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -24,7 +27,6 @@ function Dashboard() {
       unsubscribe(); 
     };
   }, []);
-
 
   if (user === null) {
     return (
@@ -121,7 +123,7 @@ function Dashboard() {
             zIndex: 1,
           }}
         >
-          <Navbar />
+          <NavbarNoLogin />
           <Container>
             <Box
               sx={{

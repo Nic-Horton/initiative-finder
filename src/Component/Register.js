@@ -19,13 +19,6 @@ import { auth } from '../Config/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
-function BottomAlert ({ open, severity, message }) {
-  return (
-    <div className={`bottom-alert ${severity}`}>
-      {message}
-    </div>
-  );
-}
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -35,14 +28,6 @@ export default function RegisterPage() {
   const [alertSeverity, setAlertSeverity] = useState('info');
   const [showAlert, setShowAlert] = useState(false);
 
-
-	const showBottomAlert = () => {
-		return (
-			<div>
-				{showAlert && <div className="bottom-alert">This is a alert!</div>}
-			</div>
-		);
-	};
 
 
 	const handleCancel = () => {
@@ -91,7 +76,7 @@ export default function RegisterPage() {
 		  
           setTimeout(()=> { 
             setOpen(false);
-          }, 3000);
+          }, 500);
 
         } catch (createErr) {
           console.error("Error creating user:", createErr);
