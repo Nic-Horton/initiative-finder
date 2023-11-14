@@ -34,6 +34,7 @@ export default function BuffsButton({
   statusValues,
   handleStatusToggle,
   handleSeveritySelect,
+  severityValues
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -118,10 +119,13 @@ export default function BuffsButton({
                       onChange={() => handleStatusToggle(buff.name)}
                     />
                     <SeverityLevelRadio
-                      name={buff.name}
                       handleSeveritySelect={handleSeveritySelect}
+                      name={buff.name}
                       modifiers={buff}
                       // setModifier={setBuffs}
+                      value={severityValues.find(
+                        (item) => item.name === buff.name
+                      )}
                     />
                   </Grid>
                 ))}
