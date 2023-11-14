@@ -161,10 +161,41 @@ function InitiativeTracker() {
 		<>
 			<Navbar />
 			<Toolbar />
-			<Box sx={{ display: 'flex' }}>
-				<CssBaseline />
-
-				<Tracker />
+			<Box
+				sx={{
+					position: 'relative',
+					width: '100%',
+					height: '100vh',
+					overflow: 'hidden',
+				}}
+			>
+				<Box
+					style={{
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						backgroundImage: `url('../Images/TrackerBG.jpg')`,
+						height: '100vh',
+						width: '100%',
+						backgroundSize: 'cover',
+						backgroundAttachment: 'fixed',
+						backgroundRepeat: 'no-repeat',
+						zIndex: -1,
+					}}
+				/>
+				<Box
+					sx={{
+						display: 'flex',
+						position: 'relative',
+						width: '100%',
+						overflowY: 'auto',
+						height: '100%',
+						margin: '0 auto',
+					}}
+				>
+					<CssBaseline />
+					<Tracker />
+				</Box>
 			</Box>
 		</>
 	);

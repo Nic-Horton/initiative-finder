@@ -16,6 +16,7 @@ import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
 import { signOut } from "firebase/auth";
+import DTwentyIcon from "./DTwentyIcon";
 
 const appBarColor = blueGrey[900];
 
@@ -138,8 +139,8 @@ function Navbar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component={NavLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },

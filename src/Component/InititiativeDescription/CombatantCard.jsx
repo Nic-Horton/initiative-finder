@@ -20,7 +20,7 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
         minWidth: 275,
         backgroundColor: "rgb(38, 50, 56,0.75)",
         border: "5px solid rgb(200, 184, 116)",
-
+      borderRadius:5
       }}>
         <CardContent >
           <Typography variant="h4" color="text.secondary" gutterBottom>
@@ -33,7 +33,6 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
               alignItems: "center",
               justifyContent: "center",
               textAlign: "center",
-              borderRadius: 2,
               border: "5px solid rgb(200, 184, 116)",
               minHeight: 50
             }}>

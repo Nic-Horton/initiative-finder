@@ -5,6 +5,7 @@ export default function StatusEntry({ status, severityValues, index }) {
   console.log(status)
   console.log(index)
   console.log(severity)
+  console.log(severity.stage)
   return (
     <div>
       {status} stage {severity && severity.stage}

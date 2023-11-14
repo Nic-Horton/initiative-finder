@@ -13,21 +13,21 @@ import Box from "@mui/material/Box";
 import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
-import Button from '@mui/material/Button';
-import { Auth } from '../Auth';
-import { db, auth } from '../../Config/firebase-config';
+import Button from "@mui/material/Button";
+import { Auth } from "../Auth";
+import { db, auth } from "../../Config/firebase-config";
 import {
-	getDocs,
-	collection,
-	addDoc,
-	getDoc,
-	deleteDoc,
-	doc,
-	updateDoc,
-	collectionGroup,
-	where,
-	query,
-} from 'firebase/firestore';
+  getDocs,
+  collection,
+  addDoc,
+  getDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  collectionGroup,
+  where,
+  query,
+} from "firebase/firestore";
 
 const accordionTop = "rgba(200,184,116)";
 const accordionDrop = "rgba(150,134,66,0.75)";
@@ -41,7 +41,7 @@ export default function InitiativeOrderAccordion({
   hp,
   portrait,
   initiative,
-  initiativeRoll, 
+  initiativeRoll,
   id,
   rolledInitiative,
   onRolledInitiativeChange,
@@ -54,13 +54,12 @@ export default function InitiativeOrderAccordion({
   setCombatantWillSave,
   setCombatantHp,
   setCombatantPortrait,
-  setSelectedUnit, 
-  selectedUnit}) {
-
+  setSelectedUnit,
+  selectedUnit,
+}) {
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
-
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -71,6 +70,8 @@ export default function InitiativeOrderAccordion({
       setStatusValues(
         statusValues.filter((selectedStatus) => selectedStatus !== status)
       );
+      console.log(status)
+      console.log(statusValues)
     } else {
       setStatusValues([...statusValues, status]);
     }
@@ -117,36 +118,28 @@ export default function InitiativeOrderAccordion({
   };
 
   const setCombatantDetails = () => {
-
-    setCombatantAC(ac)
-    setCombatantHp(hp)
-    setCombatantName(name)
-    setCombatantFortitudeSave(fortitudeSave)
-    setCombatantInitiative(initiative)
-    setCombatantReflexSave(reflexSave)
-    setCombatantWillSave(willSave)
-    setCombatantPortrait(portrait)
-    setSelectedUnit(true)
-  }
-
+    setCombatantAC(ac);
+    setCombatantHp(hp);
+    setCombatantName(name);
+    setCombatantFortitudeSave(fortitudeSave);
+    setCombatantInitiative(initiative);
+    setCombatantReflexSave(reflexSave);
+    setCombatantWillSave(willSave);
+    setCombatantPortrait(portrait);
+    setSelectedUnit(true);
+  };
 
   const clearCombatantDetails = () => {
-    setCombatantAC(null)
-    setCombatantHp(null)
-    setCombatantName(null)
-    setCombatantFortitudeSave(null)
-    setCombatantInitiative(null)
-    setCombatantReflexSave(null)
-    setCombatantWillSave(null)
-    setCombatantPortrait(null)
-    setSelectedUnit(null)
-  }
-  
-  
-  
-
-  
-
+    setCombatantAC(null);
+    setCombatantHp(null);
+    setCombatantName(null);
+    setCombatantFortitudeSave(null);
+    setCombatantInitiative(null);
+    setCombatantReflexSave(null);
+    setCombatantWillSave(null);
+    setCombatantPortrait(null);
+    setSelectedUnit(null);
+  };
 
   console.log(severityValues);
   return (
@@ -169,14 +162,7 @@ export default function InitiativeOrderAccordion({
               {/* First row */}
               <Grid item xs={12}>
                 <Grid container alignItems="center">
-                  <Grid item xs={8}>
-                    <SentimentSatisfiedAltIcon
-                      sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
-                    <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                      {name}
-                    </Typography>
-                  </Grid>
+                  
                   <Grid item xs={2}>
                     <Typography sx={{ color: "text.secondary" }}>
                       Init
@@ -190,7 +176,7 @@ export default function InitiativeOrderAccordion({
                       rolled
                     </Typography>
                     <Typography sx={{ color: "text.secondary" }}>
-                      {rolledInitiative}
+                      {initiativeRoll}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -276,7 +262,7 @@ export default function InitiativeOrderAccordion({
                   <Button
                     variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
-                    onClick={() => handleRolledInitiative(initiative)}
+                    onClick={() => handleRolledInitiative(id,initiative)}
                   >
                     <Typography
                       sx={{

@@ -1,32 +1,33 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import { Main } from '../Initiative Drawer/Drawer';
-import SearchDrawer from '../Initiative Drawer/Drawer';
-import { useState, useEffect } from 'react';
-import InitiativeOrderCard from './InitiativeOrderCard';
-import CombatantCard from '../InititiativeDescription/CombatantCard';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import BattleList from './BattleList';
-import Button from '@mui/material/Button';
-import { Auth } from '../Auth';
-import { db, auth } from '../../Config/firebase-config';
+import React from "react";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import { Main } from "../Initiative Drawer/Drawer";
+import SearchDrawer from "../Initiative Drawer/Drawer";
+import { useState, useEffect } from "react";
+import InitiativeOrderCard from "./InitiativeOrderCard";
+import CombatantCard from "../InititiativeDescription/CombatantCard";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import BattleList from "./BattleList";
+import Button from "@mui/material/Button";
+import { Auth } from "../Auth";
+import { db, auth } from "../../Config/firebase-config";
 import {
-	getDocs,
-	collection,
-	addDoc,
-	getDoc,
-	deleteDoc,
-	doc,
-	updateDoc,
-	collectionGroup,
-	where,
-	query,
-} from 'firebase/firestore';
+  getDocs,
+  collection,
+  addDoc,
+  getDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  collectionGroup,
+  where,
+  query,
+} from "firebase/firestore";
+import { Typography } from "@mui/material";
 
 function Tracker() {
 	const uid = auth.currentUser.uid;
@@ -111,51 +112,68 @@ function Tracker() {
 		console.log(getUnitsData(unitDocs));
 	};
 
-	//updates battlelists when new battles are created
-	const onBattleCreated = async (newBattleList) => {
-		setBattleLists(newBattleList);
-		// console.log(battleLists);
-	};
+  //updates battlelists when new battles are created
+  const onBattleCreated = async (newBattleList) => {
+    setBattleLists(newBattleList);
+    // console.log(battleLists);
+  };
 
-	//deletes battleLists
-	const deleteBattle = async () => {
-		const updatedBattles = battleLists.filter(
-			(battle) => battle.id !== battleListTitle
-		);
-		const battleDoc = doc(battleListCollectionRef, battleListTitle);
-		await deleteDoc(battleDoc);
-		setBattleLists(updatedBattles);
-		setBattleListTitle('');
-	};
+  //deletes battleLists
+  const deleteBattle = async () => {
+    const updatedBattles = battleLists.filter(
+      (battle) => battle.id !== battleListTitle
+    );
+    const battleDoc = doc(battleListCollectionRef, battleListTitle);
+    await deleteDoc(battleDoc);
+    setBattleLists(updatedBattles);
+    setBattleListTitle("");
+  };
 
-	//Adds units from drawer to battlelist and manipulates state for 'seamless' updating
-	const addUnitsToBattle = async (newUnit) => {
-		if (!battleListTitle) {
-			return alert('Select a Battle');
-		}
+  //Adds units from drawer to battlelist and manipulates state for 'seamless' updating
+  const addUnitsToBattle = async (newUnit) => {
+    if (!battleListTitle) {
+      return alert("Select a Battle");
+    }
 
-		const battleUnitsRef = collection(
-			battleListCollectionRef,
-			battleListTitle,
-			'Units'
-		);
-		try {
-			const docRef = await addDoc(battleUnitsRef, newUnit);
-			const newUnitsData = [...unitsData, { ...newUnit, id: docRef.id }];
-			console.log(newUnitsData);
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    try {
+      const docRef = await addDoc(battleUnitsRef, newUnit);
+      const newUnitsData = [...unitsData, { ...newUnit, id: docRef.id }];
+      console.log(newUnitsData);
 
-			setUnitsData(newUnitsData);
-		} catch (error) {
-			console.error('Error adding document: ', error);
-		}
-	};
+      setUnitsData(newUnitsData);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
 
-	// const [rolledInitiative, setRolledInitiative] = useState(0);
+  //Deletes a unit from the battlelist it is in
+  const deleteUnitsFromBattle = async (unitID) => {
+    const updatedUnits = unitsData.filter(
+      (unit) => unit.id !== unitID
+    );
 
-	const onRolledInitiativeChange = (value) => {
-		setChildRolledInitiative(value)
-		console.log("child" + childRolledInitiative)
-	}
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    const unitDoc = doc(battleUnitsRef,unitID)
+    await deleteDoc(unitDoc)
+
+    setUnitsData(updatedUnits);
+  }
+
+  // const [rolledInitiative, setRolledInitiative] = useState(0);
+
+  const onRolledInitiativeChange = (value) => {
+    setChildRolledInitiative(value);
+    console.log("child" + childRolledInitiative);
+  };
 
 	const renderCards = () => {
 		if (unitsData) {
@@ -163,7 +181,7 @@ function Tracker() {
 				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
 				.map((unit, index) => (
 					<InitiativeOrderCard
-						key={index}
+						key={unit.id}
 						name={unit.name}
 						ac={unit.ac}
 						fortitudeSave={unit.fortitudeSave}
@@ -190,98 +208,143 @@ function Tracker() {
 						setCombatantPortrait={setCombatantPortrait}
 						setCombatantDescription={setCombatantDescription}
 						selectedUnit={selectedUnit}
+            deleteUnitsFromBattle={deleteUnitsFromBattle}
 					/>
 				));
 		}
 	};
 	const characterPortrait = "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1"
-	const handleRolledInitiative = (id,initiative) => {
+
+	const handleRolledInitiative = async (id,initiative) => {
 		const finalValue = roll20SidedDieWithModifier(initiative);
 		console.log("final" + finalValue)
-		// onRolledInitiativeChange(finalValue)
-		// setRolledInitiative(finalValue);
+		
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+
 		const index = unitsData.findIndex(u => u.id === id)
-		if (index != -1) {
+		if (index !== -1) {
 			const updatedUnits = [...unitsData];
 			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
 			setUnitsData(updatedUnits)
+      const unitDoc = doc(battleUnitsRef, id);
+		  await updateDoc(unitDoc, { initiativeRoll: Number(finalValue)})
 		}
 	};
 
-	function roll20SidedDieWithModifier(modifier) {
-		const rollResult = Math.floor(Math.random() * 20) + 1;
-
-
-		const finalResult = rollResult + modifier;
-		return finalResult;
-	}
-	const [selectedCardIndex, setSelectedCardIndex] = useState(null);
-
-	const selectNextCard = () => {
-		if (unitsData.length === 0) return; 
-	
-		let newIndex = selectedCardIndex === null ? 0 : selectedCardIndex + 1;
-	
-		
-		if (newIndex >= unitsData.length) {
-		  newIndex = 0;
+	const handleMassRoll = async () => {
+		if (!battleListTitle) {
+			return alert('Select a Battle!');
 		}
-	
-		setSelectedCardIndex(newIndex);
-		console.log(selectedCardIndex)
-	  };
-	
-	const handleSelectedCard = (cardIndex) => {
-		
-	}
+		if (unitsData.length === 0 || !unitsData) {
+			return alert('Add Units to Battle!');
+		}
+    
+    const battleUnitsRef = collection(
+      battleListCollectionRef,
+      battleListTitle,
+      "Units"
+    );
+    const massRollUnits =[];
 
-	return (
-		<>
-			<SearchDrawer
-				addUnitsToBattle={addUnitsToBattle}
-				open={open}
-				setOpen={setOpen}
-			/>
-			<Main open={open}>
-				<Grid container spacing={2}>
-					<Grid item xs={12} md>
-						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
-							<BattleList
-								onBattleCreated={onBattleCreated}
-								deleteBattle={deleteBattle}
-								handleChangeBattleList={handleChangeBattleList}
-								battleLists={battleLists}
-								setBattleListTitle={setBattleListTitle}
-								battleListTitle={battleListTitle}
-							/>
-						</Paper>
-						<Paper sx={{ backgroundColor: 'lightblue', mb: 1 }}>
+    for (const unit of unitsData) {
+      const finalValue = roll20SidedDieWithModifier(unit.initiative);
+      const unitDoc = doc(battleUnitsRef, unit.id);
+      await updateDoc(unitDoc, { initiativeRoll: Number(finalValue) });
+      massRollUnits.push({ ...unit, initiativeRoll: finalValue });
+    }
+			setUnitsData(massRollUnits)
+	};
 
-						<Button onClick={selectNextCard}>Select Next Card</Button>
-						</Paper>
-						<Box sx={{ backgroundColor: 'lightblue' }}>Tracker cards</Box>
-						{renderCards()}
-					</Grid>
-					<Grid item xs>
-						<Paper sx={{ backgroundColor: 'lightgreen' }}>
-							Combatant Details
-						</Paper>
-						<CombatantCard
-							name={combatantName}
-							ac={combatantAC}
-							hp={combatantHp}
-							initiative={combatantInitiative}
-							fortitudeSave={combatantFortitudeSave}
-							reflexSave={combatantReflexSave}
-							willSave={combatantWillSave}
-							portrait={combatantPortrait}
-							description={combatantDescription}
-						/>
-					</Grid>
-         </Grid>
-         </Main>
-		</>
-	);
+  function roll20SidedDieWithModifier(modifier) {
+    const rollResult = Math.floor(Math.random() * 20) + 1;
+
+    const finalResult = rollResult + modifier;
+    return finalResult;
+  }
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+
+  const selectNextCard = () => {
+    if (unitsData.length === 0) return;
+
+    let newIndex = selectedCardIndex === null ? 0 : selectedCardIndex + 1;
+
+    if (newIndex >= unitsData.length) {
+      newIndex = 0;
+    }
+
+    setSelectedCardIndex(newIndex);
+    console.log(selectedCardIndex);
+  };
+
+  const handleSelectedCard = (cardIndex) => {};
+
+  return (
+    <>
+      <SearchDrawer
+        addUnitsToBattle={addUnitsToBattle}
+        open={open}
+        setOpen={setOpen}
+      />
+      <Main open={open}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md>
+            <Paper sx={{ backgroundColor: "rgba(38, 50, 56,0.75)", mb: 1 }}>
+              <BattleList
+                onBattleCreated={onBattleCreated}
+                deleteBattle={deleteBattle}
+                handleChangeBattleList={handleChangeBattleList}
+                battleLists={battleLists}
+                setBattleListTitle={setBattleListTitle}
+                battleListTitle={battleListTitle}
+								handleMassRoll={handleMassRoll}
+              />
+            </Paper>
+            <Paper
+              sx={{
+                backgroundColor: "rgba(38, 50, 56,0.75)",
+                mb: 1,
+                textAlign: "center",
+              }}
+            >
+              <Button onClick={selectNextCard}>
+                <Typography sx={{ color: "rgba(200, 184, 116)" }}>
+                  Select Next Card
+                </Typography>
+              </Button>
+            </Paper>
+            <Box
+              sx={{
+                backgroundColor: "rgba(38, 50, 56,0.75)",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ color: "rgba(200, 184, 116)" }}>
+                Tracker cards
+              </Typography>
+            </Box>
+            {renderCards()}
+          </Grid>
+          <Grid item xs>
+            <CombatantCard
+              name={combatantName}
+              ac={combatantAC}
+              hp={combatantHp}
+              initiative={combatantInitiative}
+              fortitudeSave={combatantFortitudeSave}
+              reflexSave={combatantReflexSave}
+              willSave={combatantWillSave}
+              portrait={combatantPortrait}
+              description={combatantDescription}
+            />
+          </Grid>
+        </Grid>
+      </Main>
+    </>
+  );
 }
 
 export default Tracker;
