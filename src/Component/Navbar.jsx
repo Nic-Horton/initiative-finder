@@ -16,18 +16,21 @@ import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
 import { signOut } from "firebase/auth";
+
+import DTwentyIcon from "./DTwentyIcon";
+
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import { auth } from "../Config/firebase-config";
 import NavbarNoLogin from "./NavBarNoLogin";
+
 const appBarColor = blueGrey[900];
 
-
 const pages = [
-  { name: 'Character Creation', path: '/dashboard' },
-  { name: 'Initiative Tracker', path: '/tracker' },
-  { name: 'Login', path: '/login' },
+  { name: "Character Creation", path: "/dashboard" },
+  { name: "Initiative Tracker", path: "/tracker" },
+  { name: "Login", path: "/login" },
 ];
 const settings = ["Profile", "Settings", "Logout"];
 
@@ -69,6 +72,7 @@ function Navbar() {
       console.log(err);
     }
   };
+
   if (user === null) {
     return (
  
@@ -82,7 +86,7 @@ function Navbar() {
             variant="h6"
             noWrap
             component={NavLink}
-            to='/'
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -146,8 +150,8 @@ function Navbar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component={NavLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -174,7 +178,6 @@ function Navbar() {
               </Button>
             ))}
           </Box>
-
         </Toolbar>
       </Container>
     </AppBar>

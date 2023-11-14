@@ -17,6 +17,7 @@ import { useState } from "react";
 import AppSteps from "../Component/Stepper";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
+
 const steps = [
 	'Select Campaign',
   
@@ -25,63 +26,54 @@ const steps = [
 	'Roll Initiative!',
 ];
 export default function Home() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState([]);
+
+	const [activeStep, setActiveStep] = useState(0);
+	const [completed, setCompleted] = useState([]);
+
+	const totalSteps = () => {
+		return steps.length;
+	};
 
 
-  
-  const totalSteps = () => {
-    return steps.length;
-  };
+	const completedSteps = () => {
+		return Object.keys(completed).length;
+	};
 
-  const completedSteps = () => {
-    return Object.keys(completed).length;
-  };
+	const isLastStep = () => {
+		return activeStep === totalSteps() - 1;
+	};
 
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
+	const allStepsCompleted = () => {
+		return completedSteps() === totalSteps();
+	};
 
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
-  };
+	const handleNext = () => {
+		let newActiveStep;
 
-  const handleNext = () => {
-    let newActiveStep;
+		if (isLastStep() && !allStepsCompleted()) {
+			newActiveStep = steps.findIndex((step, i) => !completed.includes(i));
+		} else {
+			newActiveStep = activeStep + 1;
+		}
 
-    if (isLastStep() && !allStepsCompleted()) {
-      newActiveStep = steps.findIndex((step, i) => !completed.includes(i));
-    } else {
-      newActiveStep = activeStep + 1;
-    }
-  
-    setActiveStep(newActiveStep);
-  };
+		setActiveStep(newActiveStep);
+	};
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
+	const handleStep = (step: number) => () => {
+		setActiveStep(step);
+	};
 
-  const handleStep = (step: number) => () => {
-    setActiveStep(step);
-  };
+	const handleComplete = () => {
+		const newCompleted = completed;
+		newCompleted[activeStep] = true;
+		setCompleted(newCompleted);
+		handleNext();
+	};
 
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
-
-const handleLearn = () =>{
-    alert('button clicked')
-}
   return (
     <>
     <Navbar />
@@ -122,7 +114,6 @@ const handleLearn = () =>{
 						>
 							Initiative Finder
 						</Typography>
-
 
             <Grid
               item
@@ -427,4 +418,5 @@ const handleLearn = () =>{
       </div>
     </>
   );
+
 }
