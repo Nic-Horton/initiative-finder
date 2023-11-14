@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Avatar, Card, Container, tableBodyClasses } from "@mui/material";
+import { Avatar, Card, Container, IconButton, tableBodyClasses } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Grid } from "@mui/material";
@@ -15,6 +15,7 @@ import { NavLink } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import { useState } from "react";
 import AppSteps from "../Component/Stepper";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const steps = [
 	'Select Campaign',
@@ -78,7 +79,9 @@ export default function Home() {
     setCompleted({});
   };
 
-
+const handleLearn = () =>{
+    alert('button clicked')
+}
   return (
     <>
     <Navbar />
@@ -256,7 +259,31 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Learn More</Button>
+                <IconButton
+                label="LinkedIn"
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/lelarry/",
+                    "_blank"
+                  )
+                }
+              >
+                <LinkedInIcon
+                  sx={{ color: "blue", fontSize: "3rem" }}
+                />
+              </IconButton>
+              <Button
+                variant="text"
+                size="small"
+                href="https://github.com/lelarry26"
+              >
+                <img
+                  height={40}
+                  src="https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png"
+                  alt="GitHub"
+                  // style={{ filter: "brightness(100) saturate(100%)" }}
+                />
+              </Button>
               </CardActions>
             </Card>
           </Container>
@@ -266,7 +293,7 @@ export default function Home() {
                 <Typography variant="h5" color="text.primary" gutterBottom>
                   <Avatar
                     alt="Derek Szeto"
-                    src="https://ca.slack-edge.com/T0569RDC6-U04T84BP9GW-2e2bc9b66cb0-48"
+                    src="https://media.licdn.com/dms/image/C4E03AQGRhpryroBqQw/profile-displayphoto-shrink_400_400/0/1551731556984?e=1705536000&v=beta&t=fTHQuRFJ31ndZ0jlYI8bz5Z_fzQm25rYtvl2eULbkIQ"
                   ></Avatar>
                   Derek Szeto
                 </Typography>
@@ -277,7 +304,32 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Learn More</Button>
+
+              <IconButton
+                label="LinkedIn"
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/derek-szeto-876422179/",
+                    "_blank"
+                  )
+                }
+              >
+                <LinkedInIcon
+                  sx={{ color: "blue", fontSize: "3rem" }}
+                />
+              </IconButton>
+              <Button
+                variant="text"
+                size="small"
+                href="https://github.com/MidnightMicro"
+              >
+                <img
+                  height={40}
+                  src="https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png"
+                  alt="GitHub"
+                  // style={{ filter: "brightness(100) saturate(100%)" }}
+                />
+              </Button>
               </CardActions>
             </Card>
           </Container>
@@ -294,11 +346,35 @@ export default function Home() {
                 <Typography variant="body2">
                   Pathfinder Guru
                   <br />
-                  {'Atlanta, GA'}
+                  Atlanta, GA
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Learn More</Button>
+              <IconButton
+                label="LinkedIn"
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/brett-mackinnon-19936111a/",
+                    "_blank"
+                  )
+                }
+              >
+                <LinkedInIcon
+                  sx={{ color: "blue", fontSize: "3rem" }}
+                />
+              </IconButton>
+              <Button
+                variant="text"
+                size="small"
+                href="https://github.com/JudgeBreaded"
+              >
+                <img
+                  height={40}
+                  src="https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png"
+                  alt="GitHub"
+                  // style={{ filter: "brightness(100) saturate(100%)" }}
+                />
+              </Button>
               </CardActions>
             </Card>
           </Container>
@@ -308,7 +384,7 @@ export default function Home() {
               <Typography variant="h5" color="text.primary" gutterBottom>
                   <Avatar
                     alt="Nicolas Horton"
-                    src="https://ca.slack-edge.com/T0569RDC6-U053KR0242U-1764cf7e4690-48"
+                    src="https://media.licdn.com/dms/image/D5603AQHfiJdd74VAWA/profile-displayphoto-shrink_400_400/0/1694828022884?e=1705536000&v=beta&t=IslYJ0BSSINmlQA8to684ICe6r-U_4TOa46uy4QuljY"
                   ></Avatar>
                   Nicolas Horton
                 </Typography>
@@ -319,6 +395,31 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
+              <IconButton
+                label="LinkedIn"
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/nicolas-horton/",
+                    "_blank"
+                  )
+                }
+              >
+                <LinkedInIcon
+                  sx={{ color: "blue", fontSize: "3rem" }}
+                />
+              </IconButton>
+              <Button
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                  height={40}
+                  src="https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png"
+                  alt="GitHub"
+                  // style={{ filter: "brightness(100) saturate(100%)" }}
+                />
+              </Button>
               </CardActions>
             </Card>
           </Container>
