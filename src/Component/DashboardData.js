@@ -3,7 +3,6 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 import {
@@ -23,13 +22,18 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { InputLabel, Paper, Typography } from "@mui/material";
+import { Box, InputLabel, Paper, Typography } from "@mui/material";
+import ShieldTwoToneIcon from "@mui/icons-material/ShieldTwoTone";
+import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
+
 
 export default function DashboardData() {
+
   const uid = auth.currentUser.uid;
   const monsterCollectionRef = collection(db, "Users", uid, "Monsters");
   const characterCollectionRef = collection(db, "Users", uid, "Characters");
   const [tabValue, setTabValue] = React.useState("Characters");
+
 
   const [combatantList, setCombatantList] = useState([]);
   const [dataSearch, setDataSearch] = useState("");
@@ -57,6 +61,7 @@ export default function DashboardData() {
     };
     getInformationList();
   }, [tabValue]);
+
 
   // Initialize open states for each list item to false
   useEffect(() => {
@@ -144,17 +149,26 @@ export default function DashboardData() {
               mt: 3,
             }}
             textColor="primary"
-            indicatorColor="secondary"
+            indicatorColor="success"
             value={tabValue}
             variant="fullWidth"
             onChange={handleTabChange}
-            aria-label="basic tabs example"
           >
-            <Tab label="Characters" value={"Characters"} />
-            <Tab label="Monsters" value={"Monsters"} />
+            <Tab label="Characters" value={"Characters"} sx={{
+            '&.Mui-selected': {
+              backgroundColor: 'rgba(23,118,185) ', 
+              color: 'white', 
+            },
+          }}/>
+            <Tab label="Monsters" value={"Monsters"} sx={{
+            '&.Mui-selected': {
+              backgroundColor: 'rgba(212,18,18)', 
+              color: 'white', 
+            },
+          }}/>
           </Tabs>
         </Grid>
-        <Divider />
+        
         <Grid
           sx={{
             display: "flex",
@@ -180,6 +194,7 @@ export default function DashboardData() {
             }}
           />
         </Grid>
+
         <Typography
           variant="h4"
           sx={{
@@ -192,6 +207,7 @@ export default function DashboardData() {
         >
           {tabValue}
         </Typography>
+
         <List
           component="nav"
           aria-label="secondary mailbox folder"
@@ -199,87 +215,86 @@ export default function DashboardData() {
             color: "black",
             maxWidth: 390,
             width: "100%",
+
             backgroundColor: "white",
             border: "5px solid rgba(54,69,79,0.5)",
             borderRadius: 2,
             display: "flex",
             flexDirection: "column",
             maxHeight: 350,
+            ml:.5,
             height: "100%",
-            mt: 2,
+            mt:2,
+            p:2,
             overflow: "auto",
           }}
         >
-          {!dataSearch
-            ? combatantList?.map((monster, index) => (
-                <Grid
-                  key={monster.id}
-                  sx={{ height: "100", backgroundColor: "white" }}
+
+          {monsterList.map((monster, index) => (
+            
+            <Grid key={monster.id} sx={{ height: "100", backgroundColor:"white"}}>
+              
+              <Grid
+                sx={{
+                  border: 1,
+                  borderRadius: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  color:'rgba(200,184,116)',
+                  mb:1,
+                  p:.5,
+                }}
+                overflow="auto"
+              >
+          <ArrowRightSharpIcon sx={{color:'red'}}/>
+                <ListItemButton
+                  onClick={(event) => handleListItemClick(event, index)}
                 >
-                  <Grid
-                    sx={{
-                      border: 1,
-                      borderRadius: 1,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={(event) => handleListItemClick(event, index)}
-                    >
-                      <ListItemText
-                        sx={{ color: "red" }}
-                        primary={monster.name}
-                      />
-                    </ListItemButton>
-                    <Button
-                      variant="outlined"
-                      startIcon={<EditNoteIcon />}
-                      onClick={() => handleOpen(index)}
-                    />
-                    <Button
-                      variant="outlined"
-                      startIcon={<DeleteForeverTwoToneIcon />}
-                      onClick={() => deleteEntry(monster.id)}
-                    />
-                  </Grid>
-                  <UpdateModal
-                    name={monster.name}
-                    initiative={monster.initiative}
-                    ac={monster.ac}
-                    reflexSave={monster.reflexSave}
-                    fortitudeSave={monster.fortitudeSave}
-                    willSave={monster.willSave}
-                    description={monster.description}
-                    open={openStates[index]} // Use the open state for this list item
-                    onClose={() => handleClose(index)} // Pass the index to handleClose
-                    id={monster.id}
-                    databaseRef={tabValue}
+                  
+                  <ListItemText
+                    sx={{color:'black' }}
+                    primary={monster.name}
                   />
+                </ListItemButton>
+                <Button
+                  variant="outlined"
+                  startIcon={<EditNoteIcon />}
+                  onClick={() => handleOpen(index)}
+                />
+                <Button
+                  variant="outlined"
+                  startIcon={<DeleteForeverTwoToneIcon />}
+                />
+              </Grid>
+              <UpdateModal
+                name={monster.name}
+                initiative={monster.initiative}
+                ac={monster.ac}
+                hp={monster.hp}
+                reflexSave={monster.reflexSave}
+                fortitudeSave={monster.fortitudeSave}
+                willSave={monster.willSave}
+                description={monster.description}
+                open={openStates[index]} // Use the open state for this list item
+                onClose={() => handleClose(index)} // Pass the index to handleClose
+                id={monster.id}
+                databaseRef={tabValue}
+              />
 
-                  {selectedIndex === index && (
-                    <Grid
-                      container
-                      spacing={2}
-                      sx={{
-                        color: "black",
-                        width: 300,
-                        backgroundColor: "orange",
-                        border: "5px solid rgba(54,69,79,0.5)",
-                        borderRadius: 2,
+              {selectedIndex === index && (
+                <Grid
+                  container
+                  spacing={0}
+                 sx={{
+                    flexDirection:"row",
+                    color: "white",
+                    width: "100%",
+                    mt:-1,
+                    height:70,
+                    background: 'linear-gradient(to top, darkblue, rgba(2, 78, 165))',
+                    border: "5px solid rgba(217,212,215)",
+                    borderRadius: 2,
 
-                        textAlign: "center",
-                      }}
-                    >
-                      <Grid
-                        item
-                        xs={3}
-                        sx={{
-                          color: "white",
-                          width: 300,
-                          backgroundColor: "blue",
-                          border: "5px solid rgba(54,69,79,0.5)",
-                          borderRadius: 2,
 
                           textAlign: "center",
                         }}
@@ -311,32 +326,27 @@ export default function DashboardData() {
                   key={monster.id}
                   sx={{ height: "100", backgroundColor: "white" }}
                 >
-                  <Grid
-                    sx={{
-                      border: 1,
-                      borderRadius: 1,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={(event) => handleListItemClick(event, index)}
-                    >
-                      <ListItemText
-                        sx={{ color: "red" }}
-                        primary={monster.name}
-                      />
-                    </ListItemButton>
-                    <Button
-                      variant="outlined"
-                      startIcon={<EditNoteIcon />}
-                      onClick={() => handleOpen(index)}
-                    />
-                    <Button
-                      variant="outlined"
-                      startIcon={<DeleteForeverTwoToneIcon />}
-                      onClick={() => deleteEntry(monster.id)}
-                    />
+                  
+                  <Grid item xs>
+                    <Box sx={{position: 'absolute', mt:1.8, ml:2.3,textAlign: 'center',fontSize: monster.ac.length > 2 ? 15 : 20 }}>
+          {monster.ac}
+        </Box>
+        <Box sx={{position:'absolute'}}>
+        <ShieldTwoToneIcon sx={{ fontSize: 60}} />
+        </Box>
+        
+                  </Grid >
+                  <Grid item xs sx={{flexDirection:"column"}}>
+                    <Box sx={{}}>HP: <br></br>{monster.hp}</Box>
+                  </Grid>
+                  <Grid item xs>
+                    <Box sx={{}}>RS:<br></br> {monster.reflexSave}</Box>
+                  </Grid>
+                  <Grid item xs>
+                    <Box sx={{}}>FS: <br></br> {monster.fortitudeSave}</Box>
+                  </Grid>
+                  <Grid item xs>
+                    <Box sx={{}}>WS: <br></br> {monster.willSave}</Box>
                   </Grid>
                   <UpdateModal
                     name={monster.name}

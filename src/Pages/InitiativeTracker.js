@@ -16,7 +16,10 @@ import BattleList from '../Component/InitiativeOrder/BattleList';
 import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
 import Navbar from '../Component/Navbar';
+
 import Toolbar from '@mui/material/Toolbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
+
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import Tracker from '../Component/InitiativeOrder/Tracker';
@@ -157,6 +160,7 @@ function InitiativeTracker() {
 	// 	setRolledInitiative(value);
 	//   };
 
+
 	return (
 		<>
 			<Navbar />
@@ -196,6 +200,7 @@ function InitiativeTracker() {
 					<CssBaseline />
 					<Tracker />
 				</Box>
+
 			</Box>
 		</>
 	);

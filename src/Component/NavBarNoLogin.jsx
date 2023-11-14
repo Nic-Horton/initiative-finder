@@ -14,6 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
+import { auth } from "../Config/firebase-config";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation } from 'react-router-dom';
+
+import { signOut,On } from "firebase/auth";
+import { useState, useEffect } from "react";
 
 const appBarColor = blueGrey[900];
 
@@ -25,9 +31,12 @@ const pages = [
 //     "Profile", "Settings", "Logout"
 // ];
 
-function NavbarLogin(loggedIn) {
+function NavbarNoLogin(loggedIn) {
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
     console.log("clicked Hamburger");
@@ -46,6 +55,21 @@ function NavbarLogin(loggedIn) {
   const handleCloseUserMenu = () => {
     console.log("clicked Vertical Navbar");
     setAnchorElUser(null);
+  };
+
+  console.log(auth?.currentUser);
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+
+      alert("Logging you out");
+      setTimeout(()=> { 
+        window.location.href = "/";
+          }, 500);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -163,10 +187,19 @@ function NavbarLogin(loggedIn) {
                 {page.name}
               </Button>
             ))}
-          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+        {/* Disable the logout button if the current page is the login page */}
+        {location.pathname !== '/login' && (
+          <Button onClick={logout}>
+            <Typography>Log out</Typography>
+            <LogoutIcon />
+          </Button>
+        )}
+      </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default NavbarLogin;
+export default NavbarNoLogin;

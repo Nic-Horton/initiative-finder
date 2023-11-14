@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 
+import React, { useEffect, useState } from 'react';
 import DashboardData from '../Component/DashboardData';
 import MonsterSubmit from '../Component/MonsterSubmit';
 import Box from '@mui/material/Box';
@@ -10,6 +10,9 @@ import { Button, Container, Typography } from '@mui/material';
 import CircularProgress, {
 	circularProgressClasses,
 } from '@mui/material/CircularProgress';
+
+
+// ADD DEATH SCENE and potential gif of zelda or fire from dark souls? 
 
 function Dashboard() {
 	const [user, setUser] = useState(null);
@@ -152,28 +155,30 @@ function Dashboard() {
 						zIndex: 1,
 					}}
 				>
-					<Navbar />
-					<Container>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								alignItems: 'flex-start',
-							}}
-						>
-							<Box>
-								<MonsterSubmit />
-							</Box>
-							<Box sx={{ ml: 5 }}>
-								<DashboardData />
-							</Box>
-						</Box>
-					</Container>
-				</div>
-			</div>
-		</>
-	);
+				
+          <NavbarNoLogin />
+          <Container>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "flex-start",
+              }}
+            >
+              <Box>
+                <MonsterSubmit />
+              </Box>
+              <Box sx={{ ml: 5 }}>
+                <DashboardData />
+              </Box>
+            </Box>
+          </Container>
+        </div>
+      </div>
+    </>
+  );
+
 }
 
 export default Dashboard;
