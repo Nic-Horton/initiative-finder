@@ -23,10 +23,9 @@ import { useState, useEffect } from "react";
 
 const appBarColor = blueGrey[900];
 
-
 const pages = [
-  { name: 'Character Creation', path: '/dashboard' },
-  { name: 'Initiative Tracker', path: '/tracker' },
+  { name: "Character Creation", path: "/dashboard" },
+  { name: "Initiative Tracker", path: "/tracker" },
 ];
 // const settings = [
 //     "Profile", "Settings", "Logout"
@@ -58,7 +57,6 @@ function NavbarNoLogin(loggedIn) {
     setAnchorElUser(null);
   };
 
-  
   console.log(auth?.currentUser);
 
   const logout = async () => {
@@ -75,7 +73,13 @@ function NavbarNoLogin(loggedIn) {
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: appBarColor,zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: appBarColor,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <CasinoOutlinedIcon
@@ -128,25 +132,24 @@ function NavbarNoLogin(loggedIn) {
                 display: { xs: "block", md: "none" },
               }}
             >
-
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/dashboard"
-                  >
-                    <Button>DashBoard</Button>
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <Typography
-                    textAlign="center"
-                    component={NavLink}
-                    to ="/tracker"
-                  >
-                    <Button>Initiative Tracker</Button>
-                  </Typography>
-                </MenuItem>
+                  textAlign="center"
+                  component={NavLink}
+                  to="/dashboard"
+                >
+                  <Button>DashBoard</Button>
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography
+                  textAlign="center"
+                  component={NavLink}
+                  to="/tracker"
+                >
+                  <Button>Initiative Tracker</Button>
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
 
@@ -184,7 +187,7 @@ function NavbarNoLogin(loggedIn) {
                 {page.name}
               </Button>
             ))}
-          </Box>
+
           <Box sx={{ flexGrow: 0 }}>
         {/* Disable the logout button if the current page is the login page */}
         {location.pathname !== '/login' && (

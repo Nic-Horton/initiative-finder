@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -29,9 +28,20 @@ import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
 
 
 export default function DashboardData() {
-  const monsterCollectionRef = collection(db, "Monsters");
-  const characterCollectionRef = collection(db, "Characters");
-  const [tabValue, setTabValue] = useState("Characters");
+
+  const uid = auth.currentUser.uid;
+  const monsterCollectionRef = collection(db, "Users", uid, "Monsters");
+  const characterCollectionRef = collection(db, "Users", uid, "Characters");
+  const [tabValue, setTabValue] = React.useState("Characters");
+
+
+  const [combatantList, setCombatantList] = useState([]);
+  const [dataSearch, setDataSearch] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const [openStates, setOpenStates] = React.useState([]);
+
+  const [filteredList, setFilteredList] = useState([]);
 
   const collectionRef =
     tabValue === "Monsters" ? monsterCollectionRef : characterCollectionRef;
@@ -39,13 +49,12 @@ export default function DashboardData() {
     const getInformationList = async () => {
       try {
         const data = await getDocs(collectionRef);
-        const filteredData = data.docs
-          .map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }))
-          .filter((doc) => doc.userId === auth.currentUser.uid);
-        setMonsterList(filteredData);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        // .filter((doc) => doc.userId === auth.currentUser.uid);
+        setCombatantList(filteredData);
       } catch (err) {
         console.error(err);
       }
@@ -53,16 +62,11 @@ export default function DashboardData() {
     getInformationList();
   }, [tabValue]);
 
-  const [monsterList, setMonsterList] = useState([]);
-  const [dataSearch, setDataSearch] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [openStates, setOpenStates] = React.useState([]);
 
-  
   // Initialize open states for each list item to false
   useEffect(() => {
-    setOpenStates(new Array(monsterList.length).fill(false));
-  }, [monsterList]);
+    setOpenStates(new Array(combatantList.length).fill(false));
+  }, [combatantList]);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index === selectedIndex ? -1 : index);
@@ -83,6 +87,22 @@ export default function DashboardData() {
     const updatedOpenStates = [...openStates];
     updatedOpenStates[index] = false;
     setOpenStates(updatedOpenStates);
+  };
+
+  const deleteEntry = async (id) => {
+    const monsterDoc = doc(collectionRef, id);
+    await deleteDoc(monsterDoc);
+  };
+
+  const handleSearchChange = (e) => {
+    setDataSearch(e.target.value.toLowerCase());
+    const filteredResult = combatantList?.filter((combatant) => {
+      if (combatant.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+        return true;
+      }
+      return false;
+    });
+    setFilteredList(filteredResult);
   };
 
   console.log(dataSearch);
@@ -157,13 +177,11 @@ export default function DashboardData() {
             borderRadius: 2,
           }}
         >
-          <InputLabel sx={{ color: "white" }} htmlFor="bootstrap-input">
-            Filter
-          </InputLabel>
-          <Typography>{dataSearch}</Typography>
           <TextField
-            onChange={(e) => setDataSearch(e.target.value)}
+            onChange={(e) => handleSearchChange(e)}
             variant="outlined"
+            value={dataSearch ? dataSearch : ""}
+            type="search"
             size="small"
             placeholder="Filter character/monster by Name"
             sx={{
@@ -176,13 +194,28 @@ export default function DashboardData() {
             }}
           />
         </Grid>
+
+        <Typography
+          variant="h4"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            color: "black",
+            backgroundColor: "white",
+            border: "5px solid rgba(54,69,79,0.5)",
+          }}
+        >
+          {tabValue}
+        </Typography>
+
         <List
           component="nav"
           aria-label="secondary mailbox folder"
           sx={{
-            color: "green",
-            maxWidth: 350,
-            width:"100%",
+            color: "black",
+            maxWidth: 390,
+            width: "100%",
+
             backgroundColor: "white",
             border: "5px solid rgba(54,69,79,0.5)",
             borderRadius: 2,
@@ -262,8 +295,36 @@ export default function DashboardData() {
                     border: "5px solid rgba(217,212,215)",
                     borderRadius: 2,
 
-                    textAlign: "center",
-                  }}
+
+                          textAlign: "center",
+                        }}
+                      >
+                        <div sx={{ backgroundColor: "red" }}>
+                          AC: {monster.ac}
+                        </div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>
+                          Fortitude Save: {monster.fortitudeSave}
+                        </div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>Will Save: {monster.willSave}</div>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div sx={{}}>description: {monster.description}</div>
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+              ))
+            : filteredList?.map((monster, index) => (
+                <Grid
+                  key={monster.id}
+                  sx={{ height: "100", backgroundColor: "white" }}
                 >
                   
                   <Grid item xs>
@@ -287,10 +348,69 @@ export default function DashboardData() {
                   <Grid item xs>
                     <Box sx={{}}>WS: <br></br> {monster.willSave}</Box>
                   </Grid>
+                  <UpdateModal
+                    name={monster.name}
+                    initiative={monster.initiative}
+                    ac={monster.ac}
+                    reflexSave={monster.reflexSave}
+                    fortitudeSave={monster.fortitudeSave}
+                    willSave={monster.willSave}
+                    description={monster.description}
+                    open={openStates[index]} // Use the open state for this list item
+                    onClose={() => handleClose(index)} // Pass the index to handleClose
+                    id={monster.id}
+                    databaseRef={tabValue}
+                  />
+
+                  {selectedIndex === index && (
+                    <Grid
+                      container
+                      spacing={2}
+                      sx={{
+                        color: "black",
+                        width: 300,
+                        backgroundColor: "orange",
+                        border: "5px solid rgba(54,69,79,0.5)",
+                        borderRadius: 2,
+
+                        textAlign: "center",
+                      }}
+                    >
+                      <Grid
+                        item
+                        xs={3}
+                        sx={{
+                          color: "white",
+                          width: 300,
+                          backgroundColor: "blue",
+                          border: "5px solid rgba(54,69,79,0.5)",
+                          borderRadius: 2,
+
+                          textAlign: "center",
+                        }}
+                      >
+                        <div sx={{ backgroundColor: "red" }}>
+                          AC: {monster.ac}
+                        </div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>
+                          Fortitude Save: {monster.fortitudeSave}
+                        </div>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <div sx={{}}>Will Save: {monster.willSave}</div>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div sx={{}}>description: {monster.description}</div>
+                      </Grid>
+                    </Grid>
+                  )}
                 </Grid>
-              )}
-            </Grid>
-          ))}
+              ))}
         </List>
       </Paper>
     </>

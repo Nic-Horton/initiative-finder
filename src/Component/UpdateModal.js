@@ -15,9 +15,6 @@ import {
 } from 'firebase/firestore';
 import { db, auth } from '../Config/firebase-config';
 
-
-
-
 export default function UpdateModal({ name, ac, reflexSave, fortitudeSave, willSave, description, open, onClose, id, databaseRef,initiative }) {
 
     const [acValue, setAcValue] = useState(ac);
@@ -341,3 +338,4 @@ export default function UpdateModal({ name, ac, reflexSave, fortitudeSave, willS
       </Modal>
     );
 }
+
