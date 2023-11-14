@@ -34,6 +34,7 @@ export default function ConditionsButton({
   statusValues,
   handleStatusToggle,
   handleSeveritySelect,
+  severityValues
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -126,7 +127,10 @@ export default function ConditionsButton({
                         name={condition.name}
                         stages={condition.conditionEffects}
                         modifiers={condition}
-                        setModifiers={setConditions}
+                        // setModifiers={setConditions}
+                        value={severityValues.find(
+                          (item) => item.name === condition.name
+                        )}
                       />
                     </div>
                   </Grid>
