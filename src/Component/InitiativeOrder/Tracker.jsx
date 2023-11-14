@@ -325,9 +325,6 @@ function Tracker() {
             {renderCards()}
           </Grid>
           <Grid item xs>
-            <Paper sx={{ backgroundColor: "lightgreen" }}>
-              Combatant Details
-            </Paper>
             <CombatantCard
               name={combatantName}
               ac={combatantAC}

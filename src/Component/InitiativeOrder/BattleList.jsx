@@ -19,12 +19,48 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CasinoIcon from '@mui/icons-material/Casino';
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import AddBattleList from "./AddBattleList";
 import DTwentyIcon from "../DTwentyIcon";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgba(200, 184, 116)', 
+    },
+    secondary: {
+      main: 'rgba(38, 50, 56,0.75)', 
+    },
+    text: {
+      primary: 'rgb(200, 184, 116)', 
+    },
+  },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-input': {
+            backgroundColor: 'rgba(38, 50, 56,0.75)',
+            color: 'rgb(200, 184, 116)', 
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused fieldset': {
+            borderColor: 'rgb(200, 184, 116)', 
+          },
+        },
+      },
+    },
+  },
+});
+
 
 export default function BattleList({
   onBattleCreated,
@@ -43,9 +79,7 @@ export default function BattleList({
 
   return (
     <>
-      <Grid container sx={{
-        backgroundColor: "white"
-      }}>
+      <Grid container>
         <Grid item xs={12} lg={6}>
           <AddBattleList
             onBattleCreated={onBattleCreated}
@@ -56,33 +90,50 @@ export default function BattleList({
           <FormControl sx={{ 
             display: "flex",
             flexDirection: "row",
-            backgroundColor: "rgba(38, 50, 56,0.75)",
-            borderColor: "rgba(200,184,116)",
-            borderRadius: 2,
-            paddingTop:1,
-            paddingBottom:1,
-            border:1}}>
-            {/* <InputLabel id="battleList-select-label"
-            sx={{
-              ml:13,
-              mt:1
-            }}>Battles</InputLabel> */}
-            <Select
+            justifyContent: 'center',
+            // borderColor: "rgba(200,184,116)",
+            // borderRadius: 5,
+            // paddingTop:1,
+            // paddingBottom:1,
+            // border:1
+            }}>
+            <ThemeProvider theme={customTheme}>
+            <TextField
+              fullWidth
+              select
               labelId="battleList-select-label"
               id="battleList-select"
               value={battleListTitle}
               label="Battle List"
               onChange={handleChangeBattleList}
-              variant="outlined"
+              variant="filled"
+              color="primary"
               sx={{
-                backgroundColor: 'white',
-                width:"80%",
-                minWidth:"50%",
-                ml: 4,
-                alignItems:'center'
+                "& .MuiPaper-root": {
+                  backgroundColor: "lightblue"
+                },
+                '& .MuiSelect-icon': {
+                  color: 'primary.main'
+               }
               }}
-              displayEmpty
-             
+              InputLabelProps={{
+                sx: {
+                  color: 'text.primary',
+                },}}
+              inputProps={{
+                MenuProps: {
+                  PaperProps: {
+                    sx: {
+                       backgroundColor: 'rgba(255, 50, 56,0.9)'
+                    }
+                  },
+                    MenuListProps: {
+                        sx: {
+                            backgroundColor: 'rgba(38, 50, 56,0.75)'
+                        }
+                    }
+                }
+              }}
             > 
               {battleLists?.map((battle) => {
                 return (
@@ -91,9 +142,9 @@ export default function BattleList({
                   </MenuItem>
                 );
               })}
-            </Select>
+            </TextField>
+            </ThemeProvider>
             <IconButton onClick={handleMassRoll}>
-              {/* <CasinoIcon /> */}
               <DTwentyIcon />
             </IconButton>
             <IconButton onClick={deleteBattle}>
