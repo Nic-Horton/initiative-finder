@@ -70,6 +70,8 @@ export default function InitiativeOrderAccordion({
       setStatusValues(
         statusValues.filter((selectedStatus) => selectedStatus !== status)
       );
+      console.log(status)
+      console.log(statusValues)
     } else {
       setStatusValues([...statusValues, status]);
     }
@@ -160,14 +162,7 @@ export default function InitiativeOrderAccordion({
               {/* First row */}
               <Grid item xs={12}>
                 <Grid container alignItems="center">
-                  <Grid item xs={8}>
-                    <SentimentSatisfiedAltIcon
-                      sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
-                    <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                      {name}
-                    </Typography>
-                  </Grid>
+                  
                   <Grid item xs={2}>
                     <Typography sx={{ color: "text.secondary" }}>
                       Init

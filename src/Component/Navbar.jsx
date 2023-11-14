@@ -16,6 +16,7 @@ import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
 import { signOut } from "firebase/auth";
+import DTwentyIcon from "./DTwentyIcon";
 
 const appBarColor = blueGrey[900];
 

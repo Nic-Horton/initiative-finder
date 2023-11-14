@@ -342,7 +342,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                   width: 180,
                   color: "white",
                   backgroundColor: "white",
-                  border: "5px solid rgba(54,69,79,0.5)",
+                  border: "5px solid rgba(200,184,116)",
                   borderRadius: 2,
                   textAlign: "center",
                 }}
@@ -383,7 +383,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 color: "white",
                 backgroundColor: "white",
                 width: 70,
-                border: "5px solid rgba(54,69,79,0.5)",
+                border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
               }}
@@ -407,7 +407,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 color: "white",
                 backgroundColor: "white",
                 width: 70,
-                border: "5px solid rgba(54,69,79,0.5)",
+                border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
               }}
@@ -429,7 +429,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 color: "white",
                 backgroundColor: "white",
                 width: 70,
-                border: "5px solid rgba(54,69,79,0.5)",
+                border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
               }}
@@ -451,7 +451,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 color: "white",
                 backgroundColor: "white",
                 width: 70,
-                border: "5px solid rgba(54,69,79,0.5)",
+                border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
               }}
@@ -473,7 +473,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 color: "white",
                 backgroundColor: "white",
                 width: 70,
-                border: "5px solid rgba(54,69,79,0.5)",
+                border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 borderLeft: -10,
               }}
