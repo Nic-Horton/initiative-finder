@@ -12,9 +12,12 @@ export default function SeverityLevelRadio({
   stages,
   modifiers,
   setModifiers,
+  selectedSeverity,
+  value
 }) {
-  const [selectedValue, setSelectedValue] = React.useState("0");
-
+    const [selectedValue, setSelectedValue] = React.useState(
+      value ? value.stage : "0"
+    );
   const handleChange = (
     name,
     stage,

@@ -70,6 +70,8 @@ export default function InitiativeOrderAccordion({
       setStatusValues(
         statusValues.filter((selectedStatus) => selectedStatus !== status)
       );
+      console.log(status)
+      console.log(statusValues)
     } else {
       setStatusValues([...statusValues, status]);
     }
