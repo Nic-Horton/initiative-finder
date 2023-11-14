@@ -49,6 +49,7 @@ function Tracker() {
 	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
 	const [combatantWillSave, setCombatantWillSave] = useState(null);
 	const [combatantPortrait, setCombatantPortrait] = useState(null)
+	const [combatantDescription, setCombatantDescription] = useState(null)
 
 	// const [activeStep, setActiveStep] = React.useState(0);
 
@@ -171,6 +172,7 @@ function Tracker() {
 						portrait={unit.portrait}
 						hp={unit.hp}
 						id={unit.id}
+						description={unit.description}
 						initiative={unit.initiative}
 						initiativeRoll={unit.initiativeRoll}
 						isSelected={selectedCardIndex === index}
@@ -186,6 +188,7 @@ function Tracker() {
 						setCombatantWillSave={setCombatantWillSave}
 						setSelectedUnit={setSelectedUnit}
 						setCombatantPortrait={setCombatantPortrait}
+						setCombatantDescription={setCombatantDescription}
 						selectedUnit={selectedUnit}
 					/>
 				));
@@ -272,6 +275,7 @@ function Tracker() {
 							reflexSave={combatantReflexSave}
 							willSave={combatantWillSave}
 							portrait={combatantPortrait}
+							description={combatantDescription}
 						/>
 					</Grid>
          </Grid>
