@@ -60,11 +60,22 @@ export default function SeverityLevelRadio({
 
   return (
     <FormControl>
-      <FormLabel id="SeverityLevelInput">Severity</FormLabel>
+      <FormLabel
+        id="SeverityLevelInput"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Severity
+      </FormLabel>
       <RadioGroup
         row
         aria-labelledby="SeverityLevelInput"
-        name="severity-radio-buttons-group" // Update the name
+        name="severity-radio-buttons-group"
+        defaultValue="1"
       >
         {modifiers?.conditionEffects?.map((modifier) => {
           return (
