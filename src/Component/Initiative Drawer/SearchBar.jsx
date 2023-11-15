@@ -53,16 +53,13 @@ const customTheme = createTheme({
   },
 });
 
-function SearchBar({ addUnitsToBattle, category, combatantList, setCombatantList }) {
+function SearchBar({ addUnitsToBattle, category, combatantList, setCombatantList, search, setSearch }) {
   const uid = auth.currentUser.uid;
   const monsterCollectionRef = collection(db, "Users", uid, "Monsters");
   const characterCollectionRef = collection(db, "Users", uid, "Characters");
-  const [search, setSearch] = useState("");
 
   const [filteredList, setFilteredList] = useState([]);
-  // const [combatantList, setCombatantList] = useState([
-  //   { monsterList: [], characterList: [] },
-  // ]);
+
 
   useEffect(() => {
     const getLists = async () => {
