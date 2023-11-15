@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from "react";
-import DashboardData from "../Component/DashboardData";
-import MonsterSubmit from "../Component/MonsterSubmit";
-import Box from "@mui/material/Box";
-import Navbar from "../Component/Navbar";
-import NavbarNoLogin from "../Component/NavBarNoLogin";
-import { NavLink } from "react-router-dom";
-import { auth, googleProvider } from "../Config/firebase-config";
-import { Button, Container, Typography } from "@mui/material";
-import CircularProgress, {circularProgressClasses} from "@mui/material/CircularProgress";
+import React, { useEffect, useState } from 'react';
+import DashboardData from '../Component/DashboardData';
+import MonsterSubmit from '../Component/MonsterSubmit';
+import Box from '@mui/material/Box';
+import Navbar from '../Component/Navbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
+import { NavLink } from 'react-router-dom';
+import { auth, googleProvider } from '../Config/firebase-config';
+import { Button, Container, Typography } from '@mui/material';
+import CircularProgress, {
+	circularProgressClasses,
+} from '@mui/material/CircularProgress';
+import UnitCreation from '../Component/UnitCreation';
 
-// ADD DEATH SCENE and potential gif of zelda or fire from dark souls? 
+// ADD DEATH SCENE and potential gif of zelda or fire from dark souls?
 
 function Dashboard() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser);
-      } else {
-        setUser(null); 
-      }
-      setLoading(false);
-    });
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((authUser) => {
+			if (authUser) {
+				setUser(authUser);
+			} else {
+				setUser(null);
+			}
+			setLoading(false);
+		});
 
-    return () => {
-      unsubscribe(); 
-    };
-  }, []);
-  if (loading) {
+		return () => {
+			unsubscribe();
+		};
+	}, []);
+	if (loading) {
 		return (
 			<Box
 				sx={{
@@ -179,23 +182,7 @@ function Dashboard() {
 					}}
 				>
 					<Navbar />
-					<Container>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								alignItems: 'flex-start',
-							}}
-						>
-							<Box>
-								<MonsterSubmit />
-							</Box>
-							<Box sx={{ ml: 5 }}>
-								<DashboardData />
-							</Box>
-						</Box>
-					</Container>
+					<UnitCreation />
 				</div>
 			</div>
 		</>
