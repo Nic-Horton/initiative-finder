@@ -29,7 +29,7 @@ import CloseIcon from '@mui/icons-material/Close';
 //   }
 // }
 
-export default function MonsterSubmit() {
+export default function MonsterSubmit({ combatantList, setCombatantList }) {
 	const uid = auth.currentUser.uid;
 	// const uid = user.uid;
 	// const monsterCollectionRef = collection(db, 'Monsters');
@@ -37,30 +37,65 @@ export default function MonsterSubmit() {
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 
-  const onSubmitMonster = async () => {
-    await addDoc(
-      tabValue === "Characters" ? characterCollectionRef : monsterCollectionRef,
-      {
-		name: monsterName,
-		hp: Number(monsterHP),
-		ac: Number(monsterAC),
-		fortitudeSave: Number(monsterFortSave),
-		reflexSave: Number(monsterReflexSave),
-		willSave: Number(monsterWillSave),
-		initiative: Number(monsterInitiative),
-		description: monsterDescription,
-      }
-    );
-    setMonsterAC(10);
-	setMonsterName("");
-    setMonsterHP(10);
-    setMonsterWillSave(10);
-    setMonsterReflexSave(10);
-    setMonsterFortSave(10);
-    setMonsterInitiative(10);
-    setMonsterDescription("");
-    alert("Submitted!");
-  };
+	const onSubmitMonster = async (e) => {
+		if (!monsterName) {
+			return;
+		}
+		e.preventDefault();
+		const docRef = await addDoc(
+			tabValue === 'Characters' ? characterCollectionRef : monsterCollectionRef,
+			{
+				name: monsterName,
+				hp: Number(monsterHP),
+				ac: Number(monsterAC),
+				fortitudeSave: Number(monsterFortSave),
+				reflexSave: Number(monsterReflexSave),
+				willSave: Number(monsterWillSave),
+				initiative: Number(monsterInitiative),
+				description: monsterDescription,
+			}
+		);
+		if (tabValue === 'Characters') {
+			const newCombatantList = [
+				...combatantList.characterList,
+				{
+					id: docRef.id,
+					name: monsterName,
+					hp: Number(monsterHP),
+					ac: Number(monsterAC),
+					fortitudeSave: Number(monsterFortSave),
+					reflexSave: Number(monsterReflexSave),
+					willSave: Number(monsterWillSave),
+					initiative: Number(monsterInitiative),
+					description: monsterDescription,
+				},
+			];
+			setCombatantList({
+				characterList: newCombatantList,
+				monsterList: [...combatantList.monsterList],
+			});
+		} else {
+			const newCombatantList = [
+				...combatantList.monsterList,
+				{
+					id: docRef.id,
+					name: monsterName,
+					hp: Number(monsterHP),
+					ac: Number(monsterAC),
+					fortitudeSave: Number(monsterFortSave),
+					reflexSave: Number(monsterReflexSave),
+					willSave: Number(monsterWillSave),
+					initiative: Number(monsterInitiative),
+					description: monsterDescription,
+				},
+			];
+			setCombatantList({
+				characterList: [...combatantList.characterList],
+				monsterList: newCombatantList,
+			});
+		}
+		handleReset();
+	};
 
 	const [open, setOpen] = useState(false);
 
@@ -102,59 +137,60 @@ export default function MonsterSubmit() {
 	const [monsterInitiative, setMonsterInitiative] = useState(10);
 	const [monsterDescription, setMonsterDescription] = useState('');
 
-  function handleReset() {
-    setMonsterName("");
-    setMonsterAC(10);
-    setMonsterHP(10);
-    setMonsterWillSave(10);
-    setMonsterReflexSave(10);
-    setMonsterFortSave(10);
-    setMonsterInitiative(10);
-    setMonsterDescription("");
-    alert("Stat Block Reset!")
-  }
-  return (
-    <>
-        <div>
-      <Snackbar
-        open={open}
-        autoHideDuration={300}
-        action={action}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity="success">"Tab Changed!"</Alert>
-  </Snackbar>
-    </div>
-      <Paper
-        sx={{
-          width: 700,
-          height: 700,
-          border: 5,
-          backgroundColor: "rgba(38, 50, 56,0.75)",
-          borderColor: "rgba(200,184,116)",
-          borderRadius: 10,
-          mb: 10,
-          mt: 20,
-        }}
-        elevation={20}
-      >
-        <Grid
-          sx={{ color: "white", p: 2, m: "auto" }}
-          container
-          spacing={3}
-          columns={16}
-          justifyContent="center"
-        >
-          <Grid xs={16} justifyContent="center">
-            <Typography
-              align="center"
-              variant="h4"
-              sx={{ textAlign: "center" }}
-            >
-              New Entry
-            </Typography>
-          </Grid>
-        </Grid>
+	function handleReset() {
+		setMonsterName('');
+		setMonsterAC(10);
+		setMonsterHP(10);
+		setMonsterWillSave(10);
+		setMonsterReflexSave(10);
+		setMonsterFortSave(10);
+		setMonsterInitiative(10);
+		setMonsterDescription('');
+	}
+
+	return (
+		<>
+			<div>
+				<Snackbar
+					open={open}
+					autoHideDuration={300}
+					action={action}
+					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+				>
+					<Alert severity="success">"Tab Changed!"</Alert>
+				</Snackbar>
+			</div>
+			<Paper
+				component="form"
+				sx={{
+					width: 700,
+					height: 700,
+					border: 5,
+					backgroundColor: 'rgba(38, 50, 56,0.75)',
+					borderColor: 'rgba(200,184,116)',
+					borderRadius: 10,
+					mb: 10,
+					mt: 20,
+				}}
+				elevation={20}
+			>
+				<Grid
+					sx={{ color: 'white', p: 2, m: 'auto' }}
+					container
+					spacing={3}
+					columns={16}
+					justifyContent="center"
+				>
+					<Grid xs={16} justifyContent="center">
+						<Typography
+							align="center"
+							variant="h4"
+							sx={{ textAlign: 'center' }}
+						>
+							New Entry
+						</Typography>
+					</Grid>
+				</Grid>
 
 				{/* character and monsters tabs */}
 				<Grid xs={16} justifyContent="center">
@@ -289,6 +325,7 @@ export default function MonsterSubmit() {
 							Name
 						</InputLabel>
 						<TextField
+							required
 							color="success"
 							variant="outlined"
 							placeholder="Enter the character/monster name here!"
@@ -447,6 +484,7 @@ export default function MonsterSubmit() {
 						}}
 					>
 						<Button
+							type="submit"
 							sx={{
 								color: 'yellow',
 								backgroundColor: 'rgba(14, 78, 14, 0.99)',
@@ -454,7 +492,7 @@ export default function MonsterSubmit() {
 								borderColor: 'rgba(200,184,116)',
 							}}
 							variant="outlined"
-							onClick={() => onSubmitMonster()}
+							onClick={(e) => onSubmitMonster(e)}
 						>
 							Submit
 						</Button>
