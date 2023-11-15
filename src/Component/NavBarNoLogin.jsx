@@ -14,6 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
+import { auth } from "../Config/firebase-config";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation } from 'react-router-dom';
+
+import { signOut,On } from "firebase/auth";
+import { useState, useEffect } from "react";
 
 const appBarColor = blueGrey[900];
 
@@ -25,9 +31,11 @@ const pages = [
 //     "Profile", "Settings", "Logout"
 // ];
 
-function NavbarLogin(loggedIn) {
+function NavbarNoLogin(loggedIn) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
     console.log("clicked Hamburger");
@@ -48,6 +56,22 @@ function NavbarLogin(loggedIn) {
     setAnchorElUser(null);
   };
 
+  
+  console.log(auth?.currentUser);
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+
+      alert("Logging you out");
+      setTimeout(()=> { 
+        window.location.href = "/";
+          }, 500);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -58,21 +82,35 @@ function NavbarLogin(loggedIn) {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CasinoOutlinedIcon
+        <Button
+        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
+          {/* <CasinoOutlinedIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          /> */}
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={NavLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color:'#c8b874',
               textDecoration: "none",
             }}
           >
@@ -113,6 +151,7 @@ function NavbarLogin(loggedIn) {
                   textAlign="center"
                   component={NavLink}
                   to="/dashboard"
+                  sx={{color:'#c8b874'}}
                 >
                   <Button>DashBoard</Button>
                 </Typography>
@@ -130,14 +169,25 @@ function NavbarLogin(loggedIn) {
           </Box>
 
           {/*MobileResponsiveness*/}
-          <CasinoOutlinedIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <Button
+        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component={NavLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -147,6 +197,7 @@ function NavbarLogin(loggedIn) {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              color:'#c8b874'
             }}
           >
             InitFindr
@@ -164,9 +215,18 @@ function NavbarLogin(loggedIn) {
               </Button>
             ))}
           </Box>
+          <Box sx={{ flexGrow: 0 }}>
+        {/* Disable the logout button if the current page is the login page */}
+        {location.pathname !== '/login' && (
+          <Button onClick={logout}>
+            <Typography sx={{color:'#c8b874'}}>Log out</Typography>
+            <LogoutIcon sx={{color:'#c8b874'}} />
+          </Button>
+        )}
+      </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default NavbarLogin;
+export default NavbarNoLogin;

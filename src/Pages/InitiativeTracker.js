@@ -16,6 +16,7 @@ import BattleList from '../Component/InitiativeOrder/BattleList';
 import Button from '@mui/material/Button';
 import { Auth } from '../Component/Auth';
 import Navbar from '../Component/Navbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
 import Toolbar from '@mui/material/Toolbar';
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
@@ -100,7 +101,7 @@ function InitiativeTracker() {
 							position: 'absolute',
 							top: 0,
 							left: 0,
-							backgroundImage: `url('https://livingmythrpg.files.wordpress.com/2016/03/fairy-with-dying-warrior-wallpaper-1920x1080.jpg')`,
+							backgroundImage: `url('/Images/dyingWarror.jpg')`,
 							height: '100vh',
 							width: '100%',
 							backgroundSize: 'cover',
@@ -159,7 +160,7 @@ function InitiativeTracker() {
 
 	return (
 		<>
-			<Navbar />
+			<NavbarNoLogin />
 			<Toolbar />
 			<Box
 				sx={{

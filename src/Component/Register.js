@@ -20,9 +20,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../Config/firebase-config";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
-function BottomAlert({ open, severity, message }) {
-  return <div className={`bottom-alert ${severity}`}>{message}</div>;
-}
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -40,19 +37,21 @@ export default function RegisterPage() {
     );
   };
 
-  const handleCancel = () => {
-    setAlertSeverity("error");
-    setAlertMessage("Critical Failure");
-    setShowAlert(true);
-    console.error("Error signing in:");
-    setTimeout(() => {
-      setOpen(false);
-      setShowAlert(false);
-    }, 3000);
-  };
 
-  const handleShowAlertClickO = () => setShowAlert(true);
-  const handleShowAlertClickC = () => setShowAlert(false);
+	const handleCancel = () => {
+		setAlertSeverity('error');
+        setAlertMessage('Critical Failure');
+        setShowAlert(true);
+        console.error("Error signing in:");
+        setTimeout(() => {
+		setOpen(false)
+        setShowAlert(false);
+      }, 3000);
+	};
+  
+  const handleShowAlertClickO = () => setShowAlert(true)
+  const handleShowAlertClickC= () => setShowAlert(false)
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -95,7 +94,8 @@ export default function RegisterPage() {
 
           setTimeout(() => {
             setOpen(false);
-          }, 3000);
+          }, 500);
+
         } catch (createErr) {
           console.error("Error creating user:", createErr);
         }

@@ -3,7 +3,6 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 import {
@@ -23,7 +22,10 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { InputLabel, Paper, Typography } from "@mui/material";
+import { Box, InputLabel, Paper, Typography } from "@mui/material";
+import ShieldTwoToneIcon from "@mui/icons-material/ShieldTwoTone";
+import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
+
 
 export default function DashboardData() {
   const uid = auth.currentUser.uid;
@@ -144,17 +146,26 @@ export default function DashboardData() {
               mt: 3,
             }}
             textColor="primary"
-            indicatorColor="secondary"
+            indicatorColor="success"
             value={tabValue}
             variant="fullWidth"
             onChange={handleTabChange}
-            aria-label="basic tabs example"
           >
-            <Tab label="Characters" value={"Characters"} />
-            <Tab label="Monsters" value={"Monsters"} />
+            <Tab label="Characters" value={"Characters"} sx={{
+            '&.Mui-selected': {
+              backgroundColor: 'rgba(23,118,185) ', 
+              color: 'white', 
+            },
+          }}/>
+            <Tab label="Monsters" value={"Monsters"} sx={{
+            '&.Mui-selected': {
+              backgroundColor: 'rgba(212,18,18)', 
+              color: 'white', 
+            },
+          }}/>
           </Tabs>
         </Grid>
-        <Divider />
+        
         <Grid
           sx={{
             display: "flex",
@@ -197,7 +208,7 @@ export default function DashboardData() {
           aria-label="secondary mailbox folder"
           sx={{
             color: "black",
-            maxWidth: 390,
+            maxWidth: 350,
             width: "100%",
             backgroundColor: "white",
             border: "5px solid rgba(54,69,79,0.5)",
@@ -205,30 +216,40 @@ export default function DashboardData() {
             display: "flex",
             flexDirection: "column",
             maxHeight: 350,
+            ml:.5,
             height: "100%",
-            mt: 2,
+            mt:2,
+            p:2,
             overflow: "auto",
           }}
         >
           {!dataSearch
             ? combatantList?.map((monster, index) => (
-                <Grid
+                
+            <Grid
                   key={monster.id}
                   sx={{ height: "100", backgroundColor: "white" }}
                 >
-                  <Grid
+                  
+              <Grid
                     sx={{
                       border: 1,
                       borderRadius: 1,
                       display: "flex",
                       alignItems: "center",
-                    }}
-                  >
-                    <ListItemButton
+                      color:'rgba(200,184,116)',
+                  mb:1,
+                  p:.5,
+                }}
+                    overflow="auto"
+              >
+              <ArrowRightSharpIcon sx={{color:'red'}}/>
+                <ListItemButton
                       onClick={(event) => handleListItemClick(event, index)}
                     >
-                      <ListItemText
-                        sx={{ color: "red" }}
+                      
+                  <ListItemText
+                        sx={{ color:'black' }}
                         primary={monster.name}
                       />
                     </ListItemButton>
@@ -247,7 +268,8 @@ export default function DashboardData() {
                     name={monster.name}
                     initiative={monster.initiative}
                     ac={monster.ac}
-                    reflexSave={monster.reflexSave}
+                    hp={monster.hp}
+                reflexSave={monster.reflexSave}
                     fortitudeSave={monster.fortitudeSave}
                     willSave={monster.willSave}
                     description={monster.description}
@@ -260,70 +282,76 @@ export default function DashboardData() {
                   {selectedIndex === index && (
                     <Grid
                       container
-                      spacing={2}
-                      sx={{
-                        color: "black",
-                        width: 300,
-                        backgroundColor: "orange",
-                        border: "5px solid rgba(54,69,79,0.5)",
+                      spacing={0}
+                     sx={{
+                        flexDirection:"row",
+                    color: "white",
+                        width: "100%",
+                    mt:-1,
+                    height:70,
+                        background: 'linear-gradient(to top, darkblue, rgba(2, 78, 165))',
+                        border: "5px solid rgba(217,212,215)",
                         borderRadius: 2,
 
-                        textAlign: "center",
-                      }}
-                    >
-                      <Grid
-                        item
-                        xs={3}
-                        sx={{
-                          color: "white",
-                          width: 300,
-                          backgroundColor: "blue",
-                          border: "5px solid rgba(54,69,79,0.5)",
-                          borderRadius: 2,
+                    textAlign: "center",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      color: "white",
+                      width: 300,
+                      backgroundColor: "blue",
+                      border: "5px solid rgba(54,69,79,0.5)",
+                      borderRadius: 2,
 
-                          textAlign: "center",
-                        }}
-                      >
-                        <div sx={{ backgroundColor: "red" }}>
-                          AC: {monster.ac}
-                        </div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>
-                          Fortitude Save: {monster.fortitudeSave}
-                        </div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>Will Save: {monster.willSave}</div>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <div sx={{}}>description: {monster.description}</div>
-                      </Grid>
-                    </Grid>
-                  )}
+                      textAlign: "center",
+                    }}
+                  >
+                    <div sx={{ backgroundColor: "red" }}>AC: {monster.ac}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>HP {monster.hp}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Fortitude Save: {monster.fortitudeSave}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Will Save: {monster.willSave}</div>
+                  </Grid>
                 </Grid>
-              ))
-            : filteredList?.map((monster, index) => (
-                <Grid
+                   )}
+                   </Grid>
+                  ))
+                  : filteredList?.map((monster, index) => (
+                    <Grid
                   key={monster.id}
                   sx={{ height: "100", backgroundColor: "white" }}
                 >
-                  <Grid
+                  
+              <Grid
                     sx={{
                       border: 1,
                       borderRadius: 1,
                       display: "flex",
                       alignItems: "center",
-                    }}
-                  >
-                    <ListItemButton
+                      color:'rgba(200,184,116)',
+                  mb:1,
+                  p:.5,
+                }}
+                    overflow="auto"
+              >
+              <ArrowRightSharpIcon sx={{color:'red'}}/>
+                <ListItemButton
                       onClick={(event) => handleListItemClick(event, index)}
                     >
-                      <ListItemText
-                        sx={{ color: "red" }}
+                      
+                  <ListItemText
+                        sx={{ color:'black' }}
                         primary={monster.name}
                       />
                     </ListItemButton>
@@ -342,7 +370,8 @@ export default function DashboardData() {
                     name={monster.name}
                     initiative={monster.initiative}
                     ac={monster.ac}
-                    reflexSave={monster.reflexSave}
+                    hp={monster.hp}
+                reflexSave={monster.reflexSave}
                     fortitudeSave={monster.fortitudeSave}
                     willSave={monster.willSave}
                     description={monster.description}
@@ -355,52 +384,51 @@ export default function DashboardData() {
                   {selectedIndex === index && (
                     <Grid
                       container
-                      spacing={2}
-                      sx={{
-                        color: "black",
-                        width: 300,
-                        backgroundColor: "orange",
-                        border: "5px solid rgba(54,69,79,0.5)",
+                      spacing={0}
+                     sx={{
+                        flexDirection:"row",
+                    color: "white",
+                        width: "100%",
+                    mt:-1,
+                    height:70,
+                        background: 'linear-gradient(to top, darkblue, rgba(2, 78, 165))',
+                        border: "5px solid rgba(217,212,215)",
                         borderRadius: 2,
 
-                        textAlign: "center",
-                      }}
-                    >
-                      <Grid
-                        item
-                        xs={3}
-                        sx={{
-                          color: "white",
-                          width: 300,
-                          backgroundColor: "blue",
-                          border: "5px solid rgba(54,69,79,0.5)",
-                          borderRadius: 2,
+                    textAlign: "center",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      color: "white",
+                      width: 300,
+                      backgroundColor: "blue",
+                      border: "5px solid rgba(54,69,79,0.5)",
+                      borderRadius: 2,
 
-                          textAlign: "center",
-                        }}
-                      >
-                        <div sx={{ backgroundColor: "red" }}>
-                          AC: {monster.ac}
-                        </div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>
-                          Fortitude Save: {monster.fortitudeSave}
-                        </div>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <div sx={{}}>Will Save: {monster.willSave}</div>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <div sx={{}}>description: {monster.description}</div>
-                      </Grid>
-                    </Grid>
-                  )}
+                      textAlign: "center",
+                    }}
+                  >
+                    <div sx={{ backgroundColor: "red" }}>AC: {monster.ac}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>HP {monster.hp}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Reflex Save: {monster.reflexSave}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Fortitude Save: {monster.fortitudeSave}</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div sx={{}}>Will Save: {monster.willSave}</div>
+                  </Grid>
                 </Grid>
-              ))}
+              )}
+            </Grid>
+          ))}
         </List>
       </Paper>
     </>
