@@ -23,11 +23,11 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 
-const styles = {
-	container: {
-		width: 50,
-	},
-};
+// const styles = {
+//   container: {
+//     width: 50
+//   }
+// }
 
 export default function MonsterSubmit() {
 	const uid = auth.currentUser.uid;
@@ -37,23 +37,30 @@ export default function MonsterSubmit() {
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 
-	const onSubmitMonster = async () => {
-		await addDoc(
-			tabValue === 'Characters' ? characterCollectionRef : monsterCollectionRef,
-			{
-				name: monsterName,
-				hp: Number(monsterHP),
-				ac: Number(monsterAC),
-				fortitudeSave: Number(monsterFortSave),
-				reflexSave: Number(monsterReflexSave),
-				willSave: Number(monsterWillSave),
-				initiative: Number(monsterInitiative),
-				description: monsterDescription,
-			}
-		);
-		setMonsterAC(10);
-		alert('Monster Submitted!');
-	};
+  const onSubmitMonster = async () => {
+    await addDoc(
+      tabValue === "Characters" ? characterCollectionRef : monsterCollectionRef,
+      {
+		name: monsterName,
+		hp: Number(monsterHP),
+		ac: Number(monsterAC),
+		fortitudeSave: Number(monsterFortSave),
+		reflexSave: Number(monsterReflexSave),
+		willSave: Number(monsterWillSave),
+		initiative: Number(monsterInitiative),
+		description: monsterDescription,
+      }
+    );
+    setMonsterAC(10);
+	setMonsterName("");
+    setMonsterHP(10);
+    setMonsterWillSave(10);
+    setMonsterReflexSave(10);
+    setMonsterFortSave(10);
+    setMonsterInitiative(10);
+    setMonsterDescription("");
+    alert("Submitted!");
+  };
 
 	const [open, setOpen] = useState(false);
 
@@ -95,58 +102,59 @@ export default function MonsterSubmit() {
 	const [monsterInitiative, setMonsterInitiative] = useState(10);
 	const [monsterDescription, setMonsterDescription] = useState('');
 
-	function handleReset() {
-		setMonsterName('');
-		setMonsterAC(10);
-		setMonsterHP(10);
-		setMonsterWillSave(10);
-		setMonsterReflexSave(10);
-		setMonsterFortSave(10);
-		setMonsterInitiative(10);
-		setMonsterDescription('');
-	}
-	return (
-		<>
-			<div>
-				<Snackbar
-					open={open}
-					autoHideDuration={300}
-					action={action}
-					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-				>
-					<Alert severity="success">"Tab Changed!"</Alert>
-				</Snackbar>
-			</div>
-			<Paper
-				sx={{
-					width: 700,
-					height: 700,
-					border: 5,
-					backgroundColor: 'rgba(38, 50, 56,0.75)',
-					borderColor: 'rgba(200,184,116)',
-					borderRadius: 10,
-					mb: 10,
-					mt: 20,
-				}}
-				elevation={20}
-			>
-				<Grid
-					sx={{ color: 'white', p: 2, m: 'auto' }}
-					container
-					spacing={3}
-					columns={16}
-					justifyContent="center"
-				>
-					<Grid xs={16} justifyContent="center">
-						<Typography
-							align="center"
-							variant="h4"
-							sx={{ textAlign: 'center' }}
-						>
-							New Entry
-						</Typography>
-					</Grid>
-				</Grid>
+  function handleReset() {
+    setMonsterName("");
+    setMonsterAC(10);
+    setMonsterHP(10);
+    setMonsterWillSave(10);
+    setMonsterReflexSave(10);
+    setMonsterFortSave(10);
+    setMonsterInitiative(10);
+    setMonsterDescription("");
+    alert("Stat Block Reset!")
+  }
+  return (
+    <>
+        <div>
+      <Snackbar
+        open={open}
+        autoHideDuration={300}
+        action={action}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="success">"Tab Changed!"</Alert>
+  </Snackbar>
+    </div>
+      <Paper
+        sx={{
+          width: 700,
+          height: 700,
+          border: 5,
+          backgroundColor: "rgba(38, 50, 56,0.75)",
+          borderColor: "rgba(200,184,116)",
+          borderRadius: 10,
+          mb: 10,
+          mt: 20,
+        }}
+        elevation={20}
+      >
+        <Grid
+          sx={{ color: "white", p: 2, m: "auto" }}
+          container
+          spacing={3}
+          columns={16}
+          justifyContent="center"
+        >
+          <Grid xs={16} justifyContent="center">
+            <Typography
+              align="center"
+              variant="h4"
+              sx={{ textAlign: "center" }}
+            >
+              New Entry
+            </Typography>
+          </Grid>
+        </Grid>
 
 				{/* character and monsters tabs */}
 				<Grid xs={16} justifyContent="center">
