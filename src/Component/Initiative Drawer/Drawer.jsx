@@ -112,8 +112,10 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
   const [combatantList, setCombatantList] = useState([
     { monsterList: [], characterList: [] },
   ]);
+  const [search, setSearch] = useState("");
 
   const handleTabChange = (event, newCategory) => {
+    setSearch('');
     setCategory(newCategory);
   };
 
@@ -217,7 +219,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             alignItems: "center",
             backgroundColor: 'rgba(38, 50, 56,0.75)'
              }}>
-          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} />
+          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} search={search} setSearch={setSearch}/>
           </Box>
           <SideCreation combatantList={combatantList} setCombatantList={setCombatantList}/>
         </Box>
