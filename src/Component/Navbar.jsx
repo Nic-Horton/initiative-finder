@@ -23,11 +23,10 @@ import { auth } from "../Config/firebase-config";
 import NavbarNoLogin from "./NavBarNoLogin";
 const appBarColor = blueGrey[900];
 
-
 const pages = [
-  { name: 'Character Creation', path: '/dashboard' },
-  { name: 'Initiative Tracker', path: '/tracker' },
-  { name: 'Login', path: '/login' },
+  { name: "Character Creation", path: "/dashboard" },
+  { name: "Initiative Tracker", path: "/tracker" },
+  { name: "Login", path: "/login" },
 ];
 const settings = ["Profile", "Settings", "Logout"];
 
@@ -75,14 +74,25 @@ function Navbar() {
       <AppBar position="fixed" sx={{ backgroundColor: appBarColor,zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CasinoOutlinedIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+        <Button
+        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
           <Typography
             variant="h6"
             noWrap
             component={NavLink}
-            to='/'
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -91,6 +101,7 @@ function Navbar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              color:'#c8b874'
             }}
           >
             InitFindr
@@ -140,14 +151,25 @@ function Navbar() {
           </Box>
 
           {/*MobileResponsiveness*/}
-          <CasinoOutlinedIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <Button
+        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component={NavLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -157,6 +179,7 @@ function Navbar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              color:'#c8b874'
             }}
           >
             InitFindr

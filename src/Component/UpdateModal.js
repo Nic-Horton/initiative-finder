@@ -38,12 +38,13 @@ export default function UpdateModal({ name, ac, reflexSave, fortitudeSave, willS
 		const monsterDoc = doc(db, databaseRef, id);
 		await updateDoc(monsterDoc, 
         { 
-            ac: acValue, 
-            hp:hpValue,
-            fortitudeSave: fortValue,
-            willSave: willValue,
-            reflexSave: reflexValue,
-            description: descriptionValue,
+      ac: Number(acValue),
+      hp:Number(hpValue),
+			fortitudeSave: Number(fortValue),
+			willSave: Number(willValue),
+			reflexSave: Number(reflexValue),
+			description: Number(descriptionValue),
+      
         });
 	};
 

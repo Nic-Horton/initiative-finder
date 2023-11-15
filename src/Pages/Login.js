@@ -9,7 +9,6 @@ import { Auth } from "../Component/Auth";
 import NavbarNoLogin from "../Component/NavBarNoLogin";
 
 function Login() {
-
   return (
     <>
     <NavbarNoLogin />
