@@ -19,7 +19,6 @@ export default function UpdateModal({
 	name,
 	hp,
 	ac,
-	hp,
 	reflexSave,
 	fortitudeSave,
 	willSave,
