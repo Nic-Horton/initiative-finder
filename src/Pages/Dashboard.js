@@ -10,7 +10,6 @@ import { Button, Container, Typography } from '@mui/material';
 import CircularProgress, {
 	circularProgressClasses,
 } from '@mui/material/CircularProgress';
-
 function Dashboard() {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -134,6 +133,7 @@ function Dashboard() {
 					width: '100%',
 				}}
 			>
+				
 				<div
 					style={{
 						position: 'absolute',
@@ -161,7 +161,8 @@ function Dashboard() {
 								justifyContent: 'center',
 								alignItems: 'flex-start',
 							}}
-						>
+						><img src='https://files.slack.com/files-pri/T0569RDC6-F065L0B60EA/untitled_artwork-1.png
+						'></img>
 							<Box>
 								<MonsterSubmit />
 							</Box>
