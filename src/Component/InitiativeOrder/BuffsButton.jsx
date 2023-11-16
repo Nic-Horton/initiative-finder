@@ -44,7 +44,7 @@ export default function BuffsButton({
     <div>
       <Stack direction="row" spacing={2}>
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<FlareIcon />}
           onClick={handleOpen}
           color="success"

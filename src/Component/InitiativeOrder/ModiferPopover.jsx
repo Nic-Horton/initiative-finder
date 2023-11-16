@@ -35,14 +35,14 @@ export default function ModifierPopover({ buff, condition, type }) {
           <Chip
             label={buff.name}
             color="primary"
-            style={{ marginRight: "4px" }}
+            style={{ marginLeft: "50px" }}
           />
         )}
         {type === "condition" && (
           <Chip
             label={condition.name}
             color="error"
-            style={{ marginRight: "4px" }}
+            style={{ marginLeft: "50px" }}
           />
         )}
         <Button onClick={handleOpen}>

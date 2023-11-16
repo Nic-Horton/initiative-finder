@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -34,17 +34,18 @@ export default function ConditionsButton({
   statusValues,
   handleStatusToggle,
   handleSeveritySelect,
-  severityValues
+  severityValues,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [conditions, setConditions] = React.useState(Conditions);
+
   return (
     <div>
       <Stack direction="row" spacing={2}>
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<MonitorHeartIcon />}
           onClick={handleOpen}
           color="error"
@@ -112,6 +113,10 @@ export default function ConditionsButton({
                       padding: "8px",
                       borderColor: "error.main",
                       bgcolor: "rgba(200,184,116)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {/* <Chip label={condition.name} color="error" /> */}
@@ -119,7 +124,16 @@ export default function ConditionsButton({
                     <RedSwitch
                       {...label}
                       checked={statusValues.includes(condition.name)}
-                      onChange={() => handleStatusToggle(condition.name)}
+                      onChange={() => {
+                        // if (condition.name === "prone") {
+                        //   handleStatusToggleForGroup([
+                        //     "prone",
+                        //     "flatfooted",
+                        //     "petrified",
+                        //   ]);
+                        // } else {
+                        handleStatusToggle(condition.name);
+                      }}
                     />
                     <div>
                       <SeverityLevelRadio
