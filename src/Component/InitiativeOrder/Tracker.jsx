@@ -28,6 +28,7 @@ import {
   query,
 } from "firebase/firestore";
 import { Typography } from "@mui/material";
+import { WidthFull } from "@mui/icons-material";
 
 function Tracker() {
 	const uid = auth.currentUser.uid;
@@ -328,20 +329,25 @@ function Tracker() {
             </Box>
             {renderCards()}
           </Grid>
-          <Grid item xs>
-            <CombatantCard
-              name={combatantName}
-              ac={combatantAC}
-              hp={combatantHp}
-              initiative={combatantInitiative}
-              fortitudeSave={combatantFortitudeSave}
-              reflexSave={combatantReflexSave}
-              willSave={combatantWillSave}
-              portrait={combatantPortrait}
-              description={combatantDescription}
-            />
-          </Grid>
+          {/* <Grid item xs sx={{position: "relative"}}>
+            
+          </Grid> */}
+          <CombatantCard
+            sx={{position:'fixed', zIndex: 1000}}
+          
+            name={combatantName}
+            ac={combatantAC}
+            hp={combatantHp}
+            initiative={combatantInitiative}
+            fortitudeSave={combatantFortitudeSave}
+            reflexSave={combatantReflexSave}
+            willSave={combatantWillSave}
+            portrait={combatantPortrait}
+            description={combatantDescription}
+          
+          />
         </Grid>
+        
       </Main>
     </>
   );
