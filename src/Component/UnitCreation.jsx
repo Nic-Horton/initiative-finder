@@ -10,12 +10,13 @@ import {
 import { db, auth } from '../Config/firebase-config';
 
 function UnitCreation() {
-  const uid = auth.currentUser.uid;
+
+	const uid = auth.currentUser.uid;
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
-  const [combatantList, setCombatantList] = React.useState([]);
+	const [combatantList, setCombatantList] = React.useState([]);
 
-  React.useEffect(() => {
+	React.useEffect(() => {
 		const getLists = async () => {
 			try {
 				const monsterData = await getDocs(monsterCollectionRef);
@@ -39,29 +40,30 @@ function UnitCreation() {
 			}
 		};
 		getLists();
+		console.log(uid)
 	}, []);
 
-  return (
-    <>
-      <Container>
+	return (
+		<>
+			<Container>
 				<Box
-				  sx={{
-				  	display: 'flex',
-				  	flexDirection: 'row',
-				  	justifyContent: 'center',
-				  	alignItems: 'flex-start',
-				  }}
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'flex-start',
+					}}
 				>
-				  <Box>
-				  	<MonsterSubmit combatantList={combatantList} setCombatantList={setCombatantList} />
-				  </Box>
-				  <Box sx={{ ml: 5 }}>
-				  	<DashboardData combatantList={combatantList} setCombatantList={setCombatantList}/>
-				  </Box>
+					<Box>
+						<MonsterSubmit combatantList={combatantList} setCombatantList={setCombatantList} />
+					</Box>
+					<Box sx={{ ml: 5 }}>
+						<DashboardData combatantList={combatantList} setCombatantList={setCombatantList} />
+					</Box>
 				</Box>
 			</Container>
-    </>
-  )
+		</>
+	)
 }
 
 export default UnitCreation
