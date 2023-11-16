@@ -13,11 +13,11 @@ export default function SeverityLevelRadio({
   modifiers,
   setModifiers,
   selectedSeverity,
-  value
+  value,
 }) {
-    const [selectedValue, setSelectedValue] = React.useState(
-      value ? value.stage : "0"
-    );
+  const [selectedValue, setSelectedValue] = React.useState(
+    value ? value.stage : "0"
+  );
   const handleChange = (
     name,
     stage,
@@ -75,7 +75,6 @@ export default function SeverityLevelRadio({
         row
         aria-labelledby="SeverityLevelInput"
         name="severity-radio-buttons-group"
-        defaultValue="1"
       >
         {modifiers?.conditionEffects?.map((modifier) => {
           return (

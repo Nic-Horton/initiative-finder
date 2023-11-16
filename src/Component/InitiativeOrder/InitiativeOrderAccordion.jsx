@@ -62,6 +62,7 @@ export default function InitiativeOrderAccordion({
   setCombatantPortrait,
   setSelectedUnit,
   selectedUnit,
+  value,
 }) {
   //States
   const [expanded, setExpanded] = React.useState(false);
@@ -70,7 +71,9 @@ export default function InitiativeOrderAccordion({
   const [circumstanceSnackbar, setCircumstanceSnackbar] = useState(false);
   const [removeCircumstanceSnackbar, setRemoveCircumstanceSnackbar] =
     useState(false);
-
+  const [selectedValue, setSelectedValue] = React.useState(
+    value ? value.stage : "0"
+  );
   //Accordion open/close
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -101,16 +104,11 @@ export default function InitiativeOrderAccordion({
         setRemoveCircumstanceSnackbar(true);
       }
     } else {
+      //Testing the below set SelectedValue
       console.log("added", status, "to --->", statusValues);
       setStatusValues([...statusValues, status]);
-      handleSeveritySelect({
-        name: status,
-        stage: 1, // Set the severity level to 1
-        acEffect: 0,
-        fortitudeEffect: 0,
-        willEffect: 0,
-        reflexEffect: 0,
-      });
+      // setSelectedValue("1");
+      // console.log(selectedValue)
       //Nested an if statement just for this circumstance
       if (status === "prone") {
         setCircumstanceSnackbar(true);
@@ -146,8 +144,6 @@ export default function InitiativeOrderAccordion({
     );
 
     if (findSeverity) {
-      console.log("Severity IF");
-      console.log(severity);
       const updatedSeverityValues = severityValues.map((item) =>
         item.name === severity.name
           ? {
@@ -163,7 +159,7 @@ export default function InitiativeOrderAccordion({
       setSeverityValues(updatedSeverityValues);
     } else {
       console.log("Severity ELSE");
-      console.log(severity)
+      console.log(severity);
       setSeverityValues([...severityValues, severity]);
     }
   };
@@ -317,6 +313,7 @@ export default function InitiativeOrderAccordion({
                     handleStatusToggle={handleStatusToggle}
                     severityValues={severityValues}
                     handleSeveritySelect={handleSeveritySelect}
+                    value={selectedValue}
                   />
                 </Grid>
                 <Grid item lg={4}>
@@ -325,6 +322,7 @@ export default function InitiativeOrderAccordion({
                     handleStatusToggle={handleStatusToggle}
                     severityValues={severityValues}
                     handleSeveritySelect={handleSeveritySelect}
+                    value={selectedValue}
                   />
                 </Grid>
                 <Grid item lg={4}>
