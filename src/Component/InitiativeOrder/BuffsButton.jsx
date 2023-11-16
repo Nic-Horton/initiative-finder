@@ -34,12 +34,14 @@ export default function BuffsButton({
   statusValues,
   handleStatusToggle,
   handleSeveritySelect,
-  severityValues
+  severityValues,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [buffs, setBuffs] = React.useState(Buffs);
+  const [selectedStages, setSelectedStages] = React.useState({});
+
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -51,7 +53,7 @@ export default function BuffsButton({
         >
           <Typography
             sx={{
-              display: { md: "none", lg: "flex" },
+              display: { xs: "none", md: "none", lg: "flex" },
             }}
           >
             Buffs
@@ -71,9 +73,10 @@ export default function BuffsButton({
               transform: "translate(-50%, -50%)",
               width: 500,
               bgcolor: "rgba(38, 50, 56,0.75)",
-              border: "2px solid #000",
+              border: "5px solid rgba(200,184,116)",
               boxShadow: 24,
-              p: 4,
+              borderRadius: "10px",
+              p: 3,
             }}
           >
             <IconButton
@@ -106,9 +109,14 @@ export default function BuffsButton({
                     key={index}
                     sx={{
                       border: "1px solid #ccc",
-                      padding: "8px",
-                      borderColor: "primary.main",
-                      bgcolor: "rgba(200,184,116)",
+                      padding: "10px",
+                      borderColor: "rgba(200,184,116)",
+                      borderRadius: "10px",
+                      bgcolor: "rgba(38, 50, 56,0.75)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {/* <Chip label={buff.name} color="primary" /> */}
@@ -116,16 +124,36 @@ export default function BuffsButton({
                     <BlueSwitch
                       {...label}
                       checked={statusValues.includes(buff.name)}
-                      onChange={() => handleStatusToggle(buff.name)}
+                      onChange={() => {
+                        setSelectedStages((prevStages) => ({
+                          ...prevStages,
+                          [buff.name]: 1,
+                        }));
+                        handleStatusToggle(buff.name);
+                        handleSeveritySelect({
+                          name: buff.name,
+                          stage: 1,
+                        });
+                      }}
                     />
                     <SeverityLevelRadio
-                      handleSeveritySelect={handleSeveritySelect}
+                      handleSeveritySelect={(selectedSeverity) => {
+                        handleSeveritySelect(selectedSeverity);
+                        setSelectedStages((prevStages) => ({
+                          ...prevStages,
+                          [selectedSeverity.name]: selectedSeverity.stage,
+                        }));
+                      }}
                       name={buff.name}
                       modifiers={buff}
-                      // setModifier={setBuffs}
-                      value={severityValues.find(
-                        (item) => item.name === buff.name
-                      )}
+                      value={
+                        severityValues.find(
+                          (item) => item.name === buff.name
+                        ) || {
+                          name: buff.name,
+                          stage: selectedStages[buff.name] || 1,
+                        }
+                      }
                     />
                   </Grid>
                 ))}

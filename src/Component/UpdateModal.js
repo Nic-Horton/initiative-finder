@@ -17,6 +17,7 @@ import { db, auth } from '../Config/firebase-config';
 
 export default function UpdateModal({
 	name,
+	hp,
 	ac,
 	reflexSave,
 	fortitudeSave,
@@ -29,7 +30,7 @@ export default function UpdateModal({
 	initiative,
 }) {
 	const [acValue, setAcValue] = useState(ac);
-	const [hpValue, setHpValue] = useState(ac);
+	const [hpValue, setHpValue] = useState(hp);
 	const [fortValue, setFortValue] = useState(fortitudeSave);
 	const [reflexValue, setReflexValue] = useState(reflexSave);
 	const [willValue, setWillValue] = useState(willSave);

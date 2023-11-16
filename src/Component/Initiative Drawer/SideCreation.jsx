@@ -299,7 +299,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
               }}
             >
               <ShieldTwoToneIcon
-                sx={{ mt: 3, fontSize: 70, color: "rgba(139, 0, 0)" }}
+                sx={{ mt: 3, fontSize: 75, color: "rgba(139, 0, 0)" }}
               />
             </Badge>
             <Grid
@@ -354,6 +354,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
         <Grid
           container
           xs={12}
+          spacing={1}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -367,7 +368,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
             sm={3.25}
             lg={2}
             direction="column"
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, }}
           >
             <InputLabel sx={{ textAlign: "center", color: "white" }}>
               HP
@@ -381,7 +382,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                 boxSizing: "border-box",
                 color: "white",
                 backgroundColor: "white",
-                width: 70,
+                width: 75,
                 border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
@@ -405,7 +406,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
               sx={{
                 color: "white",
                 backgroundColor: "white",
-                width: 70,
+                width: 75,
                 border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
@@ -427,7 +428,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
               sx={{
                 color: "white",
                 backgroundColor: "white",
-                width: 70,
+                width: 75,
                 border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
@@ -449,7 +450,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
               sx={{
                 color: "white",
                 backgroundColor: "white",
-                width: 70,
+                width: 75,
                 border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 textAlign: "center",
@@ -471,7 +472,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
               sx={{
                 color: "white",
                 backgroundColor: "white",
-                width: 70,
+                width: 75,
                 border: "5px solid rgba(200,184,116)",
                 borderRadius: 2,
                 borderLeft: -10,
