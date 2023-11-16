@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-
 import DashboardData from '../Component/DashboardData';
 import MonsterSubmit from '../Component/MonsterSubmit';
 import Box from '@mui/material/Box';
 import Navbar from '../Component/Navbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
 import { NavLink } from 'react-router-dom';
 import { auth, googleProvider } from '../Config/firebase-config';
 import { Button, Container, Typography } from '@mui/material';
 import CircularProgress, {
 	circularProgressClasses,
 } from '@mui/material/CircularProgress';
+
+import UnitCreation from '../Component/UnitCreation';
+
+// ADD DEATH SCENE and potential gif of zelda or fire from dark souls?
+
 
 function Dashboard() {
 	const [user, setUser] = useState(null);
@@ -29,6 +34,32 @@ function Dashboard() {
 			unsubscribe();
 		};
 	}, []);
+	if (loading) {
+		return (
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100vh',
+				}}
+			>
+				<CircularProgress
+					variant="indeterminate"
+					sx={{
+						color: 'red',
+						animationDuration: '600ms',
+						[`& .${circularProgressClasses.circle}`]: {
+							strokeLinecap: 'round',
+						},
+					}}
+					size={80}
+					thickness={4}
+					value={100}
+				/>
+			</Box>
+		);
+	}
 
 	if (loading) {
 		return (
@@ -72,7 +103,7 @@ function Dashboard() {
 							position: 'absolute',
 							top: 0,
 							left: 0,
-							backgroundImage: `url('https://livingmythrpg.files.wordpress.com/2016/03/fairy-with-dying-warrior-wallpaper-1920x1080.jpg')`,
+							backgroundImage: `url('../Images/dyingWarror.jpg')`,
 							height: '100vh',
 							width: '100%',
 							backgroundSize: 'cover',
@@ -134,12 +165,13 @@ function Dashboard() {
 					width: '100%',
 				}}
 			>
+				
 				<div
 					style={{
 						position: 'absolute',
 						width: '100%',
 						height: '100%',
-						backgroundImage: `url('https://i.pinimg.com/originals/23/e4/f3/23e4f3ca374cb742be3ee953f830b882.jpg')`,
+						backgroundImage: `url('../Images/anvil.jpg')`,
 						backgroundPosition: 'center',
 						backgroundSize: 'cover',
 						backgroundRepeat: 'no-repeat',
@@ -153,23 +185,9 @@ function Dashboard() {
 					}}
 				>
 					<Navbar />
-					<Container>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								alignItems: 'flex-start',
-							}}
-						>
-							<Box>
-								<MonsterSubmit />
-							</Box>
-							<Box sx={{ ml: 5 }}>
-								<DashboardData />
-							</Box>
-						</Box>
-					</Container>
+
+					<UnitCreation />
+
 				</div>
 			</div>
 		</>

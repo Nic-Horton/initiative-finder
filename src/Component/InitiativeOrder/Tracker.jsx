@@ -28,87 +28,90 @@ import {
   query,
 } from "firebase/firestore";
 import { Typography } from "@mui/material";
+import { WidthFull } from "@mui/icons-material";
 
 function Tracker() {
-  const uid = auth.currentUser.uid;
-  const battleListCollectionRef = collection(db, "Users", uid, "Battles");
-  const [open, setOpen] = useState(true);
-  const [battleListTitle, setBattleListTitle] = useState("");
-  const [unitsData, setUnitsData] = useState([]);
-  // const battleListRef = collection(db, 'battleList');
-  const [battleLists, setBattleLists] = useState([]);
-  const [selectedArray, setSelectedArray] = useState([]);
-  const [selectedUnit, setSelectedUnit] = useState(false);
-  const [childRolledInitiative, setChildRolledInitiative] = useState(0);
+	const uid = auth.currentUser.uid;
+	const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
+	const [open, setOpen] = useState(true);
+	const [battleListTitle, setBattleListTitle] = useState('');
+	const [unitsData, setUnitsData] = useState([]);
+	// const battleListRef = collection(db, 'battleList');
+	const [battleLists, setBattleLists] = useState([]);
+	const [selectedArray, setSelectedArray] = useState([]);
+	const [selectedUnit, setSelectedUnit] = useState(false);
+	const [childRolledInitiative, setChildRolledInitiative] = useState(0);
 
-  //Combatant info that gets passed in when selecting more info on the character
-  const [combatantAC, setCombatantAC] = useState(null);
-  const [combatantInitiative, setCombatantInitiative] = useState(null);
-  const [combatantName, setCombatantName] = useState(null);
-  const [combatantHp, setCombatantHp] = useState(null);
-  const [combatantReflexSave, setCombatantReflexSave] = useState(null);
-  const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
-  const [combatantWillSave, setCombatantWillSave] = useState(null);
-  const [combatantPortrait, setCombatantPortrait] = useState(null);
+	//Combatant info that gets passed in when selecting more info on the character
+	const [combatantAC, setCombatantAC] = useState(null);
+	const [combatantInitiative, setCombatantInitiative] = useState(null);
+	const [combatantName, setCombatantName] = useState(null);
+	const [combatantHp, setCombatantHp] = useState(null);
+	const [combatantReflexSave, setCombatantReflexSave] = useState(null);
+	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
+	const [combatantWillSave, setCombatantWillSave] = useState(null);
+	const [combatantPortrait, setCombatantPortrait] = useState(null)
+	const [combatantDescription, setCombatantDescription] = useState(null)
 
-  // const [activeStep, setActiveStep] = React.useState(0);
+	// const [activeStep, setActiveStep] = React.useState(0);
 
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
+	// const handleNext = () => {
+	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	// };
 
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
+	// const handleBack = () => {
+	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	// };
 
-  //Fetches Battles list for select TextField
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
-        setBattleLists(getFormattedData(battleListQuerySnapshot));
-        // }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    // Helper function to format battle list data
-    const getFormattedData = (querySnapshot) => {
-      const lists = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        lists.push({
-          id: doc.id,
-          title: data.title,
-          // Add other fields as needed
-        });
-      });
-      return lists;
-    };
-    fetchData();
-  }, []);
+	//Fetches Battles list for select TextField
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
+				setBattleLists(getFormattedData(battleListQuerySnapshot));
+				// }
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		};
 
-  //Onchange of selector this will render battlelist units
-  const handleChangeBattleList = async (event) => {
-    setBattleListTitle(event.target.value);
+		// Helper function to format battle list data
+		const getFormattedData = (querySnapshot) => {
+			const lists = [];
+			querySnapshot.forEach((doc) => {
+				const data = doc.data();
+				lists.push({
+					id: doc.id,
+					title: data.title,
+					// Add other fields as needed
+				});
+			});
+			return lists;
+		};
+		fetchData();
+	}, []);
 
-    const getUnitsData = (querySnapshot) => {
-      const units = [];
-      querySnapshot.forEach((doc) => {
-        const data = { ...doc.data(), id: doc.id };
-        units.push(data);
-      });
-      return units;
-    };
+	//Onchange of selector this will render battlelist units
+	const handleChangeBattleList = async (event) => {
+		setBattleListTitle(event.target.value);
 
-    const battleRef = doc(battleListCollectionRef, event.target.value);
-    const unitsQuery = query(collection(battleRef, "Units"));
-    const unitDocs = await getDocs(unitsQuery);
+		const getUnitsData = (querySnapshot) => {
+			const units = [];
+			querySnapshot.forEach((doc) => {
+				const data = { ...doc.data(), id: doc.id };
+				units.push(data);
+			});
+			return units;
+		};
 
-    setUnitsData(getUnitsData(unitDocs));
-    console.log(getUnitsData(unitDocs));
-  };
+		const battleRef = doc(battleListCollectionRef, event.target.value);
+		const unitsQuery = query(collection(battleRef, 'Units'));
+		const unitDocs = await getDocs(unitsQuery);
+
+		setUnitsData(getUnitsData(unitDocs));
+		console.log(getUnitsData(unitDocs));
+	};
 
   //updates battlelists when new battles are created
   const onBattleCreated = async (newBattleList) => {
@@ -188,6 +191,7 @@ function Tracker() {
 						portrait={unit.portrait}
 						hp={unit.hp}
 						id={unit.id}
+						description={unit.description}
 						initiative={unit.initiative}
 						initiativeRoll={unit.initiativeRoll}
 						isSelected={selectedCardIndex === index}
@@ -203,6 +207,7 @@ function Tracker() {
 						setCombatantWillSave={setCombatantWillSave}
 						setSelectedUnit={setSelectedUnit}
 						setCombatantPortrait={setCombatantPortrait}
+						setCombatantDescription={setCombatantDescription}
 						selectedUnit={selectedUnit}
             deleteUnitsFromBattle={deleteUnitsFromBattle}
 					/>
@@ -324,22 +329,25 @@ function Tracker() {
             </Box>
             {renderCards()}
           </Grid>
-          <Grid item xs>
-            <Paper sx={{ backgroundColor: "lightgreen" }}>
-              Combatant Details
-            </Paper>
-            <CombatantCard
-              name={combatantName}
-              ac={combatantAC}
-              hp={combatantHp}
-              initiative={combatantInitiative}
-              fortitudeSave={combatantFortitudeSave}
-              reflexSave={combatantReflexSave}
-              willSave={combatantWillSave}
-              portrait={combatantPortrait}
-            />
-          </Grid>
+          {/* <Grid item xs sx={{position: "relative"}}>
+            
+          </Grid> */}
+          <CombatantCard
+            sx={{position:'fixed', zIndex: 1000}}
+          
+            name={combatantName}
+            ac={combatantAC}
+            hp={combatantHp}
+            initiative={combatantInitiative}
+            fortitudeSave={combatantFortitudeSave}
+            reflexSave={combatantReflexSave}
+            willSave={combatantWillSave}
+            portrait={combatantPortrait}
+            description={combatantDescription}
+          
+          />
         </Grid>
+        
       </Main>
     </>
   );

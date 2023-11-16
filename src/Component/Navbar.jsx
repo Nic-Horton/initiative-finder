@@ -16,7 +16,11 @@ import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { NavLink } from "react-router-dom";
 import { blueGrey } from "@mui/material/colors";
 import { signOut } from "firebase/auth";
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { auth } from "../Config/firebase-config";
+import NavbarNoLogin from "./NavBarNoLogin";
 const appBarColor = blueGrey[900];
 
 const pages = [
@@ -27,16 +31,15 @@ const pages = [
 const settings = ["Profile", "Settings", "Logout"];
 
 function Navbar() {
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, setUser] = useState(null);
+
 
   const handleOpenNavMenu = (event) => {
     console.log("clicked Hamburger");
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    console.log("clicked Profile Icon");
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -44,10 +47,19 @@ function Navbar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    console.log("clicked Vertical Navbar");
-    setAnchorElUser(null);
-  };
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null); 
+      }
+    });
+
+    return () => {
+      unsubscribe(); 
+    };
+  }, []);
 
   const logout = async () => {
     try {
@@ -56,20 +68,26 @@ function Navbar() {
       console.log(err);
     }
   };
-
-  return (
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: appBarColor,
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-      }}
-    >
+  if (user === null) {
+    return (
+ 
+      <AppBar position="fixed" sx={{ backgroundColor: appBarColor,zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CasinoOutlinedIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+        <Button
+        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
           <Typography
             variant="h6"
             noWrap
@@ -83,6 +101,7 @@ function Navbar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              color:'#c8b874'
             }}
           >
             InitFindr
@@ -132,9 +151,20 @@ function Navbar() {
           </Box>
 
           {/*MobileResponsiveness*/}
-          <CasinoOutlinedIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <Button
+        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+                disabled
+                variant="text"
+                size="small"
+                href="https://github.com/Nic-Horton"
+              >
+                <img
+                   style={{marginLeft:2}}
+                   width={40}
+                   src="/Images/d20dice.png"
+                   alt="GitHub"
+                />
+              </Button>
           <Typography
             variant="h5"
             noWrap
@@ -149,6 +179,7 @@ function Navbar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              color:'#c8b874'
             }}
           >
             InitFindr
@@ -167,56 +198,15 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                  textAlign="center"
-                  component={NavLink}
-                  to="/dashboard"
-                >
-                  <Button>Profile</Button>
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                  textAlign="center"
-                  component={NavLink}
-                  to="/tracker"
-                >
-                  <Button>Settings</Button>
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center" component={NavLink} to="/login">
-                  <Button>Log Out</Button>
-                </Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
         </Toolbar>
       </Container>
     </AppBar>
+    );
+  }
+  return (
+    <>
+    <NavbarNoLogin />
+    </>
   );
 }
 export default Navbar;

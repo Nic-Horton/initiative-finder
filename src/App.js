@@ -1,14 +1,10 @@
-import "./App.css";
-
-import Crud from "./Component/Crud";
-
-import Dashboard from "./Pages/Dashboard";
-import InitiativeTracker from "./Pages/InitiativeTracker";
-import Login from "./Pages/Login";
-
-import { Routes, Route } from "react-router-dom";
-
-import Home from "./Pages/Home";
+import './App.css';
+import Crud from './Component/Crud';
+import Dashboard from './Pages/Dashboard';
+import InitiativeTracker from './Pages/InitiativeTracker';
+import Login from './Pages/Login';
+import { Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
 
 // import Crud from './Component/Crud';
 
@@ -21,7 +17,6 @@ import Home from "./Pages/Home";
 function App() {
 	return (
 		<div>
-			{/* <Toolbar /> */}
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/dashboard" element={<Dashboard />} />

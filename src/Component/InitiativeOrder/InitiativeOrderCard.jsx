@@ -65,7 +65,7 @@ export default function InitiativeOrderCard({
 					border: 5,
 					backgroundColor: 'rgba(38, 50, 56,0.75)',
 					borderColor: 'rgba(200,184,116)',
-					borderRadius: 10,
+					borderRadius: 5,
 					
 				}}
 >

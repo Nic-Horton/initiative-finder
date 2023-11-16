@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormLabel } from '@mui/material';
+import { Container, FormControl, FormLabel, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Register from './Register';
 import { useState, useEffect } from 'react';
@@ -12,6 +12,8 @@ import {
 } from "firebase/auth";
 import { Alert } from "@mui/material";
 import NavbarLogin from "./NavBarNoLogin";
+import Navbar from "./Navbar";
+
 
 export const Auth = () => {
 	const [email, setEmail] = useState('');
@@ -39,10 +41,10 @@ export const Auth = () => {
       if (userCredential.user) {
         console.log(userCredential);
         alert("User Found-Critical Success!");
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 3000);
-
+        setTimeout(()=> { 
+      window.location.href = "/dashboard";
+        }, 500);
+  
         // window.location.href = "/dashboard";
       }
     } catch (err) {
@@ -51,13 +53,14 @@ export const Auth = () => {
     }
   };
 
-	const logout = async () => {
-		try {
-			await signOut(auth);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 	function handleClick() {
 		alert('Account not found, Please create account first');
@@ -79,7 +82,7 @@ export const Auth = () => {
 		};
 	}, []);
 
-	const imageURL = 'https://cdn.paizo.com/image/content/Blog/20190624-4.jpg';
+	const imageURL = '/Images/Auth.jpg';
 
   return (
     <div
@@ -93,7 +96,6 @@ export const Auth = () => {
       }}
     >
       <div>
-        <NavbarLogin />
         <Box
           component="form"
           sx={{
@@ -119,14 +121,14 @@ export const Auth = () => {
                 alignItems: "center",
                 backgroundColor: "rgba(54,69,79,0.5)",
                 color: "white",
-                width: 500,
+                width: 800,
                 border: 1,
                 borderRadius: 10,
                 marginTop: 10,
                 marginBottom: 5,
               }}
             >
-              <h1>Initiative Finder</h1>
+            <Typography variant="h3">Please sign in or Register below!</Typography>
             </Box>
             <FormControl
               sx={{

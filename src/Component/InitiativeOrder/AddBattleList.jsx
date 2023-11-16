@@ -8,6 +8,42 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import IconButton from "@mui/material/IconButton";
 import { db, auth } from "../../Config/firebase-config";
 import { collection, addDoc, doc } from "firebase/firestore";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+    },
+    secondary: {
+      main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+    },
+    text: {
+      primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+    },
+  },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-input': {
+            backgroundColor: 'rgba(38, 50, 56,0.75)',
+            color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused fieldset': {
+            borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+          },
+        },
+      },
+    },
+  },
+});
 
 function AddBattleList({ onBattleCreated, battleLists }) {
   const uid = auth.currentUser.uid;
@@ -42,13 +78,13 @@ function AddBattleList({ onBattleCreated, battleLists }) {
     <>
       <Box component={"form"}
       sx={{
-        backgroundColor: "rgba(38, 50, 56,0.75)",
-        borderColor: "rgba(200,184,116)",
-        borderRadius: 2,
-        border:1,
-        paddingTop:1,
-        paddingBottom:1
+        // borderColor: "rgba(200,184,116)",
+        // borderRadius: 2,
+        // border:1,
+        // paddingTop:1,
+        // paddingBottom:1
       }}>
+        <ThemeProvider theme={customTheme}>
         <TextField
           label="Create Battle"
           required
@@ -57,21 +93,23 @@ function AddBattleList({ onBattleCreated, battleLists }) {
           value={newTitle}
           onChange={handleChange}
           fullWidth
+          InputLabelProps={{
+            sx: {
+              color:(theme) => theme.palette.text.primary
+            },}}
           InputProps={{
+            sx:{p:0},
             endAdornment: (
               <IconButton onClick={() => onHandleAddBattle(newTitle)}>
-                <AddCircleOutlineOutlinedIcon />
+                <AddCircleOutlineOutlinedIcon sx={{fontSize:'larger',color:'rgba(200,184,116)'}}/>
               </IconButton>
             ),
           }}
           sx={{
-            backgroundColor:"white",
-            width: "82%",
-            alignItems:"center",
-            ml:4,
-            borderRadius: 1
+            backgroundColor:"rgba(54,69,79,0.5)",
           }}
         />
+        </ThemeProvider>
       </Box>
     </>
   );

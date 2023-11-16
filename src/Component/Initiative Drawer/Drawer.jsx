@@ -7,7 +7,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import SideCreation from "./SideCreation";
-// import InfoIcon from '@mui/icons-material/Info';
+import Toolbar from "@mui/material/Toolbar";
 //For search
 import SearchBar from "./SearchBar";
 import { useState } from "react";
@@ -27,7 +27,7 @@ const customTheme = createTheme({
     MuiTab: {
       styleOverrides: {
         root: {
-          color: 'rgb(264,0,0)', // Set the color of non-selected tabs to red
+          color: 'rgb(255,0,0)', // Set the color of non-selected tabs to red
           '&.Mui-selected': {
             color: 'rgba(200, 184, 116)', // Set the color of the selected tab to your custom color
           },
@@ -112,8 +112,10 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
   const [combatantList, setCombatantList] = useState([
     { monsterList: [], characterList: [] },
   ]);
+  const [search, setSearch] = useState("");
 
   const handleTabChange = (event, newCategory) => {
+    setSearch('');
     setCategory(newCategory);
   };
 
@@ -127,7 +129,8 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
 
   return (
     <>
-      <Box sx={{ mt: 6,}}>
+      {open ? null : <Toolbar/>}
+      <Box sx={{ mt: 6, position:'fixed'}}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -135,7 +138,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
           edge="end"
           sx={{ ml: 1, mr: 2, ...(open && { display: "none" }) }}
         >
-          <ChevronRightIcon />
+          <ChevronRightIcon fontSize="large" sx={{color:'rgba(200, 184, 116)', backgroundColor:'rgba(0,0,0,.5)', borderRadius:120}} />
         </IconButton>
       </Box>
       <Drawer
@@ -216,7 +219,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             alignItems: "center",
             backgroundColor: 'rgba(38, 50, 56,0.75)'
              }}>
-          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} />
+          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} search={search} setSearch={setSearch}/>
           </Box>
           <SideCreation combatantList={combatantList} setCombatantList={setCombatantList}/>
         </Box>

@@ -23,13 +23,13 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 
-const styles = {
-	container: {
-		width: 50,
-	},
-};
+// const styles = {
+//   container: {
+//     width: 50
+//   }
+// }
 
-export default function MonsterSubmit() {
+export default function MonsterSubmit({ combatantList, setCombatantList }) {
 	const uid = auth.currentUser.uid;
 	// const uid = user.uid;
 	// const monsterCollectionRef = collection(db, 'Monsters');
@@ -37,8 +37,12 @@ export default function MonsterSubmit() {
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 
-	const onSubmitMonster = async () => {
-		await addDoc(
+	const onSubmitMonster = async (e) => {
+		if (!monsterName) {
+			return;
+		}
+		e.preventDefault();
+		const docRef = await addDoc(
 			tabValue === 'Characters' ? characterCollectionRef : monsterCollectionRef,
 			{
 				name: monsterName,
@@ -51,8 +55,46 @@ export default function MonsterSubmit() {
 				description: monsterDescription,
 			}
 		);
-		setMonsterAC(10);
-		alert('Monster Submitted!');
+		if (tabValue === 'Characters') {
+			const newCombatantList = [
+				...combatantList.characterList,
+				{
+					id: docRef.id,
+					name: monsterName,
+					hp: Number(monsterHP),
+					ac: Number(monsterAC),
+					fortitudeSave: Number(monsterFortSave),
+					reflexSave: Number(monsterReflexSave),
+					willSave: Number(monsterWillSave),
+					initiative: Number(monsterInitiative),
+					description: monsterDescription,
+				},
+			];
+			setCombatantList({
+				characterList: newCombatantList,
+				monsterList: [...combatantList.monsterList],
+			});
+		} else {
+			const newCombatantList = [
+				...combatantList.monsterList,
+				{
+					id: docRef.id,
+					name: monsterName,
+					hp: Number(monsterHP),
+					ac: Number(monsterAC),
+					fortitudeSave: Number(monsterFortSave),
+					reflexSave: Number(monsterReflexSave),
+					willSave: Number(monsterWillSave),
+					initiative: Number(monsterInitiative),
+					description: monsterDescription,
+				},
+			];
+			setCombatantList({
+				characterList: [...combatantList.characterList],
+				monsterList: newCombatantList,
+			});
+		}
+		handleReset();
 	};
 
 	const [open, setOpen] = useState(false);
@@ -105,6 +147,7 @@ export default function MonsterSubmit() {
 		setMonsterInitiative(10);
 		setMonsterDescription('');
 	}
+
 	return (
 		<>
 			<div>
@@ -118,6 +161,7 @@ export default function MonsterSubmit() {
 				</Snackbar>
 			</div>
 			<Paper
+				component="form"
 				sx={{
 					width: 700,
 					height: 700,
@@ -281,6 +325,7 @@ export default function MonsterSubmit() {
 							Name
 						</InputLabel>
 						<TextField
+							required
 							color="success"
 							variant="outlined"
 							placeholder="Enter the character/monster name here!"
@@ -439,6 +484,7 @@ export default function MonsterSubmit() {
 						}}
 					>
 						<Button
+							type="submit"
 							sx={{
 								color: 'yellow',
 								backgroundColor: 'rgba(14, 78, 14, 0.99)',
@@ -446,7 +492,7 @@ export default function MonsterSubmit() {
 								borderColor: 'rgba(200,184,116)',
 							}}
 							variant="outlined"
-							onClick={() => onSubmitMonster()}
+							onClick={(e) => onSubmitMonster(e)}
 						>
 							Submit
 						</Button>

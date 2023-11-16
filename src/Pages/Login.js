@@ -6,13 +6,13 @@ import { Container, FormControl, FormLabel } from "@mui/material";
 import Button from "@mui/material/Button";
 import Register from "../Component/Register";
 import { Auth } from "../Component/Auth";
-import NavbarLogin from "../Component/NavBarNoLogin";
+import NavbarNoLogin from "../Component/NavBarNoLogin";
 
 function Login() {
   return (
     <>
-      <NavbarLogin />
-      <Auth />
+    <NavbarNoLogin />
+    <Auth /> 
     </>
   );
 }
