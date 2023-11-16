@@ -9,62 +9,74 @@ import {
 	signInWithEmailAndPassword,
 	signInWithPopup,
 	signOut,
-} from "firebase/auth";
-import { Alert } from "@mui/material";
-import NavbarLogin from "./NavBarNoLogin";
-import Navbar from "./Navbar";
-
+} from 'firebase/auth';
+import { Alert } from '@mui/material';
+import NavbarLogin from './NavBarNoLogin';
+import Navbar from './Navbar';
+import Snackbar from './SnackBar';
 
 export const Auth = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
 
+	const [alertMessage, setAlertMessage] = useState('');
+	const [alertSeverity, setAlertSeverity] = useState('info');
+	const [showAlert, setShowAlert] = useState(false);
+
 	console.log(auth?.currentUser);
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+	const signInWithGoogle = async () => {
+		try {
+			await signInWithPopup(auth, googleProvider);
+			if (auth.currentUser) {
+				setAlertMessage('User Found-Critical Success!');
+				setAlertSeverity('success');
+				setShowAlert(true);
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 1000);
+			}
+			setTimeout(() => {
+				window.location.href = '/dashboard';
+			}, 700);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  const signIn = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (userCredential.user) {
-        console.log(userCredential);
-        alert("User Found-Critical Success!");
-        setTimeout(()=> { 
-      window.location.href = "/dashboard";
-        }, 500);
-  
-        // window.location.href = "/dashboard";
-      }
-    } catch (err) {
-      alert("User Not Found" + err);
-      console.error(err);
-    }
-  };
+	const signIn = async () => {
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+			const userCredential = await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			if (userCredential.user) {
+				setAlertMessage('User Found-Critical Success!');
+				setAlertSeverity('success');
+				setShowAlert(true);
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 1000);
+				setTimeout(() => {
+					window.location.href = '/dashboard';
+				}, 700);
+			}
+		} catch (err) {
+			setAlertMessage('User Not Found');
+			setAlertSeverity('error');
+			setShowAlert(true);
+			setTimeout(() => {
+				setShowAlert(false);
+			}, 2500);
+			// alert('User Not Found' + err);
+			// console.error(err);
+		}
+	};
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-	function handleClick() {
-		alert('Account not found, Please create account first');
-	}
+	const handleShowAlertClickC = () => setShowAlert(false);
 
 	useEffect(() => {
 		// Use onAuthStateChanged to listen for changes in authentication status
@@ -84,96 +96,98 @@ export const Auth = () => {
 
 	const imageURL = '/Images/Auth.jpg';
 
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${imageURL})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-        width: "100%",
-      }}
-    >
-      <div>
-        <Box
-          component="form"
-          sx={{
-            alignItems: "center",
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "right",
-              alignItems: "center",
-              height: 700,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgba(54,69,79,0.5)",
-                color: "white",
-                width: 800,
-                border: 1,
-                borderRadius: 10,
-                marginTop: 10,
-                marginBottom: 5,
-              }}
-            >
-            <Typography variant="h3">Please sign in or Register below!</Typography>
-            </Box>
-            <FormControl
-              sx={{
-                display: "flex",
-                backgroundColor: "rgba(256,256,256,0.95)",
-                flexWrap: "wrap",
-                flexDirection: "column",
-                border: 1,
-                borderRadius: 5,
-                marginTop: 5,
-                padding: 5,
-                alignContent: "left",
-                marginLeft: 3,
-                width: 200,
-                justifyContent: "center",
-              }}
-            >
-              <FormLabel
-                sx={{
-                  color: "black",
-                  fontStyle: "oblique",
-                  fontFamily: "Roboto",
-                }}
-              >
-                {" "}
-                How do you want to do this?{" "}
-              </FormLabel>
-              <TextField
-                value={email}
-                placeholder="Enter Email"
-                variant="outlined"
-                color="success"
-                margin="normal"
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
+	return (
+		<div
+			style={{
+				backgroundImage: `url(${imageURL})`,
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				height: '100vh',
+				width: '100%',
+			}}
+		>
+			<div>
+				<Box
+					component="form"
+					sx={{
+						alignItems: 'center',
+					}}
+					noValidate
+					autoComplete="off"
+				>
+					<Container
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'right',
+							alignItems: 'center',
+							height: 700,
+						}}
+					>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								backgroundColor: 'rgba(54,69,79,0.5)',
+								color: 'white',
+								width: 800,
+								border: 1,
+								borderRadius: 10,
+								marginTop: 10,
+								marginBottom: 5,
+							}}
+						>
+							<Typography variant="h3">
+								Please sign in or Register below!
+							</Typography>
+						</Box>
+						<FormControl
+							sx={{
+								display: 'flex',
+								backgroundColor: 'rgba(256,256,256,0.95)',
+								flexWrap: 'wrap',
+								flexDirection: 'column',
+								border: 1,
+								borderRadius: 5,
+								marginTop: 5,
+								padding: 5,
+								alignContent: 'left',
+								marginLeft: 3,
+								width: 200,
+								justifyContent: 'center',
+							}}
+						>
+							<FormLabel
+								sx={{
+									color: 'black',
+									fontStyle: 'oblique',
+									fontFamily: 'Roboto',
+								}}
+							>
+								{' '}
+								How do you want to do this?{' '}
+							</FormLabel>
+							<TextField
+								value={email}
+								placeholder="Enter Email"
+								variant="outlined"
+								color="success"
+								margin="normal"
+								onChange={(e) => setEmail(e.target.value)}
+							></TextField>
 
-              <TextField
-                sx={{ marginBottom: 2 }}
-                value={password}
-                type="password"
-                placeholder="Enter Password"
-                id="outlined-basic"
-                variant="outlined"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+							<TextField
+								sx={{ marginBottom: 2 }}
+								value={password}
+								type="password"
+								placeholder="Enter Password"
+								id="outlined-basic"
+								variant="outlined"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
 
 							<Container
 								sx={{
@@ -199,23 +213,18 @@ export const Auth = () => {
 									Sign in with Google
 								</Button>
 
-                <Register />
-                <Button
-                  sx={{ marginTop: 1 }}
-                  onClick={logout}
-                  variant="contained"
-                  disabled={!user}
-                >
-                  Logout
-                </Button>
-                {/* //remove login from navbar  and avatar in top right. work on CSS for dashboard 
-edit user data and avatar button/ routing, NavBar, logout to login screen button 
-profile. add settings to small nav, take out dashboard, fix routes*/}
-              </Container>
-            </FormControl>
-          </Container>
-        </Box>
-      </div>
-    </div>
-  );
+								<Register />
+								<Snackbar
+									alert={alertMessage}
+									alertSeverity={alertSeverity}
+									open={showAlert}
+									handleShowAlertClickC={handleShowAlertClickC}
+								/>
+							</Container>
+						</FormControl>
+					</Container>
+				</Box>
+			</div>
+		</div>
+	);
 };
