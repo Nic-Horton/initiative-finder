@@ -16,7 +16,7 @@ export default function StatusButton({ statusValues, severityValues }) {
     <div>
       <Stack direction="row" spacing={2}>
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<RocketLaunchIcon />}
           onClick={handleOpen}
           color="warning"

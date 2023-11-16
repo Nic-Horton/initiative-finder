@@ -17,6 +17,7 @@ import { db, auth } from '../Config/firebase-config';
 
 export default function UpdateModal({
 	name,
+	hp,
 	ac,
 	hp,
 	reflexSave,
