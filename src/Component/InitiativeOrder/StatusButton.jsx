@@ -23,7 +23,7 @@ export default function StatusButton({ statusValues, severityValues }) {
         >
           <Typography
             sx={{
-              display: { md: "none", lg: "flex" },
+              display: { xs: "none", md: "none", lg: "flex" },
             }}
           >
             Statuses
@@ -43,9 +43,10 @@ export default function StatusButton({ statusValues, severityValues }) {
               transform: "translate(-50%, -50%)",
               width: 400,
               bgcolor: "rgba(200,184,116)",
-              border: "2px solid #000",
+              border: "5px solid rgba(200,184,116)",
               boxShadow: 24,
-              p: 4,
+              borderRadius: "10px",
+              p: 3,
             }}
           >
             <Typography id="modal-modal-title" variant="h6" component="h2">
