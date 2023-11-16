@@ -82,7 +82,8 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
                 borderRadius: 2,
                 border: "5px solid rgb(200, 184, 116)",
                 minHeight: 50,
-                display: 'flex', flexDirection: 'column'
+                
+                textAlign: 'center'
               }}>
                 {hp}
 
