@@ -1,6 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Avatar, Card, Container, tableBodyClasses } from '@mui/material';
+import {
+	Avatar,
+	BottomNavigation,
+	Card,
+	Container,
+	IconButton,
+	BottomNavigationAction,
+	Collapse,
+} from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { Grid } from '@mui/material';
@@ -14,9 +22,12 @@ import { NavLink } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
 import { useState } from 'react';
 import AppSteps from '../Component/Stepper';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Paper from '@mui/material/Paper';
 
 const steps = [
 	'Select Campaign',
+
 	'Create Characters or Monsters',
 	'Add to Initiative Tracker',
 	'Roll Initiative!',
@@ -24,6 +35,9 @@ const steps = [
 export default function Home() {
 	const [activeStep, setActiveStep] = useState(0);
 	const [completed, setCompleted] = useState([]);
+	const [footerExpanded, setFooterExpanded] = useState(false);
+	const [showContent, setShowContent] = useState(false);
+	const [value, setValue] = React.useState(0);
 
 	const totalSteps = () => {
 		return steps.length;
@@ -57,7 +71,7 @@ export default function Home() {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
-	const handleStep = (step: number) => () => {
+	const handleStep = (step) => {
 		setActiveStep(step);
 	};
 
@@ -73,12 +87,24 @@ export default function Home() {
 		setCompleted({});
 	};
 
+	const handleLearn = () => {
+		alert('button clicked');
+	};
+
+	const uncollapsedContentStyle = {
+		zIndex: showContent ? 500 : 0,
+	};
+	const toggleContent = () => {
+		setShowContent(!showContent);
+		setFooterExpanded(!showContent);
+	};
+
 	return (
 		<>
 			<Navbar />
 			<div
 				style={{
-					backgroundImage: `url('../images/wallhaven-oxq529.jpg')`,
+					backgroundImage: `url('/Images/wallhaven-oxq529.jpg')`,
 					backgroundPosition: 'center',
 					backgroundSize: 'cover',
 					backgroundRepeat: 'no-repeat',
@@ -96,16 +122,16 @@ export default function Home() {
 						<Typography
 							sx={{
 								textAlign: 'center',
-								marginTop: 10,
-								color: 'white',
+								marginTop: 35,
+								color: '#c8b874',
 								maxWidth: 1000,
 								width: 800,
 								marginLeft: 'auto',
 								marginRight: 'auto',
 								border: 1,
 								borderRadius: 5,
-								marginBottom: 25,
-								backgroundColor: 'rgba(0,0,0,0.7)',
+								marginBottom: 10,
+								backgroundColor: 'rgba(38,50,56,.9)',
 							}}
 							variant="h1"
 							gutterBottom
@@ -131,6 +157,7 @@ export default function Home() {
 									width: 800,
 									marginLeft: 'auto',
 									marginRight: 'auto',
+									mb: 5,
 									borderRadius: 5,
 									backgroundColor: 'rgba(51,0,0,0.8)',
 									color: 'rgba(255,229,204)',
@@ -152,8 +179,9 @@ export default function Home() {
 					<Button
 						sx={{
 							fontWeight: 'bold',
-							color: 'rgb(255,215,0)',
-							backgroundColor: 'rgba(51,0,0,1)',
+							color: '#c8b874',
+							backgroundColor: 'rgba(38,50,56,.9)',
+							border: 1,
 							fontSize: 25,
 							width: 500,
 							height: 100,
@@ -168,7 +196,7 @@ export default function Home() {
 				</Box>
 			</div>
 			<div></div>
-			<div
+			{/* <div
 				style={{
 					backgroundImage: `url('https://slyflourish.com/images/printed_map.jpg')`,
 					backgroundPosition: 'center',
@@ -177,8 +205,8 @@ export default function Home() {
 					height: '50vh',
 					width: '100%',
 				}}
-			>
-				<Box sx={{ width: '100%' }}>
+			> */}
+			{/* <Box sx={{ width: '100%' }}>
 					<Stepper alternativeLabel nonLinear activeStep={activeStep}>
 						{steps.map((label, index) => (
 							<Step
@@ -194,7 +222,7 @@ export default function Home() {
 										borderRadius: 2,
 										borderColor: 'white',
 									}}
-									onClick={handleStep(index)}
+									onClick={() => handleStep(index)}
 								>
 									<Typography
 										variant="button"
@@ -223,6 +251,7 @@ export default function Home() {
 									sx={{ backgroundColor: 'red', mt: 2, mb: 1, py: 1 }}
 								>
 									Step {activeStep + 1}
+									
 								</Typography>
 								<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
 									<Button
@@ -241,7 +270,7 @@ export default function Home() {
 									>
 										Next
 									</Button>
-									{/* {activeStep !== steps.length &&
+									{activeStep !== steps.length &&
                 (completed[activeStep] ? (
                   <Typography variant="caption" sx={{ display: 'inline-block' }}>
                     Step {activeStep + 1} already completed
@@ -252,109 +281,354 @@ export default function Home() {
                       ? 'Finish'
                       : 'Complete Step'}
                   </Button>
-                ))} */}
+                ))}
 								</Box>
 							</React.Fragment>
 						)}
 					</div>
-				</Box>
-			</div>
-			<div>
-				<Typography
-					variant="h4"
+				</Box> */}
+			{/* </div> */}
+
+			{/* make as footer */}
+
+			<Box
+				sx={{
+					position: 'fixed',
+					p: 0,
+					bottom: 0,
+					left: 0,
+					right: 0,
+					zIndex: 500,
+				}}
+			>
+				{/* <Paper sx={{  }} elevation={3}> */}
+
+				<BottomNavigation
 					sx={{
-						textAlign: 'center',
-						backgroundColor: 'rgba(38,50,56,1)',
-						color: '#cfe8fc',
+						backgroundColor: '#2a0202',
+					}}
+					showLabels
+					onChange={(event, newValue) => {
+						setValue(newValue);
+						toggleContent();
 					}}
 				>
-					Meet The Team
-				</Typography>
-				<Box display="flex">
-					<Container>
-						<Card sx={{ minWidth: 200 }}>
-							<CardContent>
-								<Typography variant="h5" color="text.primary" gutterBottom>
-									<Avatar
-										alt="Larry Le"
-										src="https://ca.slack-edge.com/T0569RDC6-U051D0R0NG4-9fcd9f89cca9-48"
-									></Avatar>
-									Larry Le
-								</Typography>
-								<Typography variant="body2">
-									Starry Citizen
-									<br />
-									{'Atlanta, GA'}
-								</Typography>
-							</CardContent>
-							<CardActions>
-								<Button size="small">Learn More</Button>
-							</CardActions>
-						</Card>
-					</Container>
-					<Container>
-						<Card sx={{ minWidth: 200 }}>
-							<CardContent>
-								<Typography variant="h5" color="text.primary" gutterBottom>
-									<Avatar
-										alt="Derek Szeto"
-										src="https://ca.slack-edge.com/T0569RDC6-U04T84BP9GW-2e2bc9b66cb0-48"
-									></Avatar>
-									Derek Szeto
-								</Typography>
-								<Typography variant="body2">
-									Case of the Munchies
-									<br />
-									{'Atlanta, GA'}
-								</Typography>
-							</CardContent>
-							<CardActions>
-								<Button size="small">Learn More</Button>
-							</CardActions>
-						</Card>
-					</Container>
-					<Container>
-						<Card sx={{ minWidth: 200 }}>
-							<CardContent>
-								<Typography variant="h5" color="text.primary" gutterBottom>
-									<Avatar
-										alt="Brett MacKinnon"
-										src="https://ca.slack-edge.com/T0569RDC6-U04URA7Q8E9-d5f989e8d954-48"
-									></Avatar>
-									Brett MacKinnon
-								</Typography>
-								<Typography variant="body2">
-									Pathfinder Guru
-									<br />
-									{'Atlanta, GA'}
-								</Typography>
-							</CardContent>
-							<CardActions>
-								<Button size="small">Learn More</Button>
-							</CardActions>
-						</Card>
-					</Container>
-					<Container>
-						<Card sx={{ minWidth: 200 }}>
-							<CardContent>
-								<Typography variant="h5" color="text.primary" gutterBottom>
-									<Avatar
-										alt="Nicolas Horton"
-										src="https://ca.slack-edge.com/T0569RDC6-U053KR0242U-1764cf7e4690-48"
-									></Avatar>
-									Nicolas Horton
-								</Typography>
-								<Typography variant="body2">
-									Tech Guru
-									<br />
-									{'Houston,Texas'}
-								</Typography>
-							</CardContent>
-							<CardActions></CardActions>
-						</Card>
-					</Container>
-				</Box>
-			</div>
+					<BottomNavigationAction
+						label="Meet The Team"
+						sx={{
+							'& .MuiBottomNavigationAction-label': {
+								fontSize: '50px', // Adjust the font size as needed
+								// fontWeight: 'bold', // Adjust the font weight as needed
+								color: '#c8b874',
+								width: '100vw',
+							},
+						}}
+					/>
+				</BottomNavigation>
+				<Collapse in={showContent} sx={uncollapsedContentStyle}>
+					<div>
+						<Box
+							sx={{
+								display: 'flex',
+								flexShrink: '1',
+								backgroundColor: 'rgba(42,2,2,0.95)',
+								pt: 1,
+								pb: 1,
+							}}
+						>
+							<Container
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignContent: 'stretch',
+								}}
+							>
+								<Card
+									sx={{
+										display: 'flex',
+										minWidth: 200,
+										maxWidth: 300,
+										backgroundColor: '#2a353b',
+										color: '#c8b874',
+										border: 2,
+										borderColor: '#c8b874',
+									}}
+								>
+									<CardContent>
+										<Typography
+											variant="h6"
+											color="text.primary"
+											sx={{ backgroundColor: '#2a353b', color: '#c8b874' }}
+											gutterBottom
+										>
+											<Avatar
+												alt="Larry Le"
+												src="https://ca.slack-edge.com/T0569RDC6-U051D0R0NG4-9fcd9f89cca9-48"
+											></Avatar>
+											Larry Le
+										</Typography>
+										<Typography
+											sx={{ backgroundColor: '#2a353b', color: '#c8b874' }}
+											variant="body2"
+										>
+											Starry Citizen
+											<br />
+											Atlanta, GA
+										</Typography>
+									</CardContent>
+									<CardActions
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											justifyContent: 'center',
+											alignItems: 'center',
+										}}
+									>
+										<IconButton
+											label="LinkedIn"
+											onClick={() =>
+												window.open(
+													'https://www.linkedin.com/in/lelarry/',
+													'_blank'
+												)
+											}
+										>
+											<LinkedInIcon sx={{ color: 'white', fontSize: '3rem' }} />
+										</IconButton>
+										<Button
+											variant="text"
+											size="small"
+											href="https://github.com/lelarry26"
+										>
+											<img
+												style={{ marginLeft: 2 }}
+												width={50}
+												src="/Images/GoldGit.png"
+												alt="GitHub"
+											/>
+										</Button>
+									</CardActions>
+								</Card>
+							</Container>
+							<Container
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignContent: 'stretch',
+								}}
+							>
+								<Card
+									sx={{
+										display: 'flex',
+										minWidth: 200,
+										maxWidth: 300,
+										backgroundColor: '#2a353b',
+										color: '#c8b874',
+										border: 2,
+										borderColor: '#c8b874',
+									}}
+								>
+									<CardContent>
+										<Typography
+											variant="h6"
+											color="text.primary"
+											sx={{ backgroundColor: '#2a353b', color: '#c8b874' }}
+											gutterBottom
+										>
+											<Avatar
+												alt="Derek Szeto"
+												src="https://media.licdn.com/dms/image/C4E03AQGRhpryroBqQw/profile-displayphoto-shrink_400_400/0/1551731556984?e=1705536000&v=beta&t=fTHQuRFJ31ndZ0jlYI8bz5Z_fzQm25rYtvl2eULbkIQ"
+											></Avatar>
+											Derek Szeto
+										</Typography>
+										<Typography variant="body2">
+											Case of the Munchies
+											<br />
+											Atlanta, GA
+										</Typography>
+									</CardContent>
+									<CardActions
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											justifyContent: 'center',
+											alignItems: 'center',
+										}}
+									>
+										<IconButton
+											label="LinkedIn"
+											onClick={() =>
+												window.open(
+													'https://www.linkedin.com/in/derek-szeto-876422179/',
+													'_blank'
+												)
+											}
+										>
+											<LinkedInIcon sx={{ color: 'white', fontSize: '3rem' }} />
+										</IconButton>
+										<Button
+											variant="text"
+											size="small"
+											href="https://github.com/MidnightMicro"
+										>
+											<img
+												style={{ marginLeft: 2 }}
+												width={50}
+												src="/Images/GoldGit.png"
+												alt="GitHub"
+											/>
+										</Button>
+									</CardActions>
+								</Card>
+							</Container>
+							<Container
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignContent: 'stretch',
+								}}
+							>
+								<Card
+									sx={{
+										display: 'flex',
+										minWidth: 200,
+										maxWidth: 300,
+										backgroundColor: '#2a353b',
+										color: '#c8b874',
+										border: 2,
+										borderColor: '#c8b874',
+									}}
+								>
+									<CardContent>
+										<Typography
+											variant="h6"
+											color="text.primary"
+											sx={{ backgroundColor: '#2a353b', color: '#c8b874' }}
+											gutterBottom
+										>
+											<Avatar
+												alt="Brett MacKinnon"
+												src="https://ca.slack-edge.com/T0569RDC6-U04URA7Q8E9-d5f989e8d954-48"
+											></Avatar>
+											Brett MacKinnon
+										</Typography>
+										<Typography variant="body2">
+											Pathfinder Guru
+											<br />
+											Atlanta, GA
+										</Typography>
+									</CardContent>
+									<CardActions
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											justifyContent: 'center',
+											alignItems: 'center',
+										}}
+									>
+										<IconButton
+											label="LinkedIn"
+											onClick={() =>
+												window.open(
+													'https://www.linkedin.com/in/brett-mackinnon-19936111a/',
+													'_blank'
+												)
+											}
+										>
+											<LinkedInIcon sx={{ color: 'white', fontSize: '3rem' }} />
+										</IconButton>
+										<Button
+											variant="text"
+											size="small"
+											href="https://github.com/JudgeBreaded"
+										>
+											<img
+												style={{ marginLeft: 2 }}
+												width={50}
+												src="/Images/GoldGit.png"
+												alt="GitHub"
+												// style={{ filter: "brightness(100) saturate(100%)" }}
+											/>
+										</Button>
+									</CardActions>
+								</Card>
+							</Container>
+							<Container
+								sx={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignContent: 'stretch',
+								}}
+							>
+								<Card
+									sx={{
+										display: 'flex',
+										minWidth: 200,
+										maxWidth: 300,
+										backgroundColor: '#2a353b',
+										color: '#c8b874',
+										border: 2,
+										borderColor: '#c8b874',
+									}}
+								>
+									<CardContent>
+										<Typography
+											variant="h6"
+											color="text.primary"
+											sx={{ backgroundColor: '#2a353b', color: '#c8b874' }}
+											gutterBottom
+										>
+											<Avatar
+												alt="Nicolas Horton"
+												src="https://media.licdn.com/dms/image/D5603AQHfiJdd74VAWA/profile-displayphoto-shrink_400_400/0/1694828022884?e=1705536000&v=beta&t=IslYJ0BSSINmlQA8to684ICe6r-U_4TOa46uy4QuljY"
+											></Avatar>
+											Nicolas Horton
+										</Typography>
+										<Typography variant="body2">
+											Tech Guru
+											<br />
+											Houston,Texas
+										</Typography>
+									</CardContent>
+									<CardActions
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											justifyContent: 'center',
+											alignItems: 'center',
+										}}
+									>
+										<IconButton
+											label="LinkedIn"
+											onClick={() =>
+												window.open(
+													'https://www.linkedin.com/in/nicolas-horton/',
+													'_blank'
+												)
+											}
+										>
+											<LinkedInIcon sx={{ color: 'white', fontSize: '3rem' }} />
+										</IconButton>
+										<Button
+											variant="text"
+											size="small"
+											href="https://github.com/Nic-Horton"
+										>
+											<img
+												style={{ marginLeft: 2 }}
+												width={50}
+												src="/Images/GoldGit.png"
+												alt="GitHub"
+											/>
+										</Button>
+									</CardActions>
+								</Card>
+							</Container>
+						</Box>
+					</div>
+				</Collapse>
+				{/* </Paper> */}
+			</Box>
 		</>
 	);
 }

@@ -111,7 +111,6 @@ export default function SideCreation({ combatantList, setCombatantList }) {
         monsterList: newCombatantList,
       });
     }
-    setMonsterAC(10);
     setOpen(true);
     handleReset();
     setTimeout(() => {

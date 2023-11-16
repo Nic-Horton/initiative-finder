@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
-
 import DashboardData from '../Component/DashboardData';
 import MonsterSubmit from '../Component/MonsterSubmit';
 import Box from '@mui/material/Box';
 import Navbar from '../Component/Navbar';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
 import { NavLink } from 'react-router-dom';
 import { auth, googleProvider } from '../Config/firebase-config';
 import { Button, Container, Typography } from '@mui/material';
 import CircularProgress, {
 	circularProgressClasses,
 } from '@mui/material/CircularProgress';
+
+import UnitCreation from '../Component/UnitCreation';
+
+// ADD DEATH SCENE and potential gif of zelda or fire from dark souls?
+
+
 function Dashboard() {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -28,6 +34,32 @@ function Dashboard() {
 			unsubscribe();
 		};
 	}, []);
+	if (loading) {
+		return (
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100vh',
+				}}
+			>
+				<CircularProgress
+					variant="indeterminate"
+					sx={{
+						color: 'red',
+						animationDuration: '600ms',
+						[`& .${circularProgressClasses.circle}`]: {
+							strokeLinecap: 'round',
+						},
+					}}
+					size={80}
+					thickness={4}
+					value={100}
+				/>
+			</Box>
+		);
+	}
 
 	if (loading) {
 		return (
@@ -153,24 +185,9 @@ function Dashboard() {
 					}}
 				>
 					<Navbar />
-					<Container>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								alignItems: 'flex-start',
-							}}
-						><img src='https://files.slack.com/files-pri/T0569RDC6-F065L0B60EA/untitled_artwork-1.png
-						'></img>
-							<Box>
-								<MonsterSubmit />
-							</Box>
-							<Box sx={{ ml: 5 }}>
-								<DashboardData />
-							</Box>
-						</Box>
-					</Container>
+
+					<UnitCreation />
+
 				</div>
 			</div>
 		</>
