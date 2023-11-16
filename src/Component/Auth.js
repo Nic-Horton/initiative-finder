@@ -1,6 +1,12 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormLabel, Typography } from '@mui/material';
+import {
+	Container,
+	FormControl,
+	FormLabel,
+	Typography,
+	Grid,
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import Register from './Register';
 import { useState, useEffect } from 'react';
@@ -14,6 +20,59 @@ import { Alert } from '@mui/material';
 import NavbarLogin from './NavBarNoLogin';
 import Navbar from './Navbar';
 import Snackbar from './SnackBar';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const customTheme = createTheme({
+	palette: {
+		primary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+		},
+		secondary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+		},
+		text: {
+			primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+		},
+	},
+	components: {
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					'& .MuiInputBase-input': {
+						backgroundColor: 'rgba(38, 50, 56,0.75)',
+						color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+					},
+				},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					'&.Mui-focused fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+					},
+					'& fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for unfocused state
+					},
+				},
+			},
+		},
+	},
+});
+
+const ButtonTheme = createTheme({
+	palette: {
+		primary: {
+			main: 'rgba(70, 90, 250, 0.8)', // Set your custom color as the primary color
+		},
+		secondary: {
+			main: 'rgba(130,0,0,1)', // Set your custom color as the secondary color
+		},
+		success: {
+			main: 'rgb(200, 184, 116)',
+		},
+	},
+});
 
 export const Auth = () => {
 	const [email, setEmail] = useState('');
@@ -105,79 +164,54 @@ export const Auth = () => {
 				backgroundRepeat: 'no-repeat',
 				height: '100vh',
 				width: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}
 		>
 			<div>
 				<Box
 					component="form"
-					sx={{
-						alignItems: 'center',
-					}}
+					sx={{ position: 'relative', p: 0 }}
 					noValidate
 					autoComplete="off"
 				>
-					<Container
+					<FormControl
 						sx={{
 							display: 'flex',
+							backgroundColor: 'rgba(38, 50, 56,0.75)',
+							color: '#c8b874',
+							flexWrap: 'wrap',
 							flexDirection: 'column',
-							justifyContent: 'right',
-							alignItems: 'center',
-							height: 700,
+							border: 1,
+							borderRadius: 5,
+							padding: 4,
+							alignContent: 'left',
+							maxWidth: 250,
+							justifyContent: 'center',
 						}}
 					>
-						<Box
+						<FormLabel
 							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								alignItems: 'center',
-								backgroundColor: 'rgba(54,69,79,0.5)',
-								color: 'white',
-								width: 800,
-								border: 1,
-								borderRadius: 10,
-								marginTop: 10,
-								marginBottom: 5,
+								textAlign: 'center',
+								color: '#c8b874',
+								fontStyle: 'oblique',
+								fontFamily: 'Roboto',
+								fontSize: '2em',
 							}}
 						>
-							<Typography variant="h3">
-								Please sign in or Register below!
-							</Typography>
-						</Box>
-						<FormControl
-							sx={{
-								display: 'flex',
-								backgroundColor: 'rgba(256,256,256,0.95)',
-								flexWrap: 'wrap',
-								flexDirection: 'column',
-								border: 1,
-								borderRadius: 5,
-								marginTop: 5,
-								padding: 5,
-								alignContent: 'left',
-								marginLeft: 3,
-								width: 200,
-								justifyContent: 'center',
-							}}
-						>
-							<FormLabel
-								sx={{
-									color: 'black',
-									fontStyle: 'oblique',
-									fontFamily: 'Roboto',
-								}}
-							>
-								{' '}
-								How do you want to do this?{' '}
-							</FormLabel>
+							"How do you want to do this?"
+						</FormLabel>
+						<ThemeProvider theme={customTheme}>
 							<TextField
 								value={email}
 								placeholder="Enter Email"
 								variant="outlined"
-								color="success"
+								sx={{}}
 								margin="normal"
 								onChange={(e) => setEmail(e.target.value)}
-							></TextField>
+							/>
 
 							<TextField
 								sx={{ marginBottom: 2 }}
@@ -188,41 +222,57 @@ export const Auth = () => {
 								variant="outlined"
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-
-							<Container
-								sx={{
-									display: 'flex',
-									flexDirection: 'column',
-									justifyContent: 'center',
-								}}
-							>
+						</ThemeProvider>
+						<Container
+							style={{ paddingLeft: '0', paddingRight: '0' }}
+							sx={{
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+							}}
+						>
+							<ThemeProvider theme={ButtonTheme}>
+								<Grid
+									container
+									spacing={1}
+									sx={{
+										display: 'flex',
+										justifyContent: 'space-between',
+										mb: 1,
+									}}
+								>
+									<Grid item xs>
+										<Button
+											fullWidth
+											variant="contained"
+											color="primary"
+											onClick={signIn}
+											// sx={{ marginBottom:  }}
+										>
+											Login
+										</Button>
+									</Grid>
+									<Grid item xs>
+										<Register />
+									</Grid>
+								</Grid>
 								<Button
 									variant="contained"
 									color="success"
-									onClick={signIn}
-									sx={{ marginBottom: 1 }}
-								>
-									Login
-								</Button>
-								<Button
-									variant="contained"
-									color="secondary"
-									sx={{ marginBottom: 1 }}
 									onClick={signInWithGoogle}
 								>
 									Sign in with Google
 								</Button>
-
-								<Register />
-								<Snackbar
-									alert={alertMessage}
-									alertSeverity={alertSeverity}
-									open={showAlert}
-									handleShowAlertClickC={handleShowAlertClickC}
-								/>
-							</Container>
-						</FormControl>
-					</Container>
+							</ThemeProvider>
+							<Snackbar
+								alert={alertMessage}
+								alertSeverity={alertSeverity}
+								open={showAlert}
+								handleShowAlertClickC={handleShowAlertClickC}
+							/>
+						</Container>
+					</FormControl>
+					{/* </Container> */}
 				</Box>
 			</div>
 		</div>

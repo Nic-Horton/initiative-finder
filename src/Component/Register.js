@@ -19,6 +19,45 @@ import { auth } from '../Config/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { db } from '../Config/firebase-config';
 import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const customTheme = createTheme({
+	palette: {
+		primary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+		},
+		secondary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+		},
+		text: {
+			primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+		},
+	},
+	components: {
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					'& .MuiInputBase-input': {
+						backgroundColor: 'rgba(38, 50, 56,0.75)',
+						color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+					},
+				},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					'&.Mui-focused fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+					},
+					'& fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for unfocused state
+					},
+				},
+			},
+		},
+	},
+});
 
 export default function RegisterPage() {
 	const [email, setEmail] = useState('');
@@ -97,41 +136,51 @@ export default function RegisterPage() {
 
 	return (
 		<>
-			<div>
-				<React.Fragment>
-					<Button
-						color="error"
-						variant="contained"
-						onClick={handleClickOpen}
-						sx={{ width: 150 }}
-					>
-						Register
-					</Button>
-					<Backdrop
-						sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-						open={open}
-					>
-						<Dialog open={open} onClose={handleCancel}>
-							<DialogTitle>Registration Form</DialogTitle>
-							<DialogContent
+			<Button
+				fullWidth
+				color="secondary"
+				variant="contained"
+				onClick={handleClickOpen}
+				// sx={{ width: 150 }}
+			>
+				Register
+			</Button>
+			<Backdrop
+				sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+				open={open}
+			>
+				<Dialog open={open} onClose={handleCancel} sx={{ borderRadius: 2 }}>
+					<Box sx={{ border: '5px solid rgba(200, 184, 116)' }}>
+						<DialogTitle
+							sx={{
+								color: 'white',
+								backgroundColor: 'rgba(38, 50, 56,0.9)',
+								textAlign: 'center',
+							}}
+						>
+							Registration Form
+						</DialogTitle>
+						<DialogContent
+							sx={{
+								backgroundColor: 'rgba(38, 50, 56,0.9)',
+								width: 300,
+								alignContent: 'center',
+								display: 'flex',
+								flexDirection: 'column',
+							}}
+						>
+							<DialogContentText sx={{ color: 'white', textAlign: 'center' }}>
+								Please register to continue
+							</DialogContentText>
+							<Box
+								component="form"
+								autoComplete="off"
 								sx={{
-									width: 300,
-									alignContent: 'center',
 									display: 'flex',
 									flexDirection: 'column',
 								}}
 							>
-								<DialogContentText>
-									Please register to continue
-								</DialogContentText>
-								<Box
-									component="form"
-									autoComplete="off"
-									sx={{
-										display: 'flex',
-										flexDirection: 'column',
-									}}
-								>
+								<ThemeProvider theme={customTheme}>
 									<TextField
 										autoFocus
 										margin="normal"
@@ -141,6 +190,11 @@ export default function RegisterPage() {
 										type="email"
 										variant="outlined"
 										onChange={(e) => setEmail(e.target.value)}
+										InputLabelProps={{
+											sx: {
+												color: (theme) => theme.palette.text.primary,
+											},
+										}}
 									/>
 									<TextField
 										autoFocus
@@ -151,38 +205,42 @@ export default function RegisterPage() {
 										type="text"
 										variant="outlined"
 										onChange={(e) => setPassword(e.target.value)}
+										InputLabelProps={{
+											sx: {
+												color: (theme) => theme.palette.text.primary,
+											},
+										}}
 									/>
-								</Box>
-							</DialogContent>
-							<DialogActions>
-								<Button
-									variant="outlined"
-									color="error"
-									sx={{ width: 40, borderColor: 'error.main' }}
-									onClick={handleCancel}
-								>
-									Cancel
-								</Button>
-								<Button
-									variant="contained"
-									color="success"
-									onClick={handleCloseReg}
-								>
-									Register
-								</Button>
-							</DialogActions>
-							{/* <BottomAlert open={open} severity={alertSeverity} message={alertMessage} /> */}
-							<Snackbar
-								alert={alertMessage}
-								alertSeverity={alertSeverity}
-								open={showAlert}
-								handleShowAlertClickC={handleShowAlertClickC}
-							/>
-						</Dialog>
-					</Backdrop>
-				</React.Fragment>
-			</div>
-			<div></div>
+								</ThemeProvider>
+							</Box>
+						</DialogContent>
+						<DialogActions sx={{ backgroundColor: 'rgba(38, 50, 56,0.9)' }}>
+							<Button
+								variant="outlined"
+								color="error"
+								sx={{ width: 40, borderColor: 'error.main' }}
+								onClick={handleCancel}
+							>
+								Cancel
+							</Button>
+							<Button
+								variant="contained"
+								color="secondary"
+								onClick={handleCloseReg}
+							>
+								Register
+							</Button>
+						</DialogActions>
+						{/* <BottomAlert open={open} severity={alertSeverity} message={alertMessage} /> */}
+						<Snackbar
+							alert={alertMessage}
+							alertSeverity={alertSeverity}
+							open={showAlert}
+							handleShowAlertClickC={handleShowAlertClickC}
+						/>
+					</Box>
+				</Dialog>
+			</Backdrop>
 		</>
 	);
 }

@@ -17,6 +17,7 @@ import { blueGrey } from "@mui/material/colors";
 import { auth } from "../Config/firebase-config";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from 'react-router-dom';
+import SnackBar from "./SnackBar";
 
 import { signOut,On } from "firebase/auth";
 import { useState, useEffect } from "react";
@@ -34,7 +35,10 @@ const pages = [
 function NavbarNoLogin(loggedIn) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  
+  const [alertMessage, setAlertMessage] = useState('');
+	const [alertSeverity, setAlertSeverity] = useState('info');
+	const [showAlert, setShowAlert] = useState(false);
+
   const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
@@ -56,23 +60,28 @@ function NavbarNoLogin(loggedIn) {
     setAnchorElUser(null);
   };
 
+  const handleShowAlertClickC = () => setShowAlert(false);
   
   console.log(auth?.currentUser);
 
   const logout = async () => {
     try {
-      await signOut(auth);
-
-      alert("Logging you out");
+      setAlertSeverity('warning');
+      setAlertMessage('Logging Out!');
+      setShowAlert(true);
       setTimeout(()=> { 
+        setShowAlert(false);
         window.location.href = "/";
-          }, 500);
+        signOut(auth);
+      }, 1500);
+      
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
+    <>
     <AppBar
       position="fixed"
       sx={{
@@ -227,6 +236,13 @@ function NavbarNoLogin(loggedIn) {
         </Toolbar>
       </Container>
     </AppBar>
+    <SnackBar
+    alert={alertMessage}
+    alertSeverity={alertSeverity}
+    open={showAlert}
+    handleShowAlertClickC={handleShowAlertClickC}
+  />
+  </>
   );
 }
 export default NavbarNoLogin;
