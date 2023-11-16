@@ -11,20 +11,22 @@ import SecurityIcon from '@mui/icons-material/Security';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box } from "@mui/material";
 
-function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, conditions, initiative, portrait }) {
+function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, conditions, initiative, portrait, description }) {
 
   if (name) {
     return (
-
+      <div>
       <Card sx={{
         minWidth: 275,
+        maxWidth: 500,
+        height: 'auto',
         backgroundColor: "rgb(38, 50, 56,0.75)",
         border: "5px solid rgb(200, 184, 116)",
       borderRadius:5
       }}>
         <CardContent >
           <Typography variant="h4" color="text.secondary" gutterBottom>
-            <img src={portrait} height={"auto"} width={'100%'}></img>
+            <img src={portrait} height={"auto"} width={'100%'} ></img>
           </Typography>
           <Typography variant="h5" component="div"
             sx={{
@@ -41,36 +43,36 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
 
           </Typography>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} >
 
             <Grid item xs={2} sx={{}}>
-              <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <FavoriteIcon></FavoriteIcon>
+              <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column', }}>
+                <FavoriteIcon sx={{color:"rgba(200, 184, 116)"}}></FavoriteIcon>
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <SecurityIcon />
+                <SecurityIcon sx={{color:"rgba(200, 184, 116)"}} />
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <SettingsAccessibilityIcon />
+                <SettingsAccessibilityIcon  sx={{color:"rgba(200, 184, 116)"}}/>
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <PsychologyIcon />
+                <PsychologyIcon  sx={{color:"rgba(200, 184, 116)"}}/>
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <DirectionsRunIcon />
+                <DirectionsRunIcon sx={{color:"rgba(200, 184, 116)"}}/>
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Box sx={{ alignItems: 'center', mt: 2, width: "100%", display: 'flex', flexDirection: 'column' }}>
-                <AvTimerIcon />
+                <AvTimerIcon sx={{color:"rgba(200, 184, 116)"}}/>
               </Box>
 
             </Grid>
@@ -80,7 +82,8 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
                 borderRadius: 2,
                 border: "5px solid rgb(200, 184, 116)",
                 minHeight: 50,
-                display: 'flex', flexDirection: 'column'
+                
+                textAlign: 'center'
               }}>
                 {hp}
 
@@ -148,10 +151,11 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
             backgroundColor: "white",
             borderRadius: 2
           }}>
-            Conditions applied List (if any)
+          
           </Typography>
         </CardContent>
       </Card>
+      </div>
     );
   }
 } 

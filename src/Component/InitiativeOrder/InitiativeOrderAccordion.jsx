@@ -10,6 +10,8 @@ import ConditionsButton from "./ConditionsButton";
 import BuffsButton from "./BuffsButton";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import StatusButton from "./StatusButton";
 import { amber } from "@mui/material/colors";
 import { lightBlue } from "@mui/material/colors";
@@ -31,6 +33,10 @@ import {
 
 const accordionTop = "rgba(200,184,116)";
 const accordionDrop = "rgba(150,134,66,0.75)";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function InitiativeOrderAccordion({
   name,
@@ -56,24 +62,63 @@ export default function InitiativeOrderAccordion({
   setCombatantPortrait,
   setSelectedUnit,
   selectedUnit,
+  value,
 }) {
+  //States
   const [expanded, setExpanded] = React.useState(false);
   const [statusValues, setStatusValues] = useState([]);
   const [severityValues, setSeverityValues] = useState([]);
-
+  const [circumstanceSnackbar, setCircumstanceSnackbar] = useState(false);
+  const [removeCircumstanceSnackbar, setRemoveCircumstanceSnackbar] =
+    useState(false);
+  const [selectedValue, setSelectedValue] = React.useState(
+    value ? value.stage : "0"
+  );
+  //Accordion open/close
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
+  //Circumstance Snackbar
+  const handleCircumstanceSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setCircumstanceSnackbar(false);
+  };
+  const handleRemoveCircumstanceSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setRemoveCircumstanceSnackbar(false);
+  };
+  // For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array.
+  // Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
+  // Nested if statement specifically for circumstance status. If flatfooted is not included in prevStatusValues, it is added to prevStatusValues and then added to setStatusValues.
   const handleStatusToggle = (status) => {
     if (statusValues.includes(status)) {
+      console.log("removed", status, "from --->", statusValues);
       setStatusValues(
         statusValues.filter((selectedStatus) => selectedStatus !== status)
       );
-      console.log(status)
-      console.log(statusValues)
+      if (status === "prone") {
+        setRemoveCircumstanceSnackbar(true);
+      }
     } else {
+      //Testing the below set SelectedValue
+      console.log("added", status, "to --->", statusValues);
       setStatusValues([...statusValues, status]);
+      // setSelectedValue("1");
+      // console.log(selectedValue)
+      //Nested an if statement just for this circumstance
+      if (status === "prone") {
+        setCircumstanceSnackbar(true);
+        setStatusValues((prevStatusValues) => {
+          if (!prevStatusValues.includes("flatfooted")) {
+            return [...prevStatusValues, "flatfooted"];
+          }
+          return prevStatusValues;
+        });
+      }
     }
   };
 
@@ -85,7 +130,6 @@ export default function InitiativeOrderAccordion({
       0
     );
   };
-
   const acCumulativeEffect = calculateCumulativeEffect("acEffect");
   const fortitudeCumulativeEffect =
     calculateCumulativeEffect("fortitudeEffect");
@@ -94,11 +138,13 @@ export default function InitiativeOrderAccordion({
 
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
+    console.log("Severity Select Has Run");
     const findSeverity = severityValues.find(
       (item) => item.name === severity.name
     );
 
     if (findSeverity) {
+      console.log("Severity IF Statement");
       const updatedSeverityValues = severityValues.map((item) =>
         item.name === severity.name
           ? {
@@ -113,6 +159,8 @@ export default function InitiativeOrderAccordion({
       );
       setSeverityValues(updatedSeverityValues);
     } else {
+      console.log("Severity ELSE Statement");
+      console.log(severity);
       setSeverityValues([...severityValues, severity]);
     }
   };
@@ -141,9 +189,26 @@ export default function InitiativeOrderAccordion({
     setSelectedUnit(null);
   };
 
-  console.log(severityValues);
   return (
     <>
+      <Snackbar
+        open={circumstanceSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCircumstanceSnackbarClose}
+      >
+        <Alert onClose={handleCircumstanceSnackbarClose} severity="warning">
+          "You are also flatfooted when you are prone"
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={removeCircumstanceSnackbar}
+        autoHideDuration={6000}
+        onClose={handleRemoveCircumstanceSnackbarClose}
+      >
+        <Alert onClose={handleRemoveCircumstanceSnackbarClose} severity="error">
+          "You are still flatfooted, adjust if needed"
+        </Alert>
+      </Snackbar>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
@@ -162,7 +227,6 @@ export default function InitiativeOrderAccordion({
               {/* First row */}
               <Grid item xs={12}>
                 <Grid container alignItems="center">
-                  
                   <Grid item xs={2}>
                     <Typography sx={{ color: "text.secondary" }}>
                       Init
@@ -235,38 +299,40 @@ export default function InitiativeOrderAccordion({
         <AccordionDetails sx={{ backgroundColor: accordionDrop }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Grid container spacing={1}>
-                <Grid item lg={4}>
+              <Grid container spacing={2} justifyContent="space-evenly">
+                <Grid item lg={3}>
                   <ConditionsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
                     severityValues={severityValues}
                     handleSeveritySelect={handleSeveritySelect}
+                    value={selectedValue}
                   />
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item lg={3}>
                   <BuffsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
                     severityValues={severityValues}
                     handleSeveritySelect={handleSeveritySelect}
+                    value={selectedValue}
                   />
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item lg={3}>
                   <StatusButton
                     statusValues={statusValues}
                     severityValues={severityValues}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item lg={3}>
                   <Button
                     variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
-                    onClick={() => handleRolledInitiative(id,initiative)}
+                    onClick={() => handleRolledInitiative(id, initiative)}
                   >
                     <Typography
                       sx={{
-                        display: { md: "none", lg: "flex" },
+                        display: { xs: "none", md: "none", lg: "flex" },
                       }}
                     >
                       Roll it

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, ListItemText, Button, ListItemButton  } from '@mui/material'
+import { Grid, ListItemText, Button, ListItemButton, Box, Typography  } from '@mui/material'
 import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
@@ -8,6 +8,7 @@ import {
 	doc,
 } from 'firebase/firestore';
 import UpdateModal from './UpdateModal';
+import ShieldTwoToneIcon from '@mui/icons-material/ShieldTwoTone';
 
 function DashResult({unit, handleListItemClick, index, openStates, handleClose, collectionRef, selectedIndex, handleOpen, combatantList, setCombatantList, tabValue,filteredList, setFilteredList}) {
 
@@ -119,34 +120,44 @@ function DashResult({unit, handleListItemClick, index, openStates, handleClose, 
 										>
 											<Grid
 												item
-												xs={3}
-												sx={{
-													color: 'white',
-													width: 300,
-													backgroundColor: 'blue',
-													border: '5px solid rgba(54,69,79,0.5)',
-													borderRadius: 2,
-
-													textAlign: 'center',
-												}}
+												// xs={3}
+												// sx={{
+												// 	color: 'white',
+												// 	width: 300,
+												// 	backgroundColor: 'blue',
+												// 	border: '5px solid rgba(54,69,79,0.5)',
+												// 	borderRadius: 2,
+												// 	textAlign: 'center',
+												// }}
 											>
+												
 												<div sx={{ backgroundColor: 'red' }}>
-													AC: {unit.ac}
+												
+												<Grid container sx={{mt:1.5,}} >		
+												<Grid item > 
+			<Typography sx={{fontSize:15,mt:-1.6, ml:2, }}>
+				AC
+				</Typography>
+		</Grid>
+        <ShieldTwoToneIcon sx={{position:'absolute',fontSize: 50}} />
+	<Typography sx={{mt:1.5, mr:.5,ml:-2.5,}}>{unit.ac}</Typography>
+	</Grid>
 												</div>
 											</Grid>
-											<Grid item xs={3}>
-												<div sx={{}}>HP {unit.hp}</div>
+											
+											<Grid item xs>
+												<div sx={{}}>HP: <br></br> {unit.hp}</div>
 											</Grid>
-											<Grid item xs={3}>
-												<div sx={{}}>Reflex Save: {unit.reflexSave}</div>
+											<Grid item xs>
+												<div sx={{}}>RS: <br></br>  {unit.reflexSave}</div>
 											</Grid>
-											<Grid item xs={3}>
+											<Grid item xs>
 												<div sx={{}}>
-													Fortitude Save: {unit.fortitudeSave}
+													FS:  <br></br> {unit.fortitudeSave}
 												</div>
 											</Grid>
-											<Grid item xs={3}>
-												<div sx={{}}>Will Save: {unit.willSave}</div>
+											<Grid item xs>
+												<div sx={{}}>WS:  <br></br> {unit.willSave}</div>
 											</Grid>
 										</Grid>
 									)}

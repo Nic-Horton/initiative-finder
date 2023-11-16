@@ -471,7 +471,12 @@ export default function Home() {
 											size="small"
 											href="https://github.com/MidnightMicro"
 										>
-											<img height={50} src="/Images/GoldGit.png" alt="GitHub" />
+											<img
+												style={{ marginLeft: 2 }}
+												width={50}
+												src="/Images/GoldGit.png"
+												alt="GitHub"
+											/>
 										</Button>
 									</CardActions>
 								</Card>

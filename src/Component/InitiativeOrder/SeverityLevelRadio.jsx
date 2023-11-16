@@ -4,6 +4,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import Typography from "@mui/material/Typography";
 import { blueGrey } from "@mui/material/colors";
 
 export default function SeverityLevelRadio({
@@ -13,11 +14,11 @@ export default function SeverityLevelRadio({
   modifiers,
   setModifiers,
   selectedSeverity,
-  value
+  value,
 }) {
-    const [selectedValue, setSelectedValue] = React.useState(
-      value ? value.stage : "0"
-    );
+  const [selectedValue, setSelectedValue] = React.useState(
+    value ? value.stage : "0"
+  );
   const handleChange = (
     name,
     stage,
@@ -60,11 +61,27 @@ export default function SeverityLevelRadio({
 
   return (
     <FormControl>
-      <FormLabel id="SeverityLevelInput">Severity</FormLabel>
+      <FormLabel
+        id="SeverityLevelInput"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            color:"rgba(200,184,116)",
+          }}
+        >
+          Severity
+        </Typography>
+      </FormLabel>
       <RadioGroup
         row
         aria-labelledby="SeverityLevelInput"
-        name="severity-radio-buttons-group" // Update the name
+        name="severity-radio-buttons-group"
       >
         {modifiers?.conditionEffects?.map((modifier) => {
           return (
@@ -93,7 +110,15 @@ export default function SeverityLevelRadio({
                   size="small"
                 />
               }
-              label={modifier.stage}
+              label={
+                <Typography
+                  sx={{
+                    color: "rgba(200, 184, 116)",
+                  }}
+                >
+                  {modifier.stage}
+                </Typography>
+              }
             />
           );
         })}

@@ -1,6 +1,12 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Container, FormControl, FormLabel, Typography } from '@mui/material';
+import {
+	Container,
+	FormControl,
+	FormLabel,
+	Typography,
+	Grid,
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import Register from './Register';
 import { useState, useEffect } from 'react';
@@ -9,62 +15,127 @@ import {
 	signInWithEmailAndPassword,
 	signInWithPopup,
 	signOut,
-} from "firebase/auth";
-import { Alert } from "@mui/material";
-import NavbarLogin from "./NavBarNoLogin";
-import Navbar from "./Navbar";
+} from 'firebase/auth';
+import { Alert } from '@mui/material';
+import NavbarLogin from './NavBarNoLogin';
+import Navbar from './Navbar';
+import Snackbar from './SnackBar';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const customTheme = createTheme({
+	palette: {
+		primary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+		},
+		secondary: {
+			main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+		},
+		text: {
+			primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+		},
+	},
+	components: {
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					'& .MuiInputBase-input': {
+						backgroundColor: 'rgba(38, 50, 56,0.75)',
+						color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+					},
+				},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					'&.Mui-focused fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+					},
+					'& fieldset': {
+						borderColor: 'rgb(200, 184, 116)', // Set the border color for unfocused state
+					},
+				},
+			},
+		},
+	},
+});
+
+const ButtonTheme = createTheme({
+	palette: {
+		primary: {
+			main: 'rgba(70, 90, 250, 0.8)', // Set your custom color as the primary color
+		},
+		secondary: {
+			main: 'rgba(130,0,0,1)', // Set your custom color as the secondary color
+		},
+		success: {
+			main: 'rgb(200, 184, 116)',
+		},
+	},
+});
 
 export const Auth = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
 
+	const [alertMessage, setAlertMessage] = useState('');
+	const [alertSeverity, setAlertSeverity] = useState('info');
+	const [showAlert, setShowAlert] = useState(false);
+
 	console.log(auth?.currentUser);
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+	const signInWithGoogle = async () => {
+		try {
+			await signInWithPopup(auth, googleProvider);
+			if (auth.currentUser) {
+				setAlertMessage('User Found-Critical Success!');
+				setAlertSeverity('success');
+				setShowAlert(true);
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 1000);
+			}
+			setTimeout(() => {
+				window.location.href = '/dashboard';
+			}, 700);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  const signIn = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (userCredential.user) {
-        console.log(userCredential);
-        alert("User Found-Critical Success!");
-        setTimeout(()=> { 
-      window.location.href = "/dashboard";
-        }, 500);
-  
-        // window.location.href = "/dashboard";
-      }
-    } catch (err) {
-      alert("User Not Found" + err);
-      console.error(err);
-    }
-  };
+	const signIn = async () => {
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+			const userCredential = await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			if (userCredential.user) {
+				setAlertMessage('User Found-Critical Success!');
+				setAlertSeverity('success');
+				setShowAlert(true);
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 1000);
+				setTimeout(() => {
+					window.location.href = '/dashboard';
+				}, 700);
+			}
+		} catch (err) {
+			setAlertMessage('User Not Found');
+			setAlertSeverity('error');
+			setShowAlert(true);
+			setTimeout(() => {
+				setShowAlert(false);
+			}, 2500);
+			// alert('User Not Found' + err);
+			// console.error(err);
+		}
+	};
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-	function handleClick() {
-		alert('Account not found, Please create account first');
-	}
+	const handleShowAlertClickC = () => setShowAlert(false);
 
 	useEffect(() => {
 		// Use onAuthStateChanged to listen for changes in authentication status
@@ -84,138 +155,126 @@ export const Auth = () => {
 
 	const imageURL = '/Images/Auth.jpg';
 
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${imageURL})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-        width: "100%",
-      }}
-    >
-      <div>
-        <Box
-          component="form"
-          sx={{
-            alignItems: "center",
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "right",
-              alignItems: "center",
-              height: 700,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgba(54,69,79,0.5)",
-                color: "white",
-                width: 800,
-                border: 1,
-                borderRadius: 10,
-                marginTop: 10,
-                marginBottom: 5,
-              }}
-            >
-            <Typography variant="h3">Please sign in or Register below!</Typography>
-            </Box>
-            <FormControl
-              sx={{
-                display: "flex",
-                backgroundColor: "rgba(256,256,256,0.95)",
-                flexWrap: "wrap",
-                flexDirection: "column",
-                border: 1,
-                borderRadius: 5,
-                marginTop: 5,
-                padding: 5,
-                alignContent: "left",
-                marginLeft: 3,
-                width: 200,
-                justifyContent: "center",
-              }}
-            >
-              <FormLabel
-                sx={{
-                  color: "black",
-                  fontStyle: "oblique",
-                  fontFamily: "Roboto",
-                }}
-              >
-                {" "}
-                How do you want to do this?{" "}
-              </FormLabel>
-              <TextField
-                value={email}
-                placeholder="Enter Email"
-                variant="outlined"
-                color="success"
-                margin="normal"
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
+	return (
+		<div
+			style={{
+				backgroundImage: `url(${imageURL})`,
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				height: '100vh',
+				width: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}
+		>
+			<div>
+				<Box
+					component="form"
+					sx={{ position: 'relative', p: 0 }}
+					noValidate
+					autoComplete="off"
+				>
+					<FormControl
+						sx={{
+							display: 'flex',
+							backgroundColor: 'rgba(38, 50, 56,0.75)',
+							color: '#c8b874',
+							flexWrap: 'wrap',
+							flexDirection: 'column',
+							border: 1,
+							borderRadius: 5,
+							padding: 4,
+							alignContent: 'left',
+							maxWidth: 250,
+							justifyContent: 'center',
+						}}
+					>
+						<FormLabel
+							sx={{
+								textAlign: 'center',
+								color: '#c8b874',
+								fontStyle: 'oblique',
+								fontFamily: 'Roboto',
+								fontSize: '2em',
+							}}
+						>
+							"How do you want to do this?"
+						</FormLabel>
+						<ThemeProvider theme={customTheme}>
+							<TextField
+								value={email}
+								placeholder="Enter Email"
+								variant="outlined"
+								sx={{}}
+								margin="normal"
+								onChange={(e) => setEmail(e.target.value)}
+							/>
 
-              <TextField
-                sx={{ marginBottom: 2 }}
-                value={password}
-                type="password"
-                placeholder="Enter Password"
-                id="outlined-basic"
-                variant="outlined"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-
-							<Container
-								sx={{
-									display: 'flex',
-									flexDirection: 'column',
-									justifyContent: 'center',
-								}}
-							>
+							<TextField
+								sx={{ marginBottom: 2 }}
+								value={password}
+								type="password"
+								placeholder="Enter Password"
+								id="outlined-basic"
+								variant="outlined"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+						</ThemeProvider>
+						<Container
+							style={{ paddingLeft: '0', paddingRight: '0' }}
+							sx={{
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+							}}
+						>
+							<ThemeProvider theme={ButtonTheme}>
+								<Grid
+									container
+									spacing={1}
+									sx={{
+										display: 'flex',
+										justifyContent: 'space-between',
+										mb: 1,
+									}}
+								>
+									<Grid item xs>
+										<Button
+											fullWidth
+											variant="contained"
+											color="primary"
+											onClick={signIn}
+											// sx={{ marginBottom:  }}
+										>
+											Login
+										</Button>
+									</Grid>
+									<Grid item xs>
+										<Register />
+									</Grid>
+								</Grid>
 								<Button
 									variant="contained"
 									color="success"
-									onClick={signIn}
-									sx={{ marginBottom: 1 }}
-								>
-									Login
-								</Button>
-								<Button
-									variant="contained"
-									color="secondary"
-									sx={{ marginBottom: 1 }}
 									onClick={signInWithGoogle}
 								>
 									Sign in with Google
 								</Button>
-
-                <Register />
-                <Button
-                  sx={{ marginTop: 1 }}
-                  onClick={logout}
-                  variant="contained"
-                  disabled={!user}
-                >
-                  Logout
-                </Button>
-                {/* //remove login from navbar  and avatar in top right. work on CSS for dashboard 
-edit user data and avatar button/ routing, NavBar, logout to login screen button 
-profile. add settings to small nav, take out dashboard, fix routes*/}
-              </Container>
-            </FormControl>
-          </Container>
-        </Box>
-      </div>
-    </div>
-  );
+							</ThemeProvider>
+							<Snackbar
+								alert={alertMessage}
+								alertSeverity={alertSeverity}
+								open={showAlert}
+								handleShowAlertClickC={handleShowAlertClickC}
+							/>
+						</Container>
+					</FormControl>
+					{/* </Container> */}
+				</Box>
+			</div>
+		</div>
+	);
 };

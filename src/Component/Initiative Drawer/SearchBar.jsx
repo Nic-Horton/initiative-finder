@@ -7,14 +7,6 @@ import SearchList from "./SearchList";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Divider from "@mui/material/Divider";
 
-// const customTheme = createTheme({
-//   palette: {
-//     secondary: {
-//       main: 'rgba(200, 184, 116)',
-//     },
-//   },
-// });
-
 const customTheme = createTheme({
   palette: {
     primary: {

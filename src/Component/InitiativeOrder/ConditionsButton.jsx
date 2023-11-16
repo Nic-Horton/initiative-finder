@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -34,24 +34,26 @@ export default function ConditionsButton({
   statusValues,
   handleStatusToggle,
   handleSeveritySelect,
-  severityValues
+  severityValues,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [conditions, setConditions] = React.useState(Conditions);
+  const [selectedStages, setSelectedStages] = React.useState({});
+
   return (
     <div>
       <Stack direction="row" spacing={2}>
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<MonitorHeartIcon />}
           onClick={handleOpen}
           color="error"
         >
           <Typography
             sx={{
-              display: { md: "none", lg: "flex" },
+              display: { xs: "none", md: "none", lg: "flex" },
             }}
           >
             Conditions
@@ -71,9 +73,10 @@ export default function ConditionsButton({
               transform: "translate(-50%, -50%)",
               width: 850,
               bgcolor: "rgba(38, 50, 56,0.75)",
-              border: "2px solid #000",
+              border: "5px solid rgba(200,184,116)",
               boxShadow: 24,
-              p: 4,
+              borderRadius: "10px",
+              p: 3,
               overflowY: "auto",
               maxHeight: "60vh",
             }}
@@ -109,9 +112,14 @@ export default function ConditionsButton({
                     key={index}
                     sx={{
                       border: "1px solid #ccc",
-                      padding: "8px",
-                      borderColor: "error.main",
-                      bgcolor: "rgba(200,184,116)",
+                      padding: "10px",
+                      borderColor: "rgba(200,184,116)",
+                      borderRadius: "10px",
+                      bgcolor: "rgba(38, 50, 56,0.75)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {/* <Chip label={condition.name} color="error" /> */}
@@ -119,18 +127,38 @@ export default function ConditionsButton({
                     <RedSwitch
                       {...label}
                       checked={statusValues.includes(condition.name)}
-                      onChange={() => handleStatusToggle(condition.name)}
+                      onChange={() => {
+                        setSelectedStages((prevStages) => ({
+                          ...prevStages,
+                          [condition.name]: 1,
+                        }));
+                        handleStatusToggle(condition.name);
+                        handleSeveritySelect({
+                          name: condition.name,
+                          stage: 1,
+                        });
+                      }}
                     />
                     <div>
                       <SeverityLevelRadio
-                        handleSeveritySelect={handleSeveritySelect}
+                        handleSeveritySelect={(selectedSeverity) => {
+                          handleSeveritySelect(selectedSeverity);
+                          setSelectedStages((prevStages) => ({
+                            ...prevStages,
+                            [selectedSeverity.name]: selectedSeverity.stage,
+                          }));
+                        }}
                         name={condition.name}
                         stages={condition.conditionEffects}
                         modifiers={condition}
-                        // setModifiers={setConditions}
-                        value={severityValues.find(
-                          (item) => item.name === condition.name
-                        )}
+                        value={
+                          severityValues.find(
+                            (item) => item.name === condition.name
+                          ) || {
+                            name: condition.name,
+                            stage: selectedStages[condition.name] || 1,
+                          }
+                        }
                       />
                     </div>
                   </Grid>

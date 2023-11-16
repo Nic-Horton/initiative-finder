@@ -10,9 +10,11 @@ import { Button, Container, Typography } from '@mui/material';
 import CircularProgress, {
 	circularProgressClasses,
 } from '@mui/material/CircularProgress';
+
 import UnitCreation from '../Component/UnitCreation';
 
 // ADD DEATH SCENE and potential gif of zelda or fire from dark souls?
+
 
 function Dashboard() {
 	const [user, setUser] = useState(null);
@@ -163,6 +165,7 @@ function Dashboard() {
 					width: '100%',
 				}}
 			>
+				
 				<div
 					style={{
 						position: 'absolute',
@@ -182,7 +185,9 @@ function Dashboard() {
 					}}
 				>
 					<Navbar />
+
 					<UnitCreation />
+
 				</div>
 			</div>
 		</>
