@@ -4,6 +4,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import Typography from "@mui/material/Typography";
 import { blueGrey } from "@mui/material/colors";
 
 export default function SeverityLevelRadio({
@@ -69,7 +70,13 @@ export default function SeverityLevelRadio({
           alignItems: "center",
         }}
       >
-        Severity
+        <Typography
+          sx={{
+            color:"rgba(200,184,116)",
+          }}
+        >
+          Severity
+        </Typography>
       </FormLabel>
       <RadioGroup
         row
@@ -103,7 +110,15 @@ export default function SeverityLevelRadio({
                   size="small"
                 />
               }
-              label={modifier.stage}
+              label={
+                <Typography
+                  sx={{
+                    color: "rgba(200, 184, 116)",
+                  }}
+                >
+                  {modifier.stage}
+                </Typography>
+              }
             />
           );
         })}

@@ -138,12 +138,13 @@ export default function InitiativeOrderAccordion({
 
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
-    console.log("Severity");
+    console.log("Severity Select Has Run");
     const findSeverity = severityValues.find(
       (item) => item.name === severity.name
     );
 
     if (findSeverity) {
+      console.log("Severity IF Statement");
       const updatedSeverityValues = severityValues.map((item) =>
         item.name === severity.name
           ? {
@@ -158,7 +159,7 @@ export default function InitiativeOrderAccordion({
       );
       setSeverityValues(updatedSeverityValues);
     } else {
-      console.log("Severity ELSE");
+      console.log("Severity ELSE Statement");
       console.log(severity);
       setSeverityValues([...severityValues, severity]);
     }
@@ -226,7 +227,6 @@ export default function InitiativeOrderAccordion({
               {/* First row */}
               <Grid item xs={12}>
                 <Grid container alignItems="center">
-                  
                   <Grid item xs={2}>
                     <Typography sx={{ color: "text.secondary" }}>
                       Init
@@ -299,8 +299,8 @@ export default function InitiativeOrderAccordion({
         <AccordionDetails sx={{ backgroundColor: accordionDrop }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Grid container spacing={1}>
-                <Grid item lg={4}>
+              <Grid container spacing={2} justifyContent="space-evenly">
+                <Grid item lg={3}>
                   <ConditionsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
@@ -309,7 +309,7 @@ export default function InitiativeOrderAccordion({
                     value={selectedValue}
                   />
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item lg={3}>
                   <BuffsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
@@ -318,13 +318,13 @@ export default function InitiativeOrderAccordion({
                     value={selectedValue}
                   />
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item lg={3}>
                   <StatusButton
                     statusValues={statusValues}
                     severityValues={severityValues}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item lg={3}>
                   <Button
                     variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
@@ -332,7 +332,7 @@ export default function InitiativeOrderAccordion({
                   >
                     <Typography
                       sx={{
-                        display: { md: "none", lg: "flex" },
+                        display: { xs: "none", md: "none", lg: "flex" },
                       }}
                     >
                       Roll it
