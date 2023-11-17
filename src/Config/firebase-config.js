@@ -1,40 +1,16 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-//MAIN for when we are not over our limit
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBS5MEWVvo62nYu3DC80NWbjmC6UYD4cjs",
-//   authDomain: "initiativefinder.firebaseapp.com",
-//   projectId: "initiativefinder",
-//   storageBucket: "initiativefinder.appspot.com",
-//   messagingSenderId: "290519286816",
-//   appId: "1:290519286816:web:8dfb829f4b086028662845",
-//   measurementId: "G-K0D57VD423"
-// };
-
-// BACKUP in case the other goes down
-// const firebaseConfig = {
-// 	apiKey: 'AIzaSyCWZ1KLVYK1--oRNlD7z7iDcXPHyTd6dY0',
-// 	authDomain: 'initiativefinderbackup-ca3ad.firebaseapp.com',
-// 	projectId: 'initiativefinderbackup-ca3ad',
-// 	storageBucket: 'initiativefinderbackup-ca3ad.appspot.com',
-// 	messagingSenderId: '768316786202',
-// 	appId: '1:768316786202:web:87e1c4d914e015e4f033a3',
-// 	measurementId: 'G-TQ1PFH05DS',
-// };
-
-// Nics BackUp
 const firebaseConfig = {
-  apiKey: "AIzaSyBslYGnaswFPmBy_shXwdX3QwJ9RCgzO44",
-  authDomain: "initfindr.firebaseapp.com",
-  projectId: "initfindr",
-  storageBucket: "initfindr.appspot.com",
-  messagingSenderId: "545377912753",
-  appId: "1:545377912753:web:f51b88a18b16e60d4c1f90",
-  measurementId: "G-QFXXNVNLL3",
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID,
+	measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
