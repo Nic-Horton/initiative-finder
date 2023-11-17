@@ -20,10 +20,12 @@ import Button from '@mui/material/Button/';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 import Navbar from '../Component/Navbar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppSteps from '../Component/Stepper';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Paper from '@mui/material/Paper';
+import { auth } from '../Config/firebase-config';
+import NavbarNoLogin from '../Component/NavBarNoLogin';
 
 const steps = [
 	'Select Campaign',
@@ -38,6 +40,21 @@ export default function Home() {
 	const [footerExpanded, setFooterExpanded] = useState(false);
 	const [showContent, setShowContent] = useState(false);
 	const [value, setValue] = React.useState(0);
+	const [user, setUser] = useState(null);
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((authUser) => {
+			if (authUser) {
+				setUser(authUser);
+			} else {
+				setUser(null);
+			}
+		});
+
+		return () => {
+			unsubscribe();
+		};
+	}, []);
 
 	const totalSteps = () => {
 		return steps.length;
@@ -101,7 +118,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Navbar />
+			{user ? <NavbarNoLogin /> : <Navbar />}
 			<div
 				style={{
 					backgroundImage: `url('/Images/wallhaven-oxq529.jpg')`,
@@ -187,7 +204,7 @@ export default function Home() {
 							height: 100,
 						}}
 						size="large"
-						href="/Login"
+						href={user ? '/dashboard' : '/login'}
 						color="success"
 						variant="contained"
 					>
@@ -196,98 +213,6 @@ export default function Home() {
 				</Box>
 			</div>
 			<div></div>
-			{/* <div
-				style={{
-					backgroundImage: `url('https://slyflourish.com/images/printed_map.jpg')`,
-					backgroundPosition: 'center',
-					backgroundSize: 'cover',
-					backgroundRepeat: 'no-repeat',
-					height: '50vh',
-					width: '100%',
-				}}
-			> */}
-			{/* <Box sx={{ width: '100%' }}>
-					<Stepper alternativeLabel nonLinear activeStep={activeStep}>
-						{steps.map((label, index) => (
-							<Step
-								sx={{ backgroundColor: 'red', color: 'blue' }}
-								key={label}
-								completed={completed[index]}
-							>
-								<StepButton
-									sx={{
-										p: 0,
-										backgroundColor: 'rgb(38,50,56)',
-										border: 1,
-										borderRadius: 2,
-										borderColor: 'white',
-									}}
-									onClick={() => handleStep(index)}
-								>
-									<Typography
-										variant="button"
-										sx={{ fontSize: 'large', color: 'white' }}
-									>
-										{label}
-									</Typography>
-								</StepButton>
-							</Step>
-						))}
-					</Stepper>
-					<div>
-						{allStepsCompleted() ? (
-							<React.Fragment>
-								<Typography sx={{ mt: 2, mb: 1 }}>
-									All steps completed - you&apos;re finished
-								</Typography>
-								<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-									<Box sx={{ flex: '1 1 auto' }} />
-									<Button onClick={handleReset}>Reset</Button>
-								</Box>
-							</React.Fragment>
-						) : (
-							<React.Fragment>
-								<Typography
-									sx={{ backgroundColor: 'red', mt: 2, mb: 1, py: 1 }}
-								>
-									Step {activeStep + 1}
-									
-								</Typography>
-								<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-									<Button
-										color="inherit"
-										disabled={activeStep === 0}
-										onClick={handleBack}
-										sx={{ mr: 1 }}
-									>
-										Back
-									</Button>
-									<Box sx={{ flex: '1 1 auto' }} />
-									<Button
-										disabled={activeStep === 4}
-										onClick={handleNext}
-										sx={{ mr: 1 }}
-									>
-										Next
-									</Button>
-									{activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
-                ))}
-								</Box>
-							</React.Fragment>
-						)}
-					</div>
-				</Box> */}
-			{/* </div> */}
 
 			{/* make as footer */}
 
