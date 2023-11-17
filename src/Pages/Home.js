@@ -128,90 +128,126 @@ export default function Home() {
 					height: '100vh',
 					width: '100%',
 					backdropFilter: 'blur(500px)',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					justifyContent: 'center',
 				}}
 			>
-				<Grid container direction="column" alignItems="center" justify="center">
+				{/* <Grid container direction="column" alignItems="center" justify="center">
 					<Grid item></Grid>
-				</Grid>
+				</Grid> */}
 
-				<Box sx={{ flexGrow: 1 }}>
-					<Grid container direction="row" alignItems="flex-start" columns={16}>
+				{/* <Box sx={{ flexGrow: 1 }}> */}
+				<Grid
+					container
+					// columns={12}
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						gap: 4,
+					}}
+				>
+					<Grid
+						item
+						xs={12}
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							textAlign: 'center',
+							// maxWidth: '1000px',
+							// margin: 'auto',
+							padding: '20px',
+						}}
+					>
 						<Typography
 							sx={{
 								textAlign: 'center',
-								marginTop: 35,
+								px: { xs: 1, sm: 3 },
 								color: '#c8b874',
-								maxWidth: 1000,
-								width: 800,
-								marginLeft: 'auto',
-								marginRight: 'auto',
+								maxWidth: 900,
+								// width: 800,
+								// marginLeft: 'auto',
+								// marginRight: 'auto',
 								border: 1,
 								borderRadius: 5,
-								marginBottom: 10,
+								// marginBottom: 10,
 								backgroundColor: 'rgba(38,50,56,.9)',
 							}}
 							variant="h1"
-							gutterBottom
+							// gutterBottom
 						>
 							Initiative Finder
 						</Typography>
+					</Grid>
 
-						<Grid
-							item
-							xs={16}
+					<Grid
+						item
+						xs={12}
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							textAlign: 'center',
+							// maxWidth: '1000px',
+							// margin: 'auto',
+							padding: '20px',
+						}}
+					>
+						<Typography
+							variant="h6"
 							sx={{
-								textAlign: 'center',
-								maxWidth: '1000px',
-								margin: 'auto',
-								padding: '20px',
+								// justifyContent: 'center',
+								// alignContent: 'center',
+								maxWidth: 800,
+								p: 2,
+								// marginLeft: 'auto',
+								// marginRight: 'auto',
+								display: { xs: 'none', sm: 'inherit' },
+								// mb: 5,
+								borderRadius: 5,
+								backgroundColor: 'rgba(51,0,0,0.8)',
+								color: 'rgba(255,229,204)',
 							}}
 						>
-							<Typography
-								variant="h6"
-								sx={{
-									justifyContent: 'center',
-									alignContent: 'center',
-									width: 800,
-									marginLeft: 'auto',
-									marginRight: 'auto',
-									mb: 5,
-									borderRadius: 5,
-									backgroundColor: 'rgba(51,0,0,0.8)',
-									color: 'rgba(255,229,204)',
-								}}
-							>
-								Dive into the immersive world of Golarion with confidence and
-								precision using the "Initiative Finder" app- the digital
-								browser-based companion for Game Masters. Whether you're
-								navigating a treacherous dungeon, facing off against fearsome
-								foes, or weaving intricate tales of heroism with your friends,
-								this app is your key to mastering the art of monster and
-								character management in the thrilling and ever changing realm of
-								Pathfinder 2nd Edition.
-							</Typography>
-						</Grid>
+							Dive into the immersive world of Golarion with confidence and
+							precision using the "Initiative Finder" app- the digital
+							browser-based companion for Game Masters. Whether you're
+							navigating a treacherous dungeon, facing off against fearsome
+							foes, or weaving intricate tales of heroism with your friends,
+							this app is your key to mastering the art of monster and character
+							management in the thrilling and ever changing realm of Pathfinder
+							2nd Edition.
+						</Typography>
 					</Grid>
-				</Box>
-				<Box textAlign="center">
-					<Button
-						sx={{
-							fontWeight: 'bold',
-							color: '#c8b874',
-							backgroundColor: 'rgba(38,50,56,.9)',
-							border: 1,
-							fontSize: 25,
-							width: 500,
-							height: 100,
-						}}
-						size="large"
-						component={NavLink}
-						to={user ? '/dashboard' : '/login'}
-						color="success"
-						variant="contained"
+
+					{/* </Box> */}
+					<Grid
+						item
+						textAlign="center"
+						sx={{ display: 'flex', padding: '20px' }}
 					>
-						Let's Get Started!
-					</Button>
-				</Box>
+						<Button
+							sx={{
+								fontWeight: 'bold',
+								color: '#c8b874',
+								backgroundColor: 'rgba(38,50,56,.9)',
+								border: 1,
+								borderRadius: 5,
+								fontSize: 25,
+								p: 3,
+								// width: 500,
+								// height: 100,
+							}}
+							size="large"
+							component={NavLink}
+							to={user ? '/dashboard' : '/login'}
+							color="success"
+							variant="contained"
+						>
+							Let's Get Started!
+						</Button>
+					</Grid>
+				</Grid>
 			</div>
 			<div></div>
 
@@ -256,24 +292,29 @@ export default function Home() {
 						<Box
 							sx={{
 								display: 'flex',
-								flexShrink: '1',
+								justifyContent: 'center',
+								flexWrap: 'wrap',
+								gap: 3,
 								backgroundColor: 'rgba(42,2,2,0.95)',
 								pt: 1,
 								pb: 1,
 							}}
 						>
-							<Container
+							{/* <Container
 								sx={{
 									display: 'flex',
 									justifyContent: 'center',
 									alignContent: 'stretch',
+									minWidth: 200,
+									maxWidth: 300,
 								}}
-							>
+							> */}
+							<Box sx={{ display: 'flex', gap: 3 }}>
 								<Card
 									sx={{
 										display: 'flex',
-										minWidth: 200,
-										maxWidth: 300,
+										minWidth: 220,
+										maxWidth: 220,
 										backgroundColor: '#2a353b',
 										color: '#c8b874',
 										border: 2,
@@ -335,19 +376,19 @@ export default function Home() {
 										</Button>
 									</CardActions>
 								</Card>
-							</Container>
-							<Container
+								{/* </Container> */}
+								{/* <Container
 								sx={{
 									display: 'flex',
 									justifyContent: 'center',
 									alignContent: 'stretch',
 								}}
-							>
+							> */}
 								<Card
 									sx={{
 										display: 'flex',
-										minWidth: 200,
-										maxWidth: 300,
+										minWidth: 220,
+										maxWidth: 220,
 										backgroundColor: '#2a353b',
 										color: '#c8b874',
 										border: 2,
@@ -406,19 +447,21 @@ export default function Home() {
 										</Button>
 									</CardActions>
 								</Card>
-							</Container>
-							<Container
+							</Box>
+							{/* </Container> */}
+							{/* <Container
 								sx={{
 									display: 'flex',
 									justifyContent: 'center',
 									alignContent: 'stretch',
 								}}
-							>
+							> */}
+							<Box sx={{ display: 'flex', gap: 3 }}>
 								<Card
 									sx={{
 										display: 'flex',
-										minWidth: 200,
-										maxWidth: 300,
+										minWidth: 220,
+										maxWidth: 220,
 										backgroundColor: '#2a353b',
 										color: '#c8b874',
 										border: 2,
@@ -478,19 +521,19 @@ export default function Home() {
 										</Button>
 									</CardActions>
 								</Card>
-							</Container>
-							<Container
+								{/* </Container> */}
+								{/* <Container
 								sx={{
 									display: 'flex',
 									justifyContent: 'center',
 									alignContent: 'stretch',
 								}}
-							>
+							> */}
 								<Card
 									sx={{
 										display: 'flex',
-										minWidth: 200,
-										maxWidth: 300,
+										minWidth: 220,
+										maxWidth: 220,
 										backgroundColor: '#2a353b',
 										color: '#c8b874',
 										border: 2,
@@ -549,7 +592,8 @@ export default function Home() {
 										</Button>
 									</CardActions>
 								</Card>
-							</Container>
+							</Box>
+							{/* </Container> */}
 						</Box>
 					</div>
 				</Collapse>
