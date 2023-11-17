@@ -18,7 +18,7 @@ import { auth } from "../Config/firebase-config";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from 'react-router-dom';
 import SnackBar from "./SnackBar";
-
+import { useNavigate } from 'react-router-dom';
 import { signOut, On } from "firebase/auth";
 import { useState, useEffect } from "react";
 
@@ -35,7 +35,7 @@ function NavbarNoLogin(loggedIn) {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertSeverity, setAlertSeverity] = useState('info');
   const [showAlert, setShowAlert] = useState(false);
-
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
@@ -69,7 +69,7 @@ function NavbarNoLogin(loggedIn) {
       setTimeout(() => {
         setShowAlert(false);
         if(window.location.pathname !== '/'){
-          window.location.href = "/";
+          navigate("/");
         }
         signOut(auth);
       }, 1500);
