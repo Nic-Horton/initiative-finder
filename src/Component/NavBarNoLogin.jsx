@@ -59,7 +59,7 @@ function NavbarNoLogin(loggedIn) {
 
   const handleShowAlertClickC = () => setShowAlert(false);
 
-  console.log(auth?.currentUser);
+  // console.log(auth?.currentUser);
 
   const logout = async () => {
     try {
@@ -68,7 +68,9 @@ function NavbarNoLogin(loggedIn) {
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
-        window.location.href = "/";
+        if(window.location.pathname !== '/'){
+          window.location.href = "/";
+        }
         signOut(auth);
       }, 1500);
 
