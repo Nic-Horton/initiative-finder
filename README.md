@@ -52,10 +52,10 @@ Tracking has never been easier with InitFindr! GMs, new and seasoned, will be ab
 
 Here's why:
 * Character and Monster creation
-* Ablity to pre set battles
+* Ability to make and adjust battles beforehand and on the spot.
 * Easy to add combatants to tracker
-* Roles initiative and sorts from highest roll
-* Automatic Status and Buff effects
+* Rolls initiative and sorts based on highest-low roll
+* Automatic adjustment of stats based Status and Buffs
 
 
 ### Built With
