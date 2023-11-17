@@ -122,7 +122,7 @@ export default function ConditionsButton({
                       alignItems: "center",
                     }}
                   >
-                    {/* <Chip label={condition.name} color="error" /> */}
+                   
                     <ModifierPopover condition={condition} type="condition" />
                     <RedSwitch
                       {...label}

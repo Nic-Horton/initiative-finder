@@ -28,6 +28,7 @@ export default function UpdateModal({
 	id,
 	databaseRef,
 	initiative,
+	portrait
 }) {
 	const [acValue, setAcValue] = useState(ac);
 	const [hpValue, setHpValue] = useState(hp);
@@ -35,6 +36,8 @@ export default function UpdateModal({
 	const [reflexValue, setReflexValue] = useState(reflexSave);
 	const [willValue, setWillValue] = useState(willSave);
 	const [descriptionValue, setDescriptionValue] = useState(description);
+	const [initiativeValue, setInitiativeValue] = useState(initiative);
+	const [portraitValue, setPortraitValue] = useState(portrait)
 
 	const handleInputChange = (setter, value) => {
 		// Ensure that the input value is a number
@@ -53,6 +56,7 @@ export default function UpdateModal({
 			willSave: Number(willValue),
 			reflexSave: Number(reflexValue),
 			description: descriptionValue,
+			portrait: portraitValue,
 		});
 	};
 
@@ -65,12 +69,15 @@ export default function UpdateModal({
 		>
 			<Box
 				sx={{
+					display:"flex",
+					flexDirection:'column',
+					alignItems:'center',
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
 					transform: 'translate(-50%, -50%)',
 					width: 400,
-					height: 600,
+					height: "auto",
 					backgroundColor: 'rgba(28, 50, 56,0.98)',
 					border: '2px solid #c8b874',
 					borderRadius: 2,
@@ -78,9 +85,9 @@ export default function UpdateModal({
 					p: 4,
 				}}
 			>
-				<div>
+				{/* <div> */}
 					<Grid container sx={{ width: 385 }}>
-						<Grid item xs>
+						<Grid item xs={12}>
 							<Typography
 								variant="h4"
 								sx={{
@@ -109,6 +116,7 @@ export default function UpdateModal({
 								Name
 							</Divider>
 
+							
 							<Typography
 								variant="h6"
 								sx={{
@@ -122,6 +130,44 @@ export default function UpdateModal({
 							>
 								{name}
 							</Typography>
+						</Grid>
+						<Grid item xs>
+							
+
+							<Divider
+								sx={{
+									color: 'white',
+									'&.MuiDivider-root': {
+										'&::before': {
+											borderTop: 'thin solid #c8b874',
+										},
+										'&::after': {
+											borderTop: 'thin solid #c8b874',
+										},
+									},
+								}}
+							>
+								Portrait Url
+							</Divider>
+
+							
+							<TextField
+								type='textbox'
+								fullWidth
+								onChange={(e) => setPortraitValue(e.target.value)}
+								value={portraitValue}
+								sx={{
+									
+									backgroundColor: 'white',
+									mt: 1,
+									mb: 1,
+									borderRadius: 2,
+									justifyContent: 'center',
+								}}
+								
+							/>
+								
+							
 						</Grid>
 					</Grid>
 
@@ -145,35 +191,52 @@ export default function UpdateModal({
 						</Grid>
 					</Grid>
 
-					<Grid xs={12} container spacing={1} sx={{}}>
+					<Grid xs={12} container spacing={1} sx={{
+						display:"flex",
+						flexDirection:'row'
+					}}>
 						<Grid
 							item
-							xs={1}
+							xs
 							sx={{
+
 								color: 'white',
 								display: 'flex',
-								justifyContent: 'center',
+								justifyContent:'center'
 							}}
 						>
 							AC
 						</Grid>
 						<Grid
 							item
-							xs={1}
+							xs
 							sx={{
-								ml: 6,
+								
 								color: 'white',
 								display: 'flex',
 								justifyContent: 'center',
 							}}
 						>
+						Initiative
+						</Grid>
+						<Grid
+							item
+							xs
+							sx={{
+								// ml: 6,
+								color: 'white',
+								display: 'flex',
+								justifyContent: 'center',
+							}}
+						>
+							
 							HP
 						</Grid>
 						<Grid
 							item
-							xs={2}
+							xs
 							sx={{
-								ml: 5,
+								// ml: 5,
 								color: 'white',
 								display: 'flex',
 								justifyContent: 'center',
@@ -183,9 +246,9 @@ export default function UpdateModal({
 						</Grid>
 						<Grid
 							item
-							xs={3}
+							xs
 							sx={{
-								ml: 0.5,
+								// ml: 0.5,
 								color: 'white',
 								display: 'flex',
 								justifyContent: 'center',
@@ -195,9 +258,9 @@ export default function UpdateModal({
 						</Grid>
 						<Grid
 							item
-							xs={1}
+							xs
 							sx={{
-								ml: -0.5,
+								// ml: -0.5,
 								color: 'white',
 								display: 'flex',
 								justifyContent: 'center',
@@ -228,7 +291,24 @@ export default function UpdateModal({
 								onInput={(e) => handleInputChange(setAcValue, e.target.value)}
 							/>
 						</Grid>
-
+						<Grid item xs>
+							<TextField
+								variant="outlined"
+								type="tel"
+								InputProps={{ inputProps: { min: 0, max: 100 } }}
+								sx={{
+									backgroundColor: 'white',
+									'& input': {
+										textAlign: 'center',
+									},
+									borderRadius: 2,
+								}}
+								value={initiativeValue}
+								onChange={(e) =>
+									handleInputChange(setInitiativeValue, e.target.value)
+								}
+							/>
+							</Grid>
 						<Grid item xs>
 							<TextField
 								variant="outlined"
@@ -345,7 +425,7 @@ export default function UpdateModal({
 							</Button>
 						</Grid>
 					</Grid>
-				</div>
+				{/* </div> */}
 			</Box>
 		</Modal>
 	);

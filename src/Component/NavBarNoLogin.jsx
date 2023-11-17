@@ -19,7 +19,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from 'react-router-dom';
 import SnackBar from "./SnackBar";
 
-import { signOut,On } from "firebase/auth";
+import { signOut, On } from "firebase/auth";
 import { useState, useEffect } from "react";
 
 const appBarColor = blueGrey[900];
@@ -28,40 +28,37 @@ const pages = [
   { name: "Character Creation", path: "/dashboard" },
   { name: "Initiative Tracker", path: "/tracker" },
 ];
-// const settings = [
-//     "Profile", "Settings", "Logout"
-// ];
 
 function NavbarNoLogin(loggedIn) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const [alertMessage, setAlertMessage] = useState('');
-	const [alertSeverity, setAlertSeverity] = useState('info');
-	const [showAlert, setShowAlert] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState('info');
+  const [showAlert, setShowAlert] = useState(false);
 
   const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
-    console.log("clicked Hamburger");
+
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    console.log("clicked Profile Icon");
+
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    console.log("clicked Horizontal Navbar");
+
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    console.log("clicked Vertical Navbar");
+
     setAnchorElUser(null);
   };
 
   const handleShowAlertClickC = () => setShowAlert(false);
-  
+
   console.log(auth?.currentUser);
 
   const logout = async () => {
@@ -69,12 +66,12 @@ function NavbarNoLogin(loggedIn) {
       setAlertSeverity('warning');
       setAlertMessage('Logging Out!');
       setShowAlert(true);
-      setTimeout(()=> { 
+      setTimeout(() => {
         setShowAlert(false);
         window.location.href = "/";
         signOut(auth);
       }, 1500);
-      
+
     } catch (err) {
       console.log(err);
     }
@@ -82,167 +79,164 @@ function NavbarNoLogin(loggedIn) {
 
   return (
     <>
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: appBarColor,
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-        <Button
-        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                disabled
-                variant="text"
-                size="small"
-                href="https://github.com/Nic-Horton"
-              >
-                <img
-                   style={{marginLeft:2}}
-                   width={40}
-                   src="/Images/d20dice.png"
-                   alt="GitHub"
-                />
-              </Button>
-          {/* <CasinoOutlinedIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          /> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component={NavLink}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color:'#c8b874',
-              textDecoration: "none",
-            }}
-          >
-            InitFindr
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: appBarColor,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Button
+              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+              disabled
+              variant="text"
+              size="small"
+              href="https://github.com/Nic-Horton"
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              <img
+                style={{ marginLeft: 2 }}
+                width={40}
+                src="/Images/d20dice.png"
+                alt="GitHub"
+              />
+            </Button>
+            <Typography
+              variant="h6"
+              noWrap
+              component={NavLink}
+              to="/"
               sx={{
-                display: { xs: "block", md: "none" },
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: '#c8b874',
+                textDecoration: "none",
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                  textAlign="center"
-                  component={NavLink}
-                  to="/dashboard"
-                  sx={{color:'#c8b874'}}
-                >
-                  <Button>DashBoard</Button>
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography
-                  textAlign="center"
-                  component={NavLink}
-                  to="/tracker"
-                >
-                  <Button>Initiative Tracker</Button>
-                </Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
+              InitFindr
+            </Typography>
 
-          {/*MobileResponsiveness*/}
-          <Button
-        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                disabled
-                variant="text"
-                size="small"
-                href="https://github.com/Nic-Horton"
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
               >
-                <img
-                   style={{marginLeft:2}}
-                   width={40}
-                   src="/Images/d20dice.png"
-                   alt="GitHub"
-                />
-              </Button>
-          <Typography
-            variant="h5"
-            noWrap
-            component={NavLink}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-              color:'#c8b874'
-            }}
-          >
-            InitFindr
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                component={NavLink}
-                to={page.path}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
               >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-        {/* Disable the logout button if the current page is the login page */}
-        {location.pathname !== '/login' && (
-          <Button onClick={logout}>
-            <Typography sx={{color:'#c8b874'}}>Log out</Typography>
-            <LogoutIcon sx={{color:'#c8b874'}} />
-          </Button>
-        )}
-      </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    <SnackBar
-    alert={alertMessage}
-    alertSeverity={alertSeverity}
-    open={showAlert}
-    handleShowAlertClickC={handleShowAlertClickC}
-  />
-  </>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography
+                    textAlign="center"
+                    component={NavLink}
+                    to="/dashboard"
+                    sx={{ color: '#c8b874' }}
+                  >
+                    <Button>DashBoard</Button>
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography
+                    textAlign="center"
+                    component={NavLink}
+                    to="/tracker"
+                  >
+                    <Button>Initiative Tracker</Button>
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+
+            {/*MobileResponsiveness*/}
+            <Button
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              disabled
+              variant="text"
+              size="small"
+              href="https://github.com/Nic-Horton"
+            >
+              <img
+                style={{ marginLeft: 2 }}
+                width={40}
+                src="/Images/d20dice.png"
+                alt="GitHub"
+              />
+            </Button>
+            <Typography
+              variant="h5"
+              noWrap
+              component={NavLink}
+              to="/"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+                color: '#c8b874'
+              }}
+            >
+              InitFindr
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.name}
+                  component={NavLink}
+                  to={page.path}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              ))}
+            </Box>
+            <Box sx={{ flexGrow: 0 }}>
+              {/* Disable the logout button if the current page is the login page */}
+              {location.pathname !== '/login' && (
+                <Button onClick={logout}>
+                  <Typography sx={{ color: '#c8b874' }}>Log out</Typography>
+                  <LogoutIcon sx={{ color: '#c8b874' }} />
+                </Button>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <SnackBar
+        alert={alertMessage}
+        alertSeverity={alertSeverity}
+        open={showAlert}
+        handleShowAlertClickC={handleShowAlertClickC}
+      />
+    </>
   );
 }
 export default NavbarNoLogin;

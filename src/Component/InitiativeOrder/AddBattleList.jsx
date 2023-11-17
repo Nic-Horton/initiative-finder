@@ -13,13 +13,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+      main: 'rgba(200, 184, 116)', 
     },
     secondary: {
-      main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+      main: 'rgba(200, 184, 116)', 
     },
     text: {
-      primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+      primary: 'rgb(200, 184, 116)', 
     },
   },
   components: {
@@ -28,7 +28,7 @@ const customTheme = createTheme({
         root: {
           '& .MuiInputBase-input': {
             backgroundColor: 'rgba(38, 50, 56,0.75)',
-            color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+            color: 'rgb(200, 184, 116)', 
           },
         },
       },
@@ -37,7 +37,7 @@ const customTheme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused fieldset': {
-            borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+            borderColor: 'rgb(200, 184, 116)', 
           },
         },
       },
@@ -78,11 +78,7 @@ function AddBattleList({ onBattleCreated, battleLists }) {
     <>
       <Box component={"form"}
       sx={{
-        // borderColor: "rgba(200,184,116)",
-        // borderRadius: 2,
-        // border:1,
-        // paddingTop:1,
-        // paddingBottom:1
+        
       }}>
         <ThemeProvider theme={customTheme}>
         <TextField

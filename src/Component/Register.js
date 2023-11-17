@@ -24,13 +24,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const customTheme = createTheme({
 	palette: {
 		primary: {
-			main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+			main: 'rgba(200, 184, 116)',
 		},
 		secondary: {
-			main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+			main: 'rgba(200, 184, 116)',
 		},
 		text: {
-			primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+			primary: 'rgb(200, 184, 116)',
 		},
 	},
 	components: {
@@ -39,7 +39,7 @@ const customTheme = createTheme({
 				root: {
 					'& .MuiInputBase-input': {
 						backgroundColor: 'rgba(38, 50, 56,0.75)',
-						color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+						color: 'rgb(200, 184, 116)',
 					},
 				},
 			},
@@ -48,10 +48,10 @@ const customTheme = createTheme({
 			styleOverrides: {
 				root: {
 					'&.Mui-focused fieldset': {
-						borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+						borderColor: 'rgb(200, 184, 116)',
 					},
 					'& fieldset': {
-						borderColor: 'rgb(200, 184, 116)', // Set the border color for unfocused state
+						borderColor: 'rgb(200, 184, 116)',
 					},
 				},
 			},
@@ -97,8 +97,6 @@ export default function RegisterPage() {
 	const handleCloseReg = async () => {
 		try {
 			await createUserWithEmailAndPassword(auth, email, password);
-			// const user = userCredential.user;
-			// console.log('User Created!');
 			setAlertSeverity('success');
 			setAlertMessage(
 				'Critical Success! User Created! Please hold, while you are redirected'
@@ -141,7 +139,7 @@ export default function RegisterPage() {
 				color="secondary"
 				variant="contained"
 				onClick={handleClickOpen}
-				// sx={{ width: 150 }}
+
 			>
 				Register
 			</Button>
@@ -231,7 +229,6 @@ export default function RegisterPage() {
 								Register
 							</Button>
 						</DialogActions>
-						{/* <BottomAlert open={open} severity={alertSeverity} message={alertMessage} /> */}
 						<Snackbar
 							alert={alertMessage}
 							alertSeverity={alertSeverity}

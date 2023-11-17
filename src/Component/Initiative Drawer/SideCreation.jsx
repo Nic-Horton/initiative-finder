@@ -29,16 +29,16 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: "rgba(200, 184, 116)", // Set your custom color as the primary color
+      main: "rgba(200, 184, 116)", 
     },
   },
   components: {
     MuiTab: {
       styleOverrides: {
         root: {
-          color: "rgb(264,0,0)", // Set the color of non-selected tabs to red
+          color: "rgb(264,0,0)", 
           "&.Mui-selected": {
-            color: "rgba(200, 184, 116)", // Set the color of the selected tab to your custom color
+            color: "rgba(200, 184, 116)", 
           },
         },
       },
@@ -48,9 +48,6 @@ const customTheme = createTheme({
 
 export default function SideCreation({ combatantList, setCombatantList }) {
   const uid = auth.currentUser.uid;
-  // const uid = user.uid;
-  // const monsterCollectionRef = collection(db, 'Monsters');
-  // const characterCollectionRef = collection(db, 'Characters');
   const monsterCollectionRef = collection(db, "Users", uid, "Monsters");
   const characterCollectionRef = collection(db, "Users", uid, "Characters");
 
@@ -166,7 +163,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
   }
   return (
     <>
-      {/* <Box> */}
+      
       <Snackbar
         open={open}
         autoHideDuration={750}
@@ -177,7 +174,7 @@ export default function SideCreation({ combatantList, setCombatantList }) {
           <AlertTitle sx={{ fontSize: "1rem" }}>Combatant Created!</AlertTitle>
         </Alert>
       </Snackbar>
-      {/* </Box> */}
+     
       <Paper
         component="form"
         sx={{
@@ -277,11 +274,11 @@ export default function SideCreation({ combatantList, setCombatantList }) {
                     }}
                     sx={{
                       "& fieldset": {
-                        borderColor: "transparent", // Remove outline color
+                        borderColor: "transparent", 
                       },
                     }}
                     inputProps={{
-                      pattern: "[0-9]*", // Allow only numeric input
+                      pattern: "[0-9]*", 
                     }}
                   >
                     {monsterAC}
