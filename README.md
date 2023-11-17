@@ -48,10 +48,10 @@
 <a name="about-the-project"></a>
 
 This project was created to be the solution to the hardship of tracking inititative in Pathfinder.
-Tracking has never been easier with InitFindr! DMs, new and seasoned, will be able to focus more on the story and less on the Math!
+Tracking has never been easier with InitFindr! GMs, new and seasoned, will be able to focus more on the story and less on the Math!
 
 Here's why:
-* Character and Creature creation
+* Character and Monster creation
 * Ablity to pre set battles
 * Easy to add combatants to tracker
 * Roles initiative and sorts from highest roll
@@ -81,9 +81,9 @@ Here's why:
 <a name="directions"></a>
 
 1. Login or Register
-2. Create Creatures and Characters
+2. Create Monsters and Characters
 3. Create a Battle
-4. Add Characters and Creatures to battle
+4. Add Characters and Monsters to battle
 5. Roll inititiative!
 
 
