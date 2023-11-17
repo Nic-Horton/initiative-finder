@@ -47,8 +47,8 @@
 ## About The Project
 <a name="about-the-project"></a>
 
-This project was created to be the solution to the hardship of tracking inititative in Pathfinder.
-Tracking has never been easier with InitFindr! GMs, new and seasoned, will be able to focus more on the story and less on the Math!
+This project was created to be the solution to the hardship of tracking initiative in Pathfinder 2e.
+Tracking has never been easier with InitFindr! Game Masters, new and seasoned, will be able to focus more on the story and less on the Math!
 
 Here's why:
 * Character and Monster creation
@@ -71,7 +71,7 @@ Here's why:
 </div>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-* Firebase was used as our databse as well as for user autentication
+* Firebase was used as our database as well as for user authentication
 * MaterialUI was used for styling as well as some custom CSS
 * React was used for providing functionality to the website
 
@@ -81,10 +81,10 @@ Here's why:
 <a name="directions"></a>
 
 1. Login or Register
-2. Create Monsters and Characters
+2. Create Characters and Monsters
 3. Create a Battle
 4. Add Characters and Monsters to battle
-5. Roll inititiative!
+5. Roll initiative!
 
 
 <!-- ACKNOWLEDGMENTS -->
