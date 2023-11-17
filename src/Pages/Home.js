@@ -204,7 +204,8 @@ export default function Home() {
 							height: 100,
 						}}
 						size="large"
-						href={user ? '/dashboard' : '/login'}
+						component={NavLink}
+						to={user ? '/dashboard' : '/login'}
 						color="success"
 						variant="contained"
 					>

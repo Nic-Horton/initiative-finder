@@ -1,21 +1,14 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import {
-	Container,
-	FormControl,
-	FormLabel,
-	Grid,
-} from '@mui/material';
+import { Container, FormControl, FormLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Register from './Register';
 import { useState, useEffect } from 'react';
 import { auth, googleProvider } from '../Config/firebase-config';
-import {
-	signInWithEmailAndPassword,
-	signInWithPopup,
-} from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import Snackbar from './SnackBar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 const customTheme = createTheme({
 	palette: {
@@ -73,12 +66,12 @@ export const Auth = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
-
+	const navigate = useNavigate();
 	const [alertMessage, setAlertMessage] = useState('');
 	const [alertSeverity, setAlertSeverity] = useState('info');
 	const [showAlert, setShowAlert] = useState(false);
 
-	console.log(auth?.currentUser);
+	// console.log(auth?.currentUser);
 
 	const signInWithGoogle = async () => {
 		try {
@@ -92,7 +85,7 @@ export const Auth = () => {
 				}, 1000);
 			}
 			setTimeout(() => {
-				window.location.href = '/dashboard';
+				navigate('/dashboard');
 			}, 700);
 		} catch (err) {
 			console.log(err);
@@ -115,7 +108,7 @@ export const Auth = () => {
 					setShowAlert(false);
 				}, 1000);
 				setTimeout(() => {
-					window.location.href = '/dashboard';
+					navigate('/dashboard');
 				}, 700);
 			}
 		} catch (err) {
@@ -125,7 +118,6 @@ export const Auth = () => {
 			setTimeout(() => {
 				setShowAlert(false);
 			}, 2500);
-
 		}
 	};
 
@@ -241,7 +233,7 @@ export const Auth = () => {
 											variant="contained"
 											color="primary"
 											onClick={signIn}
-										// sx={{ marginBottom:  }}
+											// sx={{ marginBottom:  }}
 										>
 											Login
 										</Button>
