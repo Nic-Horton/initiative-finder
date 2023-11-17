@@ -142,7 +142,7 @@ function InitiativeTracker() {
 								variant="contained"
 								component={NavLink}
 								color="error"
-								to="/Login"
+								to="/login"
 							>
 								Click here to go re-roll
 							</Button>

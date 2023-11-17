@@ -15,7 +15,6 @@ import UnitCreation from '../Component/UnitCreation';
 
 // ADD DEATH SCENE and potential gif of zelda or fire from dark souls?
 
-
 function Dashboard() {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -144,7 +143,7 @@ function Dashboard() {
 								variant="contained"
 								component={NavLink}
 								color="error"
-								to="/Login"
+								to="/login"
 							>
 								Click here to go re-roll
 							</Button>
@@ -165,7 +164,6 @@ function Dashboard() {
 					width: '100%',
 				}}
 			>
-				
 				<div
 					style={{
 						position: 'absolute',
@@ -187,7 +185,6 @@ function Dashboard() {
 					<Navbar />
 
 					<UnitCreation />
-
 				</div>
 			</div>
 		</>
