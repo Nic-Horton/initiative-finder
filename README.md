@@ -47,13 +47,14 @@
 <a name="about-the-project"></a>
 
 This project was created to be the solution to the hardship of tracking inititative in Pathfinder.
-Tracking has never been easier with InitFindr!
+Tracking has never been easier with InitFindr! DMs around the world, new and seasoned, will no wbe able to focus more on the story and less on the Math!
 
 Here's why:
-* Easy to add combatants to track
-* Roles initiative for you and/or input it yourself
-* Save where you left off
-* etc..
+* Character and Creature creation
+* Ablity to pre set battles
+* Easy to add combatants to tracker
+* Roles initiative and sorts from highest roll
+* Automatic Status and Buff effects
 
 
 ### Built With
@@ -69,19 +70,36 @@ Here's why:
 </div>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+* Firebase was used as our databse as well as for user autentication
+* MaterialUI was used for styling as well as some custom CSS
+* React was used for providing functionality to the website
+
+
+
 
 
 <!-- Directions -->
 ## Directions
 <a name="directions"></a>
 
-This will explain how everyting works.
-
+1. Login or Register
+2. Create Creatures and Characters
+3. Create a Battle
+4. Add Characters and Creatures to battle
+5. Roll inititiative!
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Creators
 <a name="acknowledgments"></a>
+<div align="left">  
+<a href="https://reactjs.org/" target="_blank"></a>  
+<a href="https://www.w3schools.com/css/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/css3-original-wordmark.svg" alt="CSS3" height="50" /></a>  
+<a href="https://en.wikipedia.org/wiki/HTML5" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/html5-original-wordmark.svg" alt="HTML5" height="50" /></a>  
+<a href="https://www.javascript.com/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/javascript-original.svg" alt="JavaScript" height="50" /></a>  
+<a href="https://mui.com/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/mui.png" alt="Material UI" height="50" /></a>  
+<a href="https://firebase.google.com/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/firebase.png" alt="Firebase" height="50" /></a>  
+</div>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
