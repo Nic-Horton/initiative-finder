@@ -37,7 +37,7 @@
       </ul>
     </li>
     <li><a href="#directions">Directions</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#acknowledgments">Creators</a></li>
   </ol>
 </details>
 
