@@ -23,17 +23,10 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 
-// const styles = {
-//   container: {
-//     width: 50
-//   }
-// }
+
 
 export default function MonsterSubmit({ combatantList, setCombatantList }) {
 	const uid = auth.currentUser.uid;
-	// const uid = user.uid;
-	// const monsterCollectionRef = collection(db, 'Monsters');
-	// const characterCollectionRef = collection(db, 'Characters');
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 
@@ -53,6 +46,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 				willSave: Number(monsterWillSave),
 				initiative: Number(monsterInitiative),
 				description: monsterDescription,
+				portrait: monsterPortrait
 			}
 		);
 		if (tabValue === 'Characters') {
@@ -68,6 +62,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 					willSave: Number(monsterWillSave),
 					initiative: Number(monsterInitiative),
 					description: monsterDescription,
+					portrait: monsterPortrait
 				},
 			];
 			setCombatantList({
@@ -87,6 +82,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 					willSave: Number(monsterWillSave),
 					initiative: Number(monsterInitiative),
 					description: monsterDescription,
+					portrait: monsterPortrait
 				},
 			];
 			setCombatantList({
@@ -130,6 +126,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 	const [tabValue, setTabValue] = useState('Characters');
 	const [monsterName, setMonsterName] = useState('');
 	const [monsterAC, setMonsterAC] = useState(10);
+	const [monsterPortrait, setMonsterPortrait] = useState('')
 	const [monsterHP, setMonsterHP] = useState(10);
 	const [monsterWillSave, setMonsterWillSave] = useState(10);
 	const [monsterReflexSave, setMonsterReflexSave] = useState(10);
@@ -146,6 +143,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 		setMonsterFortSave(10);
 		setMonsterInitiative(10);
 		setMonsterDescription('');
+		setMonsterPortrait('')
 	}
 
 	return (
@@ -224,6 +222,10 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 					alignItems="center"
 					direction="row"
 					spacing={2}
+					sx={{
+						display:"flex",
+								justifyContent:'center',
+					}}
 				>
 					<Badge
 						badgeContent={
@@ -266,11 +268,11 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 									}}
 									sx={{
 										'& fieldset': {
-											borderColor: 'transparent', // Remove outline color
+											borderColor: 'transparent',
 										},
 									}}
 									inputProps={{
-										pattern: '[0-9]*', // Allow only numeric input
+										pattern: '[0-9]*',
 									}}
 								>
 									{monsterAC}
@@ -338,6 +340,27 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 								border: '5px solid rgba(54,69,79,0.5)',
 								borderRadius: 2,
 								marginLeft: -3,
+								textAlign: 'center',
+							}}
+						/>
+					</Grid>
+					<Grid xs={12} fullWidth>
+						
+						<TextField
+							fullWidth
+							required
+							color="success"
+							variant="outlined"
+							placeholder="Portrait URL"
+							value={monsterPortrait}
+							onChange={(e) => setMonsterPortrait(e.target.value)}
+							sx={{
+								ml:4,
+								color: 'white',
+								backgroundColor: 'white',
+								border: '5px solid rgba(54,69,79,0.5)',
+								borderRadius: 2,
+								width:"90%",
 								textAlign: 'center',
 							}}
 						/>
@@ -448,7 +471,7 @@ export default function MonsterSubmit({ combatantList, setCombatantList }) {
 						value={monsterDescription}
 						onChange={(e) => setMonsterDescription(e.target.value)}
 						multiline
-						rows={7}
+						rows={5}
 						placeholder="Enter your monster description here!"
 						variant="outlined"
 						sx={{

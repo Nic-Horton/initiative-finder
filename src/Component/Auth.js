@@ -4,7 +4,6 @@ import {
 	Container,
 	FormControl,
 	FormLabel,
-	Typography,
 	Grid,
 } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -14,24 +13,20 @@ import { auth, googleProvider } from '../Config/firebase-config';
 import {
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	signOut,
 } from 'firebase/auth';
-import { Alert } from '@mui/material';
-import NavbarLogin from './NavBarNoLogin';
-import Navbar from './Navbar';
 import Snackbar from './SnackBar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const customTheme = createTheme({
 	palette: {
 		primary: {
-			main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+			main: 'rgba(200, 184, 116)',
 		},
 		secondary: {
-			main: 'rgba(200, 184, 116)', // Set your custom color as the secondary color
+			main: 'rgba(200, 184, 116)',
 		},
 		text: {
-			primary: 'rgb(200, 184, 116)', // Set the text color to your custom RGB color
+			primary: 'rgb(200, 184, 116)',
 		},
 	},
 	components: {
@@ -40,7 +35,7 @@ const customTheme = createTheme({
 				root: {
 					'& .MuiInputBase-input': {
 						backgroundColor: 'rgba(38, 50, 56,0.75)',
-						color: 'rgb(200, 184, 116)', // Set the background color to your custom RGB color
+						color: 'rgb(200, 184, 116)',
 					},
 				},
 			},
@@ -49,10 +44,10 @@ const customTheme = createTheme({
 			styleOverrides: {
 				root: {
 					'&.Mui-focused fieldset': {
-						borderColor: 'rgb(200, 184, 116)', // Set the border color for focused state
+						borderColor: 'rgb(200, 184, 116)',
 					},
 					'& fieldset': {
-						borderColor: 'rgb(200, 184, 116)', // Set the border color for unfocused state
+						borderColor: 'rgb(200, 184, 116)',
 					},
 				},
 			},
@@ -63,10 +58,10 @@ const customTheme = createTheme({
 const ButtonTheme = createTheme({
 	palette: {
 		primary: {
-			main: 'rgba(70, 90, 250, 0.8)', // Set your custom color as the primary color
+			main: 'rgba(70, 90, 250, 0.8)',
 		},
 		secondary: {
-			main: 'rgba(130,0,0,1)', // Set your custom color as the secondary color
+			main: 'rgba(130,0,0,1)',
 		},
 		success: {
 			main: 'rgb(200, 184, 116)',
@@ -130,8 +125,7 @@ export const Auth = () => {
 			setTimeout(() => {
 				setShowAlert(false);
 			}, 2500);
-			// alert('User Not Found' + err);
-			// console.error(err);
+
 		}
 	};
 
@@ -247,7 +241,7 @@ export const Auth = () => {
 											variant="contained"
 											color="primary"
 											onClick={signIn}
-											// sx={{ marginBottom:  }}
+										// sx={{ marginBottom:  }}
 										>
 											Login
 										</Button>
@@ -272,7 +266,6 @@ export const Auth = () => {
 							/>
 						</Container>
 					</FormControl>
-					{/* </Container> */}
 				</Box>
 			</div>
 		</div>

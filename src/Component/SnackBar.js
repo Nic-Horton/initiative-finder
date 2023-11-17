@@ -16,7 +16,6 @@ export default function SimpleSnackbar({
 }) {
 	return (
 		<div>
-			{/* <Button onClick={handleShowAlertClickO}>Show SnackBar</Button> */}
 			<Snackbar
 				open={open}
 				autoHideDuration={3000}

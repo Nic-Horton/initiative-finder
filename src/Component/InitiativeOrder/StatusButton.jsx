@@ -53,7 +53,6 @@ export default function StatusButton({ statusValues, severityValues }) {
               Selected Status Effects
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {/* Ternary for if statusValues is = then there are no status effects selected message displayed. Else, the modal is populated with the status */}
               {statusValues.length === 0 ? (
                 <div>No status effects selected.</div>
               ) : (

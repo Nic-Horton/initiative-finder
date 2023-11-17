@@ -31,95 +31,84 @@ import { Typography } from "@mui/material";
 import { WidthFull } from "@mui/icons-material";
 
 function Tracker() {
-	const uid = auth.currentUser.uid;
-	const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
-	const [open, setOpen] = useState(true);
-	const [battleListTitle, setBattleListTitle] = useState('');
-	const [unitsData, setUnitsData] = useState([]);
-	// const battleListRef = collection(db, 'battleList');
-	const [battleLists, setBattleLists] = useState([]);
-	const [selectedArray, setSelectedArray] = useState([]);
-	const [selectedUnit, setSelectedUnit] = useState(false);
-	const [childRolledInitiative, setChildRolledInitiative] = useState(0);
+  const uid = auth.currentUser.uid;
+  const battleListCollectionRef = collection(db, 'Users', uid, 'Battles');
+  const [open, setOpen] = useState(true);
+  const [battleListTitle, setBattleListTitle] = useState('');
+  const [unitsData, setUnitsData] = useState([]);
+  const [battleLists, setBattleLists] = useState([]);
+  const [selectedArray, setSelectedArray] = useState([]);
+  const [selectedUnit, setSelectedUnit] = useState(false);
+  const [childRolledInitiative, setChildRolledInitiative] = useState(0);
 
-	//Combatant info that gets passed in when selecting more info on the character
-	const [combatantAC, setCombatantAC] = useState(null);
-	const [combatantInitiative, setCombatantInitiative] = useState(null);
-	const [combatantName, setCombatantName] = useState(null);
-	const [combatantHp, setCombatantHp] = useState(null);
-	const [combatantReflexSave, setCombatantReflexSave] = useState(null);
-	const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
-	const [combatantWillSave, setCombatantWillSave] = useState(null);
-	const [combatantPortrait, setCombatantPortrait] = useState(null)
-	const [combatantDescription, setCombatantDescription] = useState(null)
-
-	// const [activeStep, setActiveStep] = React.useState(0);
-
-	// const handleNext = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// };
-
-	// const handleBack = () => {
-	//   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	// };
+  //Combatant info that gets passed in when selecting more info on the character
+  const [combatantAC, setCombatantAC] = useState(null);
+  const [combatantInitiative, setCombatantInitiative] = useState(null);
+  const [combatantName, setCombatantName] = useState(null);
+  const [combatantHp, setCombatantHp] = useState(null);
+  const [combatantReflexSave, setCombatantReflexSave] = useState(null);
+  const [combatantFortitudeSave, setCombatantFortitudeSave] = useState(null);
+  const [combatantWillSave, setCombatantWillSave] = useState(null);
+  const [combatantPortrait, setCombatantPortrait] = useState(null)
+  const [combatantDescription, setCombatantDescription] = useState(null)
 
 
-	//Fetches Battles list for select TextField
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
-				setBattleLists(getFormattedData(battleListQuerySnapshot));
-				// }
-			} catch (error) {
-				console.error('Error fetching data:', error);
-			}
-		};
 
-		// Helper function to format battle list data
-		const getFormattedData = (querySnapshot) => {
-			const lists = [];
-			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				lists.push({
-					id: doc.id,
-					title: data.title,
-					// Add other fields as needed
-				});
-			});
-			return lists;
-		};
-		fetchData();
-	}, []);
+  //Fetches Battles list for select TextField
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const battleListQuerySnapshot = await getDocs(battleListCollectionRef);
+        setBattleLists(getFormattedData(battleListQuerySnapshot));
+        // }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-	//Onchange of selector this will render battlelist units
-	const handleChangeBattleList = async (event) => {
-		setBattleListTitle(event.target.value);
+    // Helper function to format battle list data
+    const getFormattedData = (querySnapshot) => {
+      const lists = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        lists.push({
+          id: doc.id,
+          title: data.title,
 
-		const getUnitsData = (querySnapshot) => {
-			const units = [];
-			querySnapshot.forEach((doc) => {
-				const data = { ...doc.data(), id: doc.id };
-				units.push(data);
-			});
-			return units;
-		};
+        });
+      });
+      return lists;
+    };
+    fetchData();
+  }, []);
 
-		const battleRef = doc(battleListCollectionRef, event.target.value);
-		const unitsQuery = query(collection(battleRef, 'Units'));
-		const unitDocs = await getDocs(unitsQuery);
 
-		setUnitsData(getUnitsData(unitDocs));
-		console.log(getUnitsData(unitDocs));
-	};
+  const handleChangeBattleList = async (event) => {
+    setBattleListTitle(event.target.value);
 
-  //updates battlelists when new battles are created
-  const onBattleCreated = async (newBattleList) => {
-    setBattleLists(newBattleList);
-    // console.log(battleLists);
+    const getUnitsData = (querySnapshot) => {
+      const units = [];
+      querySnapshot.forEach((doc) => {
+        const data = { ...doc.data(), id: doc.id };
+        units.push(data);
+      });
+      return units;
+    };
+
+    const battleRef = doc(battleListCollectionRef, event.target.value);
+    const unitsQuery = query(collection(battleRef, 'Units'));
+    const unitDocs = await getDocs(unitsQuery);
+
+    setUnitsData(getUnitsData(unitDocs));
   };
 
-  //deletes battleLists
+
+  const onBattleCreated = async (newBattleList) => {
+    setBattleLists(newBattleList);
+
+  };
+
+  
   const deleteBattle = async () => {
     const updatedBattles = battleLists.filter(
       (battle) => battle.id !== battleListTitle
@@ -130,7 +119,7 @@ function Tracker() {
     setBattleListTitle("");
   };
 
-  //Adds units from drawer to battlelist and manipulates state for 'seamless' updating
+ 
   const addUnitsToBattle = async (newUnit) => {
     if (!battleListTitle) {
       return alert("Select a Battle");
@@ -144,7 +133,7 @@ function Tracker() {
     try {
       const docRef = await addDoc(battleUnitsRef, newUnit);
       const newUnitsData = [...unitsData, { ...newUnit, id: docRef.id }];
-      console.log(newUnitsData);
+      
 
       setUnitsData(newUnitsData);
     } catch (error) {
@@ -152,7 +141,7 @@ function Tracker() {
     }
   };
 
-  //Deletes a unit from the battlelist it is in
+  
   const deleteUnitsFromBattle = async (unitID) => {
     const updatedUnits = unitsData.filter(
       (unit) => unit.id !== unitID
@@ -163,93 +152,93 @@ function Tracker() {
       battleListTitle,
       "Units"
     );
-    const unitDoc = doc(battleUnitsRef,unitID)
+    const unitDoc = doc(battleUnitsRef, unitID)
     await deleteDoc(unitDoc)
 
     setUnitsData(updatedUnits);
   }
 
-  // const [rolledInitiative, setRolledInitiative] = useState(0);
+  
 
   const onRolledInitiativeChange = (value) => {
     setChildRolledInitiative(value);
-    console.log("child" + childRolledInitiative);
+    
   };
 
-	const renderCards = () => {
-		if (unitsData) {
-			return unitsData
-				.sort((a, b) => b.initiativeRoll - a.initiativeRoll)
-				.map((unit, index) => (
-					<InitiativeOrderCard
-						key={unit.id}
-						name={unit.name}
-						ac={unit.ac}
-						fortitudeSave={unit.fortitudeSave}
-						willSave={unit.willSave}
-						reflexSave={unit.reflexSave}
-						portrait={unit.portrait}
-						hp={unit.hp}
-						id={unit.id}
-						description={unit.description}
-						initiative={unit.initiative}
-						initiativeRoll={unit.initiativeRoll}
-						isSelected={selectedCardIndex === index}
-						handleSelectedCard={() => setSelectedCardIndex(index)}
-						handleRolledInitiative={handleRolledInitiative}
-						onRolledInitiativeChange={onRolledInitiativeChange}
-						setCombatantInitiative={setCombatantInitiative}
-						setCombatantHp={setCombatantHp}
-						setCombatantName={setCombatantName}
-						setCombatantAC={setCombatantAC}
-						setCombatantFortitudeSave={setCombatantFortitudeSave}
-						setCombatantReflexSave={setCombatantReflexSave}
-						setCombatantWillSave={setCombatantWillSave}
-						setSelectedUnit={setSelectedUnit}
-						setCombatantPortrait={setCombatantPortrait}
-						setCombatantDescription={setCombatantDescription}
-						selectedUnit={selectedUnit}
+  const renderCards = () => {
+    if (unitsData) {
+      return unitsData
+        .sort((a, b) => b.initiativeRoll - a.initiativeRoll)
+        .map((unit, index) => (
+          <InitiativeOrderCard
+            key={unit.id}
+            name={unit.name}
+            ac={unit.ac}
+            fortitudeSave={unit.fortitudeSave}
+            willSave={unit.willSave}
+            reflexSave={unit.reflexSave}
+            portrait={unit.portrait}
+            hp={unit.hp}
+            id={unit.id}
+            description={unit.description}
+            initiative={unit.initiative}
+            initiativeRoll={unit.initiativeRoll}
+            isSelected={selectedCardIndex === index}
+            handleSelectedCard={() => setSelectedCardIndex(index)}
+            handleRolledInitiative={handleRolledInitiative}
+            onRolledInitiativeChange={onRolledInitiativeChange}
+            setCombatantInitiative={setCombatantInitiative}
+            setCombatantHp={setCombatantHp}
+            setCombatantName={setCombatantName}
+            setCombatantAC={setCombatantAC}
+            setCombatantFortitudeSave={setCombatantFortitudeSave}
+            setCombatantReflexSave={setCombatantReflexSave}
+            setCombatantWillSave={setCombatantWillSave}
+            setSelectedUnit={setSelectedUnit}
+            setCombatantPortrait={setCombatantPortrait}
+            setCombatantDescription={setCombatantDescription}
+            selectedUnit={selectedUnit}
             deleteUnitsFromBattle={deleteUnitsFromBattle}
-					/>
-				));
-		}
-	};
-	const characterPortrait = "https://storage.prompt-hunt.workers.dev/clf2eooxi000bl108ctdeygbf_1"
+          />
+        ));
+    }
+  };
+  
 
-	const handleRolledInitiative = async (id,initiative) => {
-		const finalValue = roll20SidedDieWithModifier(initiative);
-		console.log("final" + finalValue)
-		
+  const handleRolledInitiative = async (id, initiative) => {
+    const finalValue = roll20SidedDieWithModifier(initiative);
+    console.log("final" + finalValue)
+
     const battleUnitsRef = collection(
       battleListCollectionRef,
       battleListTitle,
       "Units"
     );
 
-		const index = unitsData.findIndex(u => u.id === id)
-		if (index !== -1) {
-			const updatedUnits = [...unitsData];
-			updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
-			setUnitsData(updatedUnits)
+    const index = unitsData.findIndex(u => u.id === id)
+    if (index !== -1) {
+      const updatedUnits = [...unitsData];
+      updatedUnits[index] = { ...updatedUnits[index], initiativeRoll: finalValue }
+      setUnitsData(updatedUnits)
       const unitDoc = doc(battleUnitsRef, id);
-		  await updateDoc(unitDoc, { initiativeRoll: Number(finalValue)})
-		}
-	};
+      await updateDoc(unitDoc, { initiativeRoll: Number(finalValue) })
+    }
+  };
 
-	const handleMassRoll = async () => {
-		if (!battleListTitle) {
-			return alert('Select a Battle!');
-		}
-		if (unitsData.length === 0 || !unitsData) {
-			return alert('Add Units to Battle!');
-		}
-    
+  const handleMassRoll = async () => {
+    if (!battleListTitle) {
+      return alert('Select a Battle!');
+    }
+    if (unitsData.length === 0 || !unitsData) {
+      return alert('Add Units to Battle!');
+    }
+
     const battleUnitsRef = collection(
       battleListCollectionRef,
       battleListTitle,
       "Units"
     );
-    const massRollUnits =[];
+    const massRollUnits = [];
 
     for (const unit of unitsData) {
       const finalValue = roll20SidedDieWithModifier(unit.initiative);
@@ -257,8 +246,8 @@ function Tracker() {
       await updateDoc(unitDoc, { initiativeRoll: Number(finalValue) });
       massRollUnits.push({ ...unit, initiativeRoll: finalValue });
     }
-			setUnitsData(massRollUnits)
-	};
+    setUnitsData(massRollUnits)
+  };
 
   function roll20SidedDieWithModifier(modifier) {
     const rollResult = Math.floor(Math.random() * 20) + 1;
@@ -278,10 +267,10 @@ function Tracker() {
     }
 
     setSelectedCardIndex(newIndex);
-    console.log(selectedCardIndex);
+    
   };
 
-  const handleSelectedCard = (cardIndex) => {};
+  const handleSelectedCard = (cardIndex) => { };
 
   return (
     <>
@@ -301,7 +290,7 @@ function Tracker() {
                 battleLists={battleLists}
                 setBattleListTitle={setBattleListTitle}
                 battleListTitle={battleListTitle}
-								handleMassRoll={handleMassRoll}
+                handleMassRoll={handleMassRoll}
               />
             </Paper>
             <Paper
@@ -329,12 +318,9 @@ function Tracker() {
             </Box>
             {renderCards()}
           </Grid>
-          {/* <Grid item xs sx={{position: "relative"}}>
-            
-          </Grid> */}
           <CombatantCard
-            sx={{position:'fixed', zIndex: 1000}}
-          
+            sx={{ position: 'fixed', zIndex: 1000 }}
+
             name={combatantName}
             ac={combatantAC}
             hp={combatantHp}
@@ -344,10 +330,10 @@ function Tracker() {
             willSave={combatantWillSave}
             portrait={combatantPortrait}
             description={combatantDescription}
-          
+
           />
         </Grid>
-        
+
       </Main>
     </>
   );

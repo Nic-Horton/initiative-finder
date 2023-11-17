@@ -119,7 +119,7 @@ export default function BuffsButton({
                       alignItems: "center",
                     }}
                   >
-                    {/* <Chip label={buff.name} color="primary" /> */}
+                    
                     <ModifierPopover buff={buff} type="buff" />
                     <BlueSwitch
                       {...label}

@@ -28,11 +28,11 @@ const style = {
     md: leftWidth.md,
     lg: leftWidth.lg,
   },
-  width: { xs: 250},
-  bgcolor: "rgba(38, 50, 56,0.75)" ,
+  width: { xs: 250 },
+  bgcolor: "rgba(38, 50, 56,0.75)",
   border: "5px solid rgba(200,184,116)",
   boxShadow: 24,
-  borderRadius:"10px",
+  borderRadius: "10px",
   p: 3,
 };
 
@@ -58,11 +58,11 @@ function CombatantModal({ handleClose, open, combatant }) {
             onClick={handleClose}
             sx={{ position: "absolute", right: 1, top: 1 }}
           >
-            <CloseIcon sx={{color:'red'}}/>
+            <CloseIcon sx={{ color: 'red' }} />
           </IconButton>
 
           <Typography
-            sx={{ overflowX: "scroll", mb:2, color:'rgba(200,184,116)' }}
+            sx={{ overflowX: "scroll", mb: 2, color: 'rgba(200,184,116)' }}
             id="modal-modal-title"
             variant="h6"
             component="h2"
@@ -70,79 +70,79 @@ function CombatantModal({ handleClose, open, combatant }) {
             <b>{combatant.name.toUpperCase()}</b>
           </Typography>
 
-          <Grid container spacing={2} sx={{display:'flex', justifyContent:'center' }}>
+          <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  AC
-						  </InputLabel>
-						  <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                AC
+              </InputLabel>
+              <Typography
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.ac}
               </Typography>
-					  </Grid>
+            </Grid>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  HP
-						  </InputLabel>
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                HP
+              </InputLabel>
               <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.hp}
               </Typography>
-					  </Grid>
+            </Grid>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  INIT
-						  </InputLabel>
-						  <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                INIT
+              </InputLabel>
+              <Typography
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.initiative}
               </Typography>
-					  </Grid>
+            </Grid>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  FS
-						  </InputLabel>
-						  <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                FS
+              </InputLabel>
+              <Typography
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.fortitudeSave}
               </Typography>
-					  </Grid>
+            </Grid>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  RS
-						  </InputLabel>
-						  <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                RS
+              </InputLabel>
+              <Typography
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.reflexSave}
               </Typography>
-					  </Grid>
+            </Grid>
             <Grid item xs={4} sx={{ borderRadius: 2 }}>
-						  <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign:'center' }} htmlFor="bootstrap-input">
-							  WS
-						  </InputLabel>
-						  <Typography
-                sx={{ color:'red', border: '3px solid rgba(200,184,116,.5)',borderRadius: 2, textAlign:'center'}}
+              <InputLabel sx={{ color: 'rgba(200,184,116)', textAlign: 'center' }} htmlFor="bootstrap-input">
+                WS
+              </InputLabel>
+              <Typography
+                sx={{ color: 'red', border: '3px solid rgba(200,184,116,.5)', borderRadius: 2, textAlign: 'center' }}
                 variant="h6"
                 component="h6"
               >
                 {combatant.willSave}
               </Typography>
-					  </Grid>
+            </Grid>
           </Grid>
         </Box>
       </Modal>

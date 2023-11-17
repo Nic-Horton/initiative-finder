@@ -20,16 +20,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: 'rgba(200, 184, 116)', // Set your custom color as the primary color
+      main: 'rgba(200, 184, 116)',
     },
   },
   components: {
     MuiTab: {
       styleOverrides: {
         root: {
-          color: 'rgb(255,0,0)', // Set the color of non-selected tabs to red
+          color: 'rgb(255,0,0)',
           '&.Mui-selected': {
-            color: 'rgba(200, 184, 116)', // Set the color of the selected tab to your custom color
+            color: 'rgba(200, 184, 116)',
           },
         },
       },
@@ -100,11 +100,11 @@ export const Main = styled("main", {
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  // gets content to be below the AppBar
+
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
   marginTop: 12,
-  
+
 }));
 
 function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
@@ -129,8 +129,8 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
 
   return (
     <>
-      {open ? null : <Toolbar/>}
-      <Box sx={{ mt: 6, position:'fixed'}}>
+      {open ? null : <Toolbar />}
+      <Box sx={{ mt: 6, position: 'fixed' }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -138,7 +138,7 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
           edge="end"
           sx={{ ml: 1, mr: 2, ...(open && { display: "none" }) }}
         >
-          <ChevronRightIcon fontSize="large" sx={{color:'rgba(200, 184, 116)', backgroundColor:'rgba(0,0,0,.5)', borderRadius:120}} />
+          <ChevronRightIcon fontSize="large" sx={{ color: 'rgba(200, 184, 116)', backgroundColor: 'rgba(0,0,0,.5)', borderRadius: 120 }} />
         </IconButton>
       </Box>
       <Drawer
@@ -174,31 +174,31 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h5" sx={{color:'rgba(200,184,116)'}}>
+          <Typography variant="h5" sx={{ color: 'rgba(200,184,116)' }}>
             {category === "characters" ? "Add Characters" : "Add Monsters"}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between",  }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", }}>
           <Box
             sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
             <ThemeProvider theme={customTheme}>
-            <Tabs
-              value={category}
-              onChange={handleTabChange}
-              aria-label="secondary tabs example"
-            >
-              <Tab value="characters" label="Characters" />
-              <Tab value="monsters" label="Monsters" />
-            </Tabs>
+              <Tabs
+                value={category}
+                onChange={handleTabChange}
+                aria-label="secondary tabs example"
+              >
+                <Tab value="characters" label="Characters" />
+                <Tab value="monsters" label="Monsters" />
+              </Tabs>
             </ThemeProvider>
           </Box>
-          <Box sx={{mb:1, display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ mb: 1, display: "flex", justifyContent: "flex-end" }}>
             <IconButton
               onClick={handleDrawerClose}
               edge="start"
             >
-              <ChevronLeftIcon sx={{color:'rgba(200,184,116)'}} />
+              <ChevronLeftIcon sx={{ color: 'rgba(200,184,116)' }} />
             </IconButton>
           </Box>
         </Box>
@@ -212,16 +212,17 @@ function SearchDrawer({ addUnitsToBattle, open, setOpen }) {
             mt: 2,
           }}
         >
-          <Box component={Paper} sx={{ width: "90%",
-            height:'32vh',
+          <Box component={Paper} sx={{
+            width: "90%",
+            height: '32vh',
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: 'rgba(38, 50, 56,0.75)'
-             }}>
-          <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} search={search} setSearch={setSearch}/>
+          }}>
+            <SearchBar combatantList={combatantList} setCombatantList={setCombatantList} category={category} addUnitsToBattle={addUnitsToBattle} search={search} setSearch={setSearch} />
           </Box>
-          <SideCreation combatantList={combatantList} setCombatantList={setCombatantList}/>
+          <SideCreation combatantList={combatantList} setCombatantList={setCombatantList} />
         </Box>
       </Drawer>
     </>

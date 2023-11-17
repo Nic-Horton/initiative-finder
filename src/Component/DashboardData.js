@@ -1,18 +1,14 @@
 import * as React from 'react';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
+
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
-import ListSubheader from '@mui/material/ListSubheader';
+
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import {
-	getDocs,
 	collection,
-	addDoc,
-	deleteDoc,
-	doc,
-	updateDoc,
+
 } from 'firebase/firestore';
 import { Auth } from './Auth';
 import { db, auth } from '../Config/firebase-config';
@@ -34,61 +30,14 @@ export default function DashboardData({ combatantList, setCombatantList }) {
 	const monsterCollectionRef = collection(db, 'Users', uid, 'Monsters');
 	const characterCollectionRef = collection(db, 'Users', uid, 'Characters');
 	const [tabValue, setTabValue] = React.useState('Characters');
-
-	// const [combatantList, setCombatantList] = useState([]);
 	const [dataSearch, setDataSearch] = useState('');
 	const [selectedIndex, setSelectedIndex] = useState(-1);
-
 	const [openStates, setOpenStates] = React.useState([]);
-
 	const [filteredList, setFilteredList] = useState([]);
-
+	
 	const collectionRef =
 		tabValue === 'Monsters' ? monsterCollectionRef : characterCollectionRef;
-	// useEffect(() => {
-	// 	const getInformationList = async () => {
-	// 		try {
-	// 			const data = await getDocs(collectionRef);
-	// 			const filteredData = data.docs.map((doc) => ({
-	// 				...doc.data(),
-	// 				id: doc.id,
-	// 			}));
-	// 			const sortedFilteredData = filteredData.sort((a, b) =>
-	// 				a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-	// 			);
-	// 			setCombatantList(sortedFilteredData);
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 		}
-	// 	};
-	// 	getInformationList();
-	// }, [tabValue]);
 
-	// useEffect(() => {
-	// 	const getLists = async () => {
-	// 		try {
-	// 			const monsterData = await getDocs(monsterCollectionRef);
-	// 			const characterData = await getDocs(characterCollectionRef);
-
-	// 			const filteredMonsterData = monsterData.docs.map((doc) => ({
-	// 				...doc.data(),
-	// 				id: doc.id,
-	// 			}));
-	// 			const filteredCharacterData = characterData.docs.map((doc) => ({
-	// 				...doc.data(),
-	// 				id: doc.id,
-	// 			}));
-
-	// 			setCombatantList({
-	// 				monsterList: filteredMonsterData,
-	// 				characterList: filteredCharacterData,
-	// 			});
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 		}
-	// 	};
-	// 	getLists();
-	// }, []);
 
 	// Initialize open states for each list item to false
 	useEffect(() => {
@@ -121,10 +70,6 @@ export default function DashboardData({ combatantList, setCombatantList }) {
 		setOpenStates(updatedOpenStates);
 	};
 
-	// const deleteEntry = async (id) => {
-	// 	const monsterDoc = doc(collectionRef, id);
-	// 	await deleteDoc(monsterDoc);
-	// };
 
 	const handleSearchChange = (e) => {
 		setDataSearch(e.target.value.toLowerCase());

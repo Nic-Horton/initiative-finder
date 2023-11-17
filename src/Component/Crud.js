@@ -16,7 +16,7 @@ import {
 import BattleList from "../Component/InitiativeOrder/BattleList";
 import InitiativeOrderCard from "./InitiativeOrder/InitiativeOrderCard";
 import InitiativeOrderAccordion from "./InitiativeOrder/InitiativeOrderAccordion";
-
+//THIS IS THE TESTING GROUND, NOTHING IN THIS CODE AFFECTS THE MAIN APPLICATION
 function Crud() {
   const [monsterList, setMonsterList] = useState([]);
   const [monsterName, setMonsterName] = useState("");

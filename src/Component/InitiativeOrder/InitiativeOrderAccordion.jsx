@@ -91,12 +91,10 @@ export default function InitiativeOrderAccordion({
     }
     setRemoveCircumstanceSnackbar(false);
   };
-  // For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array.
-  // Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
-  // Nested if statement specifically for circumstance status. If flatfooted is not included in prevStatusValues, it is added to prevStatusValues and then added to setStatusValues.
+  // adds status to be added to statusValues state array. 
   const handleStatusToggle = (status) => {
     if (statusValues.includes(status)) {
-      console.log("removed", status, "from --->", statusValues);
+      // console.log("removed", status, "from --->", statusValues);
       setStatusValues(
         statusValues.filter((selectedStatus) => selectedStatus !== status)
       );
@@ -105,11 +103,11 @@ export default function InitiativeOrderAccordion({
       }
     } else {
       //Testing the below set SelectedValue
-      console.log("added", status, "to --->", statusValues);
+      // console.log("added", status, "to --->", statusValues);
       setStatusValues([...statusValues, status]);
       // setSelectedValue("1");
       // console.log(selectedValue)
-      //Nested an if statement just for this circumstance
+      
       if (status === "prone") {
         setCircumstanceSnackbar(true);
         setStatusValues((prevStatusValues) => {
@@ -138,13 +136,13 @@ export default function InitiativeOrderAccordion({
 
   //For status to be added to statusValues state array. If the status is already in the array, it will filter out the matching status and remove from array. Else, it will add the status to the array. When switch it toggled "on" it should do the else statement.
   const handleSeveritySelect = (severity) => {
-    console.log("Severity Select Has Run");
+    // console.log("Severity Select Has Run");
     const findSeverity = severityValues.find(
       (item) => item.name === severity.name
     );
 
     if (findSeverity) {
-      console.log("Severity IF Statement");
+      // console.log("Severity IF Statement");
       const updatedSeverityValues = severityValues.map((item) =>
         item.name === severity.name
           ? {
@@ -159,8 +157,8 @@ export default function InitiativeOrderAccordion({
       );
       setSeverityValues(updatedSeverityValues);
     } else {
-      console.log("Severity ELSE Statement");
-      console.log(severity);
+      // console.log("Severity ELSE Statement");
+      // console.log(severity);
       setSeverityValues([...severityValues, severity]);
     }
   };
