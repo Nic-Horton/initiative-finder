@@ -17,6 +17,7 @@ function CombatantCard({ name, ac, fortitudeSave, willSave, reflexSave, hp, cond
     return (
       <div>
       <Card sx={{
+        marginTop: 19,
         minWidth: 275,
         maxWidth: 500,
         height: 'auto',

@@ -107,7 +107,7 @@ export default function InitiativeOrderAccordion({
       setStatusValues([...statusValues, status]);
       // setSelectedValue("1");
       // console.log(selectedValue)
-      
+
       if (status === "prone") {
         setCircumstanceSnackbar(true);
         setStatusValues((prevStatusValues) => {
@@ -146,13 +146,13 @@ export default function InitiativeOrderAccordion({
       const updatedSeverityValues = severityValues.map((item) =>
         item.name === severity.name
           ? {
-              ...item,
-              stage: severity.stage,
-              acEffect: severity.acEffect,
-              fortitudeEffect: severity.fortitudeEffect,
-              willEffect: severity.willEffect,
-              reflexEffect: severity.reflexEffect,
-            }
+            ...item,
+            stage: severity.stage,
+            acEffect: severity.acEffect,
+            fortitudeEffect: severity.fortitudeEffect,
+            willEffect: severity.willEffect,
+            reflexEffect: severity.reflexEffect,
+          }
           : item
       );
       setSeverityValues(updatedSeverityValues);
@@ -225,19 +225,43 @@ export default function InitiativeOrderAccordion({
               {/* First row */}
               <Grid item xs={12}>
                 <Grid container alignItems="center">
-                  <Grid item xs={2}>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary", fontSize: 20,}}>
                       Init
                     </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {initiative}
                     </Typography>
                   </Grid>
-                  <Grid item xs={2}>
-                    <Typography sx={{ color: "text.secondary" }}>
-                      rolled
+                  <Grid item xs={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary", fontSize: 20,}}>
+                      Rolled
                     </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {initiativeRoll}
                     </Typography>
                   </Grid>
@@ -247,40 +271,100 @@ export default function InitiativeOrderAccordion({
               <Grid item xs={6} lg={12}>
                 {/* Character Points */}
                 <Grid container spacing={1}>
-                  <Grid item xs={4} lg={2}>
-                    <Typography sx={{ color: "text.secondary" }}>HP</Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={4} lg={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary", fontSize: 20, }}>HP</Typography>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {hp}
                     </Typography>
                   </Grid>
                   {/* Add other items for the second row as needed */}
-                  <Grid item xs={4} lg={2}>
-                    <Typography sx={{ color: "text.secondary" }}>AC</Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={4} lg={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary" , fontSize: 20,}}>AC</Typography>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {ac + acCumulativeEffect}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4} lg={2}>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={4} lg={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary", fontSize: 20, }}>
                       Reflex
                     </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {reflexSave + reflexCumulativeEffect}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4} lg={2}>
-                    <Typography sx={{ color: "text.secondary" }}>
-                      Fort
-                    </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={4} lg={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                      <Typography sx={{ color: "text.secondary" , fontSize: 20,}}>
+                        Fort
+                      </Typography>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {fortitudeSave + fortitudeCumulativeEffect}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4} lg={2}>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <Grid item xs={4} lg={2} sx={{ display: 'flex', flexDirection:"column", alignItems:"center"}}>
+                    <Typography sx={{ color: "text.secondary", fontSize: 20, }}>
                       Will
                     </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                    <Typography variant="body2" sx={{
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      border: "3px solid rgb(38, 50, 56)",
+                      minHeight: 50,
+                      minWidth: 50,
+                      width: '50%',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 25,
+                    }}>
                       {willSave + willCumulativeEffect}
                     </Typography>
                     <Grid item xs={4} lg={2}></Grid>
@@ -296,18 +380,19 @@ export default function InitiativeOrderAccordion({
         {/* Dropdown Buttons */}
         <AccordionDetails sx={{ backgroundColor: accordionDrop }}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Grid container spacing={2} justifyContent="space-evenly">
-                <Grid item lg={3}>
+            <Grid item xs={12} sx={{display:'flex', }}>
+              <Grid container spacing={2} sx={{ display: 'flex'}}>
+                <Grid item lg={3} sx={{ display:'flex', justifyContent:'center'}}>
                   <ConditionsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
                     severityValues={severityValues}
                     handleSeveritySelect={handleSeveritySelect}
                     value={selectedValue}
+                    
                   />
                 </Grid>
-                <Grid item lg={3}>
+                <Grid item lg={3} sx={{ display:'flex', justifyContent:'center'}}>
                   <BuffsButton
                     statusValues={statusValues}
                     handleStatusToggle={handleStatusToggle}
@@ -316,13 +401,13 @@ export default function InitiativeOrderAccordion({
                     value={selectedValue}
                   />
                 </Grid>
-                <Grid item lg={3}>
+                <Grid item lg={3} sx={{ display:'flex', justifyContent:'center'}}>
                   <StatusButton
                     statusValues={statusValues}
                     severityValues={severityValues}
                   />
                 </Grid>
-                <Grid item lg={3}>
+                <Grid item lg={3} sx={{ display:'flex', justifyContent:'center'}}>
                   <Button
                     variant="contained"
                     startIcon={<CasinoOutlinedIcon />}
