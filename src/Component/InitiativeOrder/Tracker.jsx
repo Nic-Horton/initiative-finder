@@ -318,8 +318,9 @@ function Tracker() {
             </Box>
             {renderCards()}
           </Grid>
+          <Grid item xs={2}>
           <CombatantCard
-            sx={{ position: 'fixed', zIndex: 1000 }}
+            sx={{ position: 'flex', zIndex: 1000,}}
 
             name={combatantName}
             ac={combatantAC}
@@ -332,6 +333,7 @@ function Tracker() {
             description={combatantDescription}
 
           />
+          </Grid>
         </Grid>
 
       </Main>
